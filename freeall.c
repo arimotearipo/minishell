@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_utils.c                                       :+:      :+:    :+:   */
+/*   freeall.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 18:21:35 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/19 18:21:35 by wwan-taj         ###   ########.fr       */
+/*   Created: 2022/05/19 18:25:25 by wwan-taj          #+#    #+#             */
+/*   Updated: 2022/05/19 18:25:26 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	filllst(t_token **lst, char *str, int i, int len)
+void	clearmemory(t_cmd *cmd)
 {
-	t_token	*tokens;
-	t_token	*last;
+	t_token	*temp;
 
-	if (len < 0)
-		return ;
-	last = *lst;
-	tokens = malloc(sizeof(t_token));
-	tokens->str = ft_substr(str, i, len);
-	if (last == NULL)
+	temp = cmd->tokens;
+	while (cmd->tokens != NULL)
 	{
-		*lst = tokens;
-		(*lst)->next = NULL;
-		return ;
-	}		
-	else
-	{
-		while (last->next)
-			last = last->next; // Move current pointer to next list
-		last->next = tokens;
-		last->next->next = NULL;
+		temp = cmd->tokens->next;
+		free(cmd->tokens);
+		cmd->tokens = temp;
 	}
 }

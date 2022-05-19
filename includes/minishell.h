@@ -18,13 +18,13 @@ typedef struct s_cmd
 {
 	t_token			*tokens;
 	int				tkn_count;
-	struct s_cmd 	*next;
+	struct	s_cmd 	*next;
 }	t_cmd;
 
-// void	gettokens(char *line, t_cmd *cmd);
 void	collecttoken(char *line, t_cmd *cmd);
 void	printerror(void);
-void	filllst(t_token **lst, char *str, int	i, int len);
+void	filllst(t_token **lst, char *str, int i, int len);
 void	addnewlst(t_token *lst);
+void	clearmemory(t_cmd *cmd);
 
-# endif
+#endif

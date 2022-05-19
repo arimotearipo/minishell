@@ -1,4 +1,4 @@
-SRCS = shell.c error.c list_utils.c \
+SRCS = shell.c error.c list_utils.c freeall.c \
 
 OBJS = $(SRCS:.c=.o)
 
