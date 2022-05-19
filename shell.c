@@ -5,14 +5,17 @@ int	main(void)
 	t_cmd	cmd;
 	char 	*line;
 
-	while (1)
-	{
-		line = readline("minishell% ");
-		counttoken(line, &cmd);
-		printf("%s\n", cmd.tokens->token);
-		add_history(line);
-		free(line);
-	}
+	line = "echo hello world";
+
+	counttoken(line, &cmd);
+	// while (1)
+	// {
+	// 	line = readline("minishell% ");
+	// 	counttoken(line, &cmd);
+	// 	printf("%s\n", cmd.tokens->str);
+	// 	add_history(line);
+	// 	free(line);
+	// }
 	return (0);
 }
 
@@ -29,6 +32,14 @@ void	skipstr(char *line, char quote, int *count, int *i)
 	else
 		printerror();
 }
+
+// void	skipspace(char *line, char space, int *count, int *i)
+// {
+// 	(*i)++;
+// 	while (line[*i] == space && line[*i] != '\0')
+// 		(*i)++;
+	
+// }
 
 int		counttoken(char	*line, t_cmd *cmd)
 {
@@ -49,10 +60,11 @@ int		counttoken(char	*line, t_cmd *cmd)
 			space = 1;
 		else if (line[i] > 32 && space == 1)
 		{
-			len = i;
-			while (line[len] > 32)
+			len = 0;
+			while (line[len + i] > 32)
 				len++;
-			filllst(cmd->tokens, line, i, len);
+			filllst(&(cmd->tokens), line, i, len);
+			i += len - 1;
 			space = 0;
 			count++;
 		}

@@ -10,9 +10,8 @@
 
 typedef struct s_token
 {
-	char			*token;
+	char			*str;
 	struct s_token	*next;
-	struct s_token	*prev;
 }	t_token;
 
 typedef struct s_cmd
@@ -25,7 +24,7 @@ typedef struct s_cmd
 // void	gettokens(char *line, t_cmd *cmd);
 int		counttoken(char *line, t_cmd *cmd);
 void	printerror(void);
-void	filllst(t_token *lst, char *str, int	i, int len);
+void	filllst(t_token **lst, char *str, int	i, int len);
 void	addnewlst(t_token *lst);
 
 # endif

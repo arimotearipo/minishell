@@ -1,18 +1,22 @@
 #include "minishell.h"
 
-void	filllst(t_token *lst, char *str, int	i, int len)
+void	filllst(t_token **lst, char *str, int	i, int len)
 {
-	addnewlst(lst);
-	lst->token = ft_substr(str, i, len);
-}
+	t_token	*tokens;
+	t_token	*last;
 
-void	addnewlst(t_token *lst)
-{
-	t_token	*token;
-
-	token = malloc(sizeof(t_token));
-	lst->next = token;
-	// lst->next->prev = lst;
-	// lst->next->next = NULL;
-	lst = lst->next;
+	last = *lst;
+	tokens = malloc(sizeof(t_token));
+	tokens->str = ft_substr(str, i, len);
+	if (last == NULL)
+	{
+		*lst = tokens;
+		return ;
+	}		
+	else
+	{
+		while (last->next)
+			last = last->next; // Move current pointer to next list
+		last->next = tokens;
+	}
 }
