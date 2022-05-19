@@ -5,6 +5,8 @@ void	filllst(t_token **lst, char *str, int	i, int len)
 	t_token	*tokens;
 	t_token	*last;
 
+	if (len < 0)
+		return ;
 	last = *lst;
 	tokens = malloc(sizeof(t_token));
 	tokens->str = ft_substr(str, i, len);

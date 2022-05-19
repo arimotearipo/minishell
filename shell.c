@@ -3,11 +3,16 @@
 int	main(void)
 {
 	t_cmd	cmd;
-	char 	*line;
+	char	*line;
 
-	line = "echo hello world";
-
-	counttoken(line, &cmd);
+	line = "    hello world       testa \"hah   aa\"   ";
+	// line = "'hello world'";
+	collecttoken(line, &cmd);
+	while (cmd.tokens != NULL)
+	{
+		printf("%s\n", cmd.tokens->str);
+		cmd.tokens = cmd.tokens->next;
+	}
 	// while (1)
 	// {
 	// 	line = readline("minishell% ");
@@ -19,71 +24,57 @@ int	main(void)
 	return (0);
 }
 
-void	skipstr(char *line, char quote, int *count, int *i)
+int	gettokenlen(char *line, char c, int *i)
 {
-	(*i)++;
-	while (line[*i] != quote && line[*i] != '\0')
-		*i += 1;
-	if (line[*i] == quote)
+	int	len;
+
+	len = 0;
+	if (c == '\'' || c == '"')
 	{
-		*count += 1;
 		(*i)++;
+		len = 2;
 	}
-	else
-		printerror();
+	while (line[*i] != c && line[*i] != '\0')
+	{
+		*i += 1;
+		len++;
+	}
+	if (c == '\'' || c == '"')
+	{
+		if (line[*i] == '\'' || line[*i] == '"')
+			(*i)++;
+		else
+		{
+			printerror();
+			return (-1);
+		}
+	}
+	return (len);
 }
 
-// void	skipspace(char *line, char space, int *count, int *i)
-// {
-// 	(*i)++;
-// 	while (line[*i] == space && line[*i] != '\0')
-// 		(*i)++;
-	
-// }
-
-int		counttoken(char	*line, t_cmd *cmd)
+void		collecttoken(char	*line, t_cmd *cmd)
 {
-	int		count;
 	int		i;
-	int		space;
 	int		len;
+	int		start;
 
-	count = 0;
 	i = 0;
-	space = 1;
-	len = 0;
+	start = 0;
 	while (line[i] != '\0')
 	{
+		if (line[i] <= 32)
+			i++;
 		if (line[i] == '"' || line[i] == '\'')
-			skipstr(line, line[i], &count, &i);
-		if (line[i] <= 32 && space == 0)
-			space = 1;
-		else if (line[i] > 32 && space == 1)
 		{
-			len = 0;
-			while (line[len + i] > 32)
-				len++;
-			filllst(&(cmd->tokens), line, i, len);
-			i += len - 1;
-			space = 0;
-			count++;
+			start = i;
+			len = gettokenlen(line, line[i], &i);
+			filllst(&(cmd->tokens), line, start, len);
 		}
-		i++;
+		if (line[i] > 32 )
+		{
+			start = i;
+			len = gettokenlen(line, ' ', &i);
+			filllst(&(cmd->tokens), line, start, len);
+		}
 	}
-	return (count);
 }
-
-// void	gettokens(char *line, t_cmd *cmd)
-// {
-// 	int	count;
-// 	int	i;
-
-// 	count = counttoken(line, cmd);
-// 	cmd->tokens = malloc(sizeof(char *) * count + 1);
-// 	cmd->tokens[count] = NULL;
-// 	i = 0;
-// 	while (cmd->tokens[i] != NULL)
-// 	{
-// 		i++;
-// 	}
-// }
