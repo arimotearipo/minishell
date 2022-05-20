@@ -8,9 +8,17 @@
 # include <stdlib.h>
 # include "libft.h"
 
+# define COMMAND 1
+# define ARG 2
+# define INPUT 3
+# define APPEND 4
+# define PIPE 5
+# define LASTARG 6
+
 typedef struct s_token
 {
 	char			*str;
+	int				type;
 	struct s_token	*next;
 }	t_token;
 
@@ -26,5 +34,6 @@ void	printerror(t_cmd *cmd);
 void	filllst(t_cmd *cmd, char *str, int i, int len);
 void	addnewlst(t_token *lst);
 void	clearmemory(t_cmd *cmd);
+void	showlist(t_cmd *cmd);
 
 #endif

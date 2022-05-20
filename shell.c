@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/20 12:24:36 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:37:19 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	main(int ac, char **av)
 {
 	t_cmd	cmd;
-	t_token	*first;
 	char	*line;
 
 	(void)av;
@@ -25,17 +24,12 @@ int	main(int ac, char **av)
 		while (1)
 		{
 			line = readline("minishell>% ");
+			if (ft_strncmp(line, "exit", 4) == 0)
+				exit(0);
 			collecttoken(line, &cmd);
 			add_history(line);
-			first = cmd.tokens;
-			while (cmd.tokens != NULL)
-			{
-				printf("%s\n", cmd.tokens->str);
-				cmd.tokens = cmd.tokens->next;
-			}
-			cmd.tokens = first;
+			showlist(&cmd);
 			clearmemory(&cmd);
-			// break ;
 		}
 	}
 	// system("leaks minishell");

@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:35 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/20 11:30:11 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:35:00 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,17 @@ void	filllst(t_cmd *cmd, char *str, int i, int len)
 		last->next = tokens;
 		last->next->next = NULL;
 	}
+}
+
+void	showlist(t_cmd *cmd)
+{
+	t_token *first;
+
+	first = cmd->tokens;
+	while (cmd->tokens != NULL)
+	{
+		printf("%s\n", cmd->tokens->str);
+		cmd->tokens = cmd->tokens->next;
+	}
+	cmd->tokens = first;
 }
