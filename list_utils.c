@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:35 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/21 21:39:20 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/21 21:44:15 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	addlist(t_cmd *cmd, char *str, int i, int len)
 	t_token	*newlist;
 
 	newlist = createlist(str, i, len);
+	if (!newlist)
+		printerror(cmd);
 	lst = cmd->tokens;
 	if (lst == NULL)
 	{
@@ -82,13 +84,12 @@ void	addlist(t_cmd *cmd, char *str, int i, int len)
 
 void	showlist(t_cmd *cmd)
 {
-	t_token *first;
+	t_token *lst;
 
-	first = cmd->tokens;
-	while (cmd->tokens != NULL)
+	lst = cmd->tokens;
+	while (lst != NULL)
 	{
-		printf("prev addr: %p my addr: %p next addr: %p str: %s\n", cmd->tokens->prev, cmd->tokens, cmd->tokens->next, cmd->tokens->str);
-		cmd->tokens = cmd->tokens->next;
+		printf("prev addr: %p my addr: %p next addr: %p str: %s\n", lst->prev, lst, lst->next, lst->str);
+		lst = lst->next;
 	}
-	cmd->tokens = first;
 }
