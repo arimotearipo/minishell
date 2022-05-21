@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:35 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/21 21:44:15 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/21 21:53:33 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_token	*createlist(char *str, int i, int len)
 	return (newlist);
 }
 
-void	addlist(t_cmd *cmd, char *str, int i, int len)
+int	addlist(t_cmd *cmd, char *str, int i, int len)
 {
 	t_token	*lst;
 	t_token	*temp;		// for future purpose in case of adding a *prev pointer to each node
@@ -65,12 +65,12 @@ void	addlist(t_cmd *cmd, char *str, int i, int len)
 
 	newlist = createlist(str, i, len);
 	if (!newlist)
-		printerror(cmd);
+		return (EXIT_FAILURE);
 	lst = cmd->tokens;
 	if (lst == NULL)
 	{
 		cmd->tokens = newlist;
-		return ;
+		return (EXIT_SUCCESS);
 	}
 	while (lst->next != NULL)
 	{
@@ -80,6 +80,7 @@ void	addlist(t_cmd *cmd, char *str, int i, int len)
 	}
 	newlist->prev = lst;	// for future purpose in case of adding a *prev pointer to each node
 	lst->next = newlist;
+	return (EXIT_SUCCESS);
 }
 
 void	showlist(t_cmd *cmd)

@@ -30,10 +30,10 @@ typedef struct s_cmd
 	// struct	s_cmd 	*next;
 }	t_cmd;
 
-void	collecttoken(char *line, t_cmd *cmd);
+int		collecttoken(char *line, t_cmd *cmd);
 void	printerror(t_cmd *cmd);
 void	filllst(t_cmd *cmd, char *str, int i, int len);
-void	addlist(t_cmd *cmd, char *str, int i, int len); // Maybe to replace filllst
+int		addlist(t_cmd *cmd, char *str, int i, int len); // Maybe to replace filllst
 void	addnewlst(t_token *lst);
 void	clearmemory(t_cmd *cmd);
 void	showlist(t_cmd *cmd);

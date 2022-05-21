@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/21 21:30:49 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/21 21:54:16 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	main(int ac, char **av)
 			line = readline("minishell>% ");
 			if (ft_strncmp(line, "exit", 4) == 0)
 				exit(0);
-			collecttoken(line, &cmd);
+			if (collecttoken(line, &cmd) == EXIT_FAILURE)
+				continue;
 			add_history(line);
 			showlist(&cmd);
 			clearmemory(&cmd);
@@ -87,7 +88,7 @@ int	getredlen(char *line, char c, int *i)
 	return (len);
 }
 
-void	collecttoken(char	*line, t_cmd *cmd)
+int	collecttoken(char *line, t_cmd *cmd)
 {
 	int		i;
 	int		len;
@@ -110,6 +111,8 @@ void	collecttoken(char	*line, t_cmd *cmd)
 		else if (line[i] > 32)
 			len = gettokenlen(line, &i);
 		// filllst(cmd, line, start, len);
-		addlist(cmd, line, start, len);
+		if (addlist(cmd, line, start, len) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 	}
+	return (EXIT_SUCCESS);
 }
