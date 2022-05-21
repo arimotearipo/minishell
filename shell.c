@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/20 17:37:19 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/21 21:30:49 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	collecttoken(char	*line, t_cmd *cmd)
 			len = getredlen(line, line[i], &i);
 		else if (line[i] > 32)
 			len = gettokenlen(line, &i);
-		filllst(cmd, line, start, len);
+		// filllst(cmd, line, start, len);
+		addlist(cmd, line, start, len);
 	}
 }

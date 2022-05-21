@@ -6,12 +6,13 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:35 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/20 17:35:00 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/21 21:39:20 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
 void	filllst(t_cmd *cmd, char *str, int i, int len)
 {
 	t_token **lst;
@@ -40,6 +41,44 @@ void	filllst(t_cmd *cmd, char *str, int i, int len)
 		last->next->next = NULL;
 	}
 }
+*/
+
+t_token	*createlist(char *str, int i, int len)
+{
+	t_token	*newlist;
+
+	if (!str || i < 0 || len < 0)
+		return (NULL);
+	newlist = malloc(sizeof(t_token));
+	newlist->str = ft_substr(str, i, len);
+	newlist->next = NULL;
+	newlist->prev = NULL;
+	newlist->type = COMMAND;
+	return (newlist);
+}
+
+void	addlist(t_cmd *cmd, char *str, int i, int len)
+{
+	t_token	*lst;
+	t_token	*temp;		// for future purpose in case of adding a *prev pointer to each node
+	t_token	*newlist;
+
+	newlist = createlist(str, i, len);
+	lst = cmd->tokens;
+	if (lst == NULL)
+	{
+		cmd->tokens = newlist;
+		return ;
+	}
+	while (lst->next != NULL)
+	{
+		temp = lst;		// for future purpose in case of adding a *prev pointer to each node
+		lst = lst->next;
+		lst->prev = temp; //for future purpose in case of adding a *prev pointer to each node
+	}
+	newlist->prev = lst;	// for future purpose in case of adding a *prev pointer to each node
+	lst->next = newlist;
+}
 
 void	showlist(t_cmd *cmd)
 {
@@ -48,7 +87,7 @@ void	showlist(t_cmd *cmd)
 	first = cmd->tokens;
 	while (cmd->tokens != NULL)
 	{
-		printf("%s\n", cmd->tokens->str);
+		printf("prev addr: %p my addr: %p next addr: %p str: %s\n", cmd->tokens->prev, cmd->tokens, cmd->tokens->next, cmd->tokens->str);
 		cmd->tokens = cmd->tokens->next;
 	}
 	cmd->tokens = first;

@@ -20,6 +20,7 @@ typedef struct s_token
 	char			*str;
 	int				type;
 	struct s_token	*next;
+	struct s_token	*prev;
 }	t_token;
 
 typedef struct s_cmd
@@ -32,6 +33,7 @@ typedef struct s_cmd
 void	collecttoken(char *line, t_cmd *cmd);
 void	printerror(t_cmd *cmd);
 void	filllst(t_cmd *cmd, char *str, int i, int len);
+void	addlist(t_cmd *cmd, char *str, int i, int len); // Maybe to replace filllst
 void	addnewlst(t_token *lst);
 void	clearmemory(t_cmd *cmd);
 void	showlist(t_cmd *cmd);
