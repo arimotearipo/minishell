@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:25:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/20 12:26:20 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/22 21:16:16 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,54 @@
 // 	}
 // }
 
-void	clearmemory(t_cmd *cmd)
+void	cleartokenmemory(t_token *lst)
 {
-	t_token *temp;
-	t_token *lst;
-
-	lst = cmd->tokens;
-	while(lst)
+	while (lst != NULL)
 	{
-		temp = lst->next;
 		free(lst->str);
+		lst->str = NULL;
+		lst = lst->next;
+		if (lst != NULL && lst->prev != NULL)
+		{
+			free(lst->prev);
+			lst->prev = NULL;
+		}
+	}
+}
+
+void	clearmemory(t_cmdgroup *lst)
+{
+	t_cmdgroup	*temp;
+
+	while (lst != NULL)
+	{
+		cleartokenmemory(lst->tokens);
+		temp = lst->next;
 		free(lst);
+		lst = NULL;
 		lst = temp;
 	}
-	cmd->tokens = NULL;
 }
+
+// void	clearmemory(t_cmdgroup *cmd)
+// {
+// 	t_cmdgroup	*cmdtemp;
+// 	t_cmdgroup 	*cmdlst;
+// 	t_token		*tokenlst;
+
+// 	cmdlst = cmd;
+// 	while(cmdlst != NULL)
+// 	{
+// 		while (cmdlst->tokens != NULL)
+// 		{
+// 			tokenlst = cmdlst->tokens;
+// 			free(cmdlst->tokens->str);
+// 			cmdlst->tokens = cmdlst->tokens->next;
+// 			free(tokenlst);
+// 		}
+// 		cmdtemp = cmdlst;
+// 		cmdlst = cmdlst->next;
+// 		free(cmdtemp);
+// 	}
+// 	cmd->tokens = NULL;
+// }

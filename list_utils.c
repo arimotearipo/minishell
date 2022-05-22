@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:35 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/21 21:53:33 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/22 21:07:02 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,32 @@ t_token	*createlist(char *str, int i, int len)
 	newlist->str = ft_substr(str, i, len);
 	newlist->next = NULL;
 	newlist->prev = NULL;
-	newlist->type = COMMAND;
+	// newlist->type = identifytype(str);
 	return (newlist);
 }
 
-int	addlist(t_cmd *cmd, char *str, int i, int len)
+t_cmdgroup	*creategroup(int count)
+{
+	t_cmdgroup	*newgroup;
+	t_cmdgroup	*tmp;
+	t_cmdgroup	*first;
+
+	newgroup = malloc(sizeof(t_cmdgroup));
+	newgroup->tokens = NULL;
+	first = newgroup;
+	tmp = newgroup;
+	while(count--)
+	{
+		newgroup = malloc(sizeof(t_cmdgroup));
+		newgroup->tokens = NULL;
+		tmp->next = newgroup;
+		tmp = tmp->next;
+	}
+	newgroup->next = NULL;
+	return (first);
+}
+
+int	addlist(t_cmdgroup *cmd, char *str, int i, int len)
 {
 	t_token	*lst;
 	t_token	*temp;		// for future purpose in case of adding a *prev pointer to each node
@@ -83,14 +104,26 @@ int	addlist(t_cmd *cmd, char *str, int i, int len)
 	return (EXIT_SUCCESS);
 }
 
-void	showlist(t_cmd *cmd)
+void	showlist(t_cmdgroup *cmd)
 {
-	t_token *lst;
+	t_token		*firsttoken;
+	t_cmdgroup	*firstcmd;
+	int			i;
 
-	lst = cmd->tokens;
-	while (lst != NULL)
+	firstcmd = cmd;
+	i = 0;
+	while (cmd != NULL)
 	{
-		printf("prev addr: %p my addr: %p next addr: %p str: %s\n", lst->prev, lst, lst->next, lst->str);
-		lst = lst->next;
+		printf("%d\n", i);
+		firsttoken = cmd->tokens;
+		while (cmd->tokens != NULL)
+		{
+			printf("%s\n", cmd->tokens->str);
+			cmd->tokens = cmd->tokens->next;
+		}
+		cmd->tokens = firsttoken;
+		cmd = cmd->next;
+		i++;
 	}
+	cmd = firstcmd;
 }
