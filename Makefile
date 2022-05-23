@@ -16,7 +16,7 @@ all 	:	$(NAME)
 
 $(NAME) :	$(OBJS)
 			make -C libft
-			$(CC) $(FLAGS) $(INCLUDE) $(LINK) $(OBJS) -o $(NAME)
+			$(CC) $(FLAGS) $(OBJS) $(INCLUDE) $(LINK) -o $(NAME)
 
 %.o		: 	%.c
 			$(CC) $(FLAGS) $(INCLUDE) -c $<
