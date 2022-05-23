@@ -6,42 +6,11 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:35 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/22 21:07:02 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/23 14:55:31 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-void	filllst(t_cmd *cmd, char *str, int i, int len)
-{
-	t_token **lst;
-	t_token	*tokens;
-	t_token	*last;
-
-	lst = &(cmd->tokens);
-	if (len < 0)
-		printerror(cmd);
-	last = *lst;
-	tokens = malloc(sizeof(t_token));
-	tokens->str = ft_substr(str, i, len);
-	if (!tokens || !tokens->str)
-		printerror(cmd);
-	if (last == NULL)
-	{
-		*lst = tokens;
-		(*lst)->next = NULL;
-		return ;
-	}		
-	else
-	{
-		while (last->next)
-			last = last->next; // Move current pointer to next list
-		last->next = tokens;
-		last->next->next = NULL;
-	}
-}
-*/
 
 t_token	*createlist(char *str, int i, int len)
 {
@@ -57,25 +26,21 @@ t_token	*createlist(char *str, int i, int len)
 	return (newlist);
 }
 
-t_cmdgroup	*creategroup(int count)
+void	creategroup(t_cmdgroup **cmdgroup, int count)
 {
-	t_cmdgroup	*newgroup;
-	t_cmdgroup	*tmp;
-	t_cmdgroup	*first;
+	t_cmdgroup	*lst;
+	t_cmdgroup	*new;
 
-	newgroup = malloc(sizeof(t_cmdgroup));
-	newgroup->tokens = NULL;
-	first = newgroup;
-	tmp = newgroup;
-	while(count--)
+	*cmdgroup = malloc(sizeof(t_cmdgroup));
+	(*cmdgroup)->tokens = NULL;
+	lst = *cmdgroup; // assign address of first linked list of commandgroup to lst
+	while(count-- > 1)
 	{
-		newgroup = malloc(sizeof(t_cmdgroup));
-		newgroup->tokens = NULL;
-		tmp->next = newgroup;
-		tmp = tmp->next;
+		new = malloc(sizeof(t_cmdgroup));
+		new->tokens = NULL;
+		lst->next = new;
+		lst = lst->next;
 	}
-	newgroup->next = NULL;
-	return (first);
 }
 
 int	addlist(t_cmdgroup *cmd, char *str, int i, int len)

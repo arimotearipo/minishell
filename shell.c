@@ -3,56 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/23 11:12:05 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/05/23 14:50:28 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av)
+int	countcmdgroups(char *line)
 {
-	t_cmdgroup	*cmd;
-	// char		*line;
-	char		*line = "hello | world";
-
-	(void)av;
-	// cmd.tokens = NULL;
-	if (ac == 1)
-	{
-		while (1)
-		{
-			// line = readline("minishell>% ");
-			if (ft_strncmp(line, "exit", 4) == 0)
-				exit(0);
-			cmd = collectcmdgroup(line);
-			collecttoken(line, cmd);
-			add_history(line);
-			showlist(cmd);
-			clearmemory(cmd);
-			break ;
-		}
-	}
-	// system("leaks minishell");
-	return (0);
-}
-
-t_cmdgroup	*collectcmdgroup(char *line)
-{
-	int			i;
-	int			count;
+	int		count;
+	int		openquote;
+	char	quotetype;
+	int		i;
 
 	i = 0;
-	count = 0;
+	openquote = 0;
+	count = 1;
 	while (line[i] != '\0')
 	{
-		if (line[i] == '|')
+		if ((line[i] == '\'' || line[i] == '"') && openquote == 0)
+		{
+			openquote = 1;
+			quotetype = line[i];
+		}
+		else if (line[i] == quotetype)
+			openquote = 0;
+		if (line[i] == '|' && openquote == 0)
 			count++;
 		i++;
 	}
-	return (creategroup(count));
+	return (count);
 }
 
 int	getquotedlen(char *line, char c, int *i)
@@ -134,15 +117,42 @@ int	collecttoken(char *line, t_cmdgroup *cmd)
 			i++;
 			continue ;
 		}
-		len = getlen(line, &i);
 		if (line[i] == '|')
 		{
 			cmd = cmd->next;
 			i++;
 			continue ;
 		}
+		len = getlen(line, &i);
 		if (addlist(cmd, line, start, len) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
+}
+
+int	main(int ac, char **av)
+{
+	t_shell		shell;
+	char		*line;
+	// char		*line = "abc def gh ij | klm no| q";
+
+	(void)av;
+	if (ac != 1)
+		return (1);
+	while (1)
+	{
+		line = readline("minishell>% ");
+		if (ft_strncmp(line, "exit", 4) == 0)
+			exit(0);
+		shell.cmdgrpcount = countcmdgroups(line);
+		creategroup(&(shell.cmdgroup), shell.cmdgrpcount);
+		collecttoken(line, shell.cmdgroup);
+		add_history(line);
+		showlist(shell.cmdgroup);
+		clearmemory(shell.cmdgroup);
+		free(line);
+		break ;
+	}
+	system("leaks minishell");
+	return (0);
 }

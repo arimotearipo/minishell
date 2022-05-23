@@ -35,10 +35,16 @@ typedef struct s_token
 typedef struct s_cmdgroup
 {
 	t_token				*tokens;
-	int					cmdcount;
+	int					cmdwordcount;
 	// int				tkn_count;
 	struct	s_cmdgroup  *next;
 }	t_cmdgroup;
+
+typedef struct s_shell
+{
+	t_cmdgroup	*cmdgroup;
+	int			cmdgrpcount;
+}	t_shell;
 
 int			collecttoken(char *line, t_cmdgroup *cmd);
 void		printerror(t_cmdgroup *cmd);
@@ -47,7 +53,6 @@ int			addlist(t_cmdgroup *cmd, char *str, int i, int len); // Maybe to replace f
 void		addnewlst(t_token *lst);
 void		clearmemory(t_cmdgroup *lst);
 void		showlist(t_cmdgroup *cmd);
-t_cmdgroup	*creategroup(int count);
-t_cmdgroup	*collectcmdgroup(char *line);
+void		creategroup(t_cmdgroup **cmdgroup, int count);
 
 #endif
