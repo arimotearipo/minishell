@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:35 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/23 14:55:31 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:08:34 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@ void	creategroup(t_cmdgroup **cmdgroup, int count)
 
 	*cmdgroup = malloc(sizeof(t_cmdgroup));
 	(*cmdgroup)->tokens = NULL;
+	(*cmdgroup)->next = NULL;
 	lst = *cmdgroup; // assign address of first linked list of commandgroup to lst
 	while(count-- > 1)
 	{
 		new = malloc(sizeof(t_cmdgroup));
 		new->tokens = NULL;
 		lst->next = new;
+		lst->next->next = NULL;
 		lst = lst->next;
 	}
 }

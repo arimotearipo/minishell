@@ -17,13 +17,6 @@
 # define PIPE 7 // Take output from left of pipe and pass as argument to command on right of pipe
 # define LASTARG 8 //
 
-// typedef struct s_cmdgrp
-// {
-// 	char	*cmd;
-// 	char	*arg;
-// 	char	*flag;
-// }	t_cmdgrp;
-
 typedef struct s_token
 {
 	char			*str;
@@ -54,5 +47,9 @@ void		addnewlst(t_token *lst);
 void		clearmemory(t_cmdgroup *lst);
 void		showlist(t_cmdgroup *cmd);
 void		creategroup(t_cmdgroup **cmdgroup, int count);
+int			gettokenlen(char *line, int *i);
+int			getredlen(char *line, char c, int *i);
+int			getlen(char *line, int *i);
+int			getquotedlen(char *line, char c, int *i);
 
 #endif

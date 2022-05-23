@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+
+
 int	identifytype(char *str, int isfirst)
 {
 	if (str[0] == '<' && str[1] == '<')

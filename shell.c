@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/23 14:50:28 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:21:17 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,69 +38,6 @@ int	countcmdgroups(char *line)
 	return (count);
 }
 
-int	getquotedlen(char *line, char c, int *i)
-{
-	int	len;
-
-	len = 2;
-	(*i)++;
-	while (line[*i] != c && line[*i] != '\0')
-	{
-		*i += 1;
-		len++;
-	}
-	if (line[*i] == '\'' || line[*i] == '"')
-		(*i)++;
-	else
-		return (-1);
-	return (len);
-}
-
-int	gettokenlen(char *line, int *i)
-{
-	int	len;
-
-	len = 0;
-	while (line[*i] != ' ' && line[*i] != '"'
-		&& line[*i] != '\'' && line[*i] != '\0'
-		&& line[*i] != '<' && line[*i] != '>'
-		&& line[*i] != '|')
-	{
-		(*i)++;
-		len++;
-	}
-	return (len);
-}
-
-int	getredlen(char *line, char c, int *i)
-{
-	int	len;
-
-	len = 0;
-	while (line[*i] == c)
-	{
-		(*i)++;
-		len++;
-	}
-	if ((c == '<' || c == '>') && len > 2)
-		return (-1);
-	return (len);
-}
-
-int	getlen(char *line, int *i)
-{
-	int	len;
-
-	len = 0;
-	if (line[*i] == '"' || line[*i] == '\'')
-		len = getquotedlen(line, line[*i], i);
-	else if (line[*i] == '<' || line[*i] == '>')
-		len = getredlen(line, line[*i], i);
-	else if (line[*i] > 32)
-		len = gettokenlen(line, i);
-	return (len);
-}
-
 int	collecttoken(char *line, t_cmdgroup *cmd)
 {
 	int		i;
@@ -130,29 +67,34 @@ int	collecttoken(char *line, t_cmdgroup *cmd)
 	return (EXIT_SUCCESS);
 }
 
+void	lexer(char *line, t_shell *shell)
+{
+	shell->cmdgrpcount = countcmdgroups(line);
+	creategroup(&(shell->cmdgroup), shell->cmdgrpcount);
+	collecttoken(line, shell->cmdgroup);
+}
+
 int	main(int ac, char **av)
 {
 	t_shell		shell;
 	char		*line;
-	// char		*line = "abc def gh ij | klm no| q";
+	// char		*line = "echo hello | world";
 
 	(void)av;
 	if (ac != 1)
 		return (1);
 	while (1)
 	{
-		line = readline("minishell>% ");
+		line = readline("minishell>% "); // Jangan lupa comment free(line)
 		if (ft_strncmp(line, "exit", 4) == 0)
 			exit(0);
-		shell.cmdgrpcount = countcmdgroups(line);
-		creategroup(&(shell.cmdgroup), shell.cmdgrpcount);
-		collecttoken(line, shell.cmdgroup);
 		add_history(line);
+		lexer(line, &shell);
 		showlist(shell.cmdgroup);
 		clearmemory(shell.cmdgroup);
-		free(line);
+		// free(line);
 		break ;
 	}
-	system("leaks minishell");
+	// system("leaks minishell");
 	return (0);
 }
