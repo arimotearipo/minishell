@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeall.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:25:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/22 21:16:16 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/23 11:09:45 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,42 @@
 // 	}
 // }
 
-void	cleartokenmemory(t_token *lst)
+void	ft_freelst(t_token **list)
 {
-	while (lst != NULL)
+	t_token	*l;
+	t_token	*next;
+
+	l = *list;
+	while (l)
 	{
-		free(lst->str);
-		lst->str = NULL;
-		lst = lst->next;
-		if (lst != NULL && lst->prev != NULL)
-		{
-			free(lst->prev);
-			lst->prev = NULL;
-		}
+		next = l->next;
+		free(l->str);
+		free(l);
+		l = next;
 	}
+	*list = NULL;
 }
+
+// void	clearmemory(t_cmdgroup *lst)
+// {
+// 	ft_freelst(&(lst->tokens));
+// 	ft_freelst(&(lst));
+// }
+
+// void	cleartokenmemory(t_token **lst)
+// {
+// 	while (*lst != NULL)
+// 	{
+// 		free((*lst)->str);
+// 		(*lst)->str = NULL;
+// 		(*lst) = (*lst)->next;
+// 		if ((*lst) != NULL && (*lst)->prev != NULL)
+// 		{
+// 			free((*lst)->prev);
+// 			(*lst)->prev = NULL;
+// 		}
+// 	}
+// }
 
 void	clearmemory(t_cmdgroup *lst)
 {
@@ -47,7 +69,7 @@ void	clearmemory(t_cmdgroup *lst)
 
 	while (lst != NULL)
 	{
-		cleartokenmemory(lst->tokens);
+		ft_freelst(&(lst->tokens));
 		temp = lst->next;
 		free(lst);
 		lst = NULL;
