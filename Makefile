@@ -1,4 +1,4 @@
-SRCS = shell.c error.c list_utils.c freeall.c tokenlength.c \
+SRCS = shell.c error.c list_utils.c free_utils.c tokenlength.c parser.c \
 
 OBJS = $(SRCS:.c=.o)
 

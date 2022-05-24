@@ -1,29 +1,105 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/24 14:28:06 by wwan-taj          #+#    #+#             */
+/*   Updated: 2022/05/24 15:31:03 by wwan-taj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-
-
-int	identifytype(char *str, int isfirst)
+int	isbuiltin(char *str)
 {
-	if (str[0] == '<' && str[1] == '<')
-		return (RDINPUT);
-	if (str[0] == '<')
-		return (INPUT);
-	if (str[0] == '>' && str[1] == '>')
-		return (APPEND);
-	if (str[0] == '>')
-		return (OUTPUT);
-	if (str[0] == '|')
-		return (PIPE);
-	if (iscommand == 1)
-	{	
-		cmd->cmdcount += 1;
-		return (COMMAND);
-	}
-	else
-		return (ARG);
+	if (ft_strcmp(str, "echo") == 0)
+		return (1);
+	else if (ft_strcmp(str, "cd") == 0)
+		return (1);
+	else if (ft_strcmp(str, "pwd") == 0)
+		return (1);
+	else if (ft_strcmp(str, "export") == 0)
+		return (1);
+	else if (ft_strcmp(str, "unset") == 0)
+		return (1);
+	else if (ft_strcmp(str, "env") == 0)
+		return (1);
+	else if (ft_strcmp(str, "exit") == 0)
+		return (1);
+	return (0);
 }
 
 int	iscommand(char *str)
 {
+	char			**binpath;
+	DIR 			*dir;
+	struct dirent 	*entity;
+	int				i;
 	
+	i = 0;
+	binpath = ft_split(getenv("PATH"), ':');
+	while (binpath[i] != NULL)
+	{
+		dir = opendir(binpath[i++]);
+		entity = readdir(dir);
+		while (entity != NULL)
+		{
+			if (ft_strcmp(str, entity->d_name) == 0)
+			{	
+				free2d(binpath);
+				return (1);
+			}
+			entity = readdir(dir);
+		}
+	}
+	free2d(binpath);
+	return (0);
+}
+
+void	assigntype(t_token *token)
+{
+	if (iscommand(token->str) || isbuiltin(token->str))
+		token->type = COMMAND;
+	else if (ft_strcmp("<<", token->str) == 0)
+		token->type = RDINPUT;
+	else if (ft_strcmp("<", token->str) == 0)
+		token->type = INPUT;
+	else if (ft_strcmp(">", token->str) == 0)
+		token->type = OUTPUT;
+	else if (ft_strcmp(">>", token->str) == 0)
+		token->type = APPEND;
+	else if (ft_strcmp("|", token->str) == 0)
+		token->type = PIPE;
+	else
+		token->type = ARG;
+}
+
+void	loopandassigntype(t_cmdgroup *cmd)
+{
+	t_token		*firsttoken;
+	t_cmdgroup	*firstcmd;
+	int			i;
+
+	firstcmd = cmd;
+	i = 0;
+	while (cmd != NULL)
+	{
+		firsttoken = cmd->tokens;
+		while (cmd->tokens != NULL)
+		{
+			assigntype(cmd->tokens);
+			cmd->tokens = cmd->tokens->next;
+		}
+		cmd->tokens = firsttoken;
+		cmd = cmd->next;
+		i++;
+	}
+	cmd = firstcmd;
+}
+
+void	parser(t_shell *shell)
+{
+	loopandassigntype(shell->cmdgroup);
 }

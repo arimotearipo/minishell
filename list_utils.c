@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:35 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/23 17:08:34 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/24 14:21:40 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	showlist(t_cmdgroup *cmd)
 		firsttoken = cmd->tokens;
 		while (cmd->tokens != NULL)
 		{
-			printf("%s\n", cmd->tokens->str);
+			printf("str: %s\t type: %d\n", cmd->tokens->str, cmd->tokens->type);
 			cmd->tokens = cmd->tokens->next;
 		}
 		cmd->tokens = firsttoken;
@@ -94,3 +94,28 @@ void	showlist(t_cmdgroup *cmd)
 	}
 	cmd = firstcmd;
 }
+
+
+/* How to loop through the 2D linked list
+void	showlist(t_cmdgroup *cmd)
+{
+	t_token		*firsttoken;
+	t_cmdgroup	*firstcmd;
+	int			i;
+
+	firstcmd = cmd;
+	i = 0;
+	while (cmd != NULL)
+	{
+		firsttoken = cmd->tokens;
+		while (cmd->tokens != NULL)
+		{
+			cmd->tokens = cmd->tokens->next;
+		}
+		cmd->tokens = firsttoken;
+		cmd = cmd->next;
+		i++;
+	}
+	cmd = firstcmd;
+}
+*/

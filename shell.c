@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/24 11:28:32 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/24 15:21:45 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	main(int ac, char **av)
 {
 	t_shell		shell;
 	char		*line;
-	// char		*line = "echo hello | world";
+	// char		*line = "a";
 
 	(void)av;
 	if (ac != 1)
@@ -90,11 +90,12 @@ int	main(int ac, char **av)
 			exit(0);
 		add_history(line);
 		lexer(line, &shell);
+		parser(&shell);
 		showlist(shell.cmdgroup);
 		clearmemory(shell.cmdgroup);
 		free(line);
-		// break ;
+		break ;
 	}
-	// system("leaks minishell");
+	system("leaks minishell");
 	return (0);
 }
