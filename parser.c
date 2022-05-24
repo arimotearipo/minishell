@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:28:06 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/24 17:14:19 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/24 17:42:16 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void	parser(t_shell *shell)
 	 * Errorchecking: Need to check for empty command group.
 	 * Errorchecking: Need to check for consecutive redirection (more than 2)
 	 * Errorchecking: Need to deal with "<>" "< >" "><" "> <"" ">>>" "<<<"
+	 * Echo needs to take in spaces
 	 */
 	// arrangetokens(shell->cmdgroup);
 }
