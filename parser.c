@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:28:06 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/24 15:31:03 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:45:17 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	isbuiltin(char *str)
 int	iscommand(char *str)
 {
 	char			**binpath;
-	DIR 			*dir;
+	DIR				*dir;
 	struct dirent 	*entity;
 	int				i;
 	
@@ -48,19 +48,29 @@ int	iscommand(char *str)
 		{
 			if (ft_strcmp(str, entity->d_name) == 0)
 			{	
+				closedir(dir);
 				free2d(binpath);
 				return (1);
 			}
 			entity = readdir(dir);
 		}
+		closedir(dir);
 	}
 	free2d(binpath);
 	return (0);
 }
 
-void	assigntype(t_token *token)
+void	assigntype(t_token *token, int prevtype)
 {
-	if (iscommand(token->str) || isbuiltin(token->str))
+	if (prevtype == RDINPUT)
+		token->type = DELIM;
+	else if ((prevtype >= INPUT && prevtype <= APPEND)
+				|| prevtype == DELIM)
+		token->type = FD;
+	else if (ft_strcmp(".", token->str) == 0 
+				|| ft_strcmp("..", token->str) == 0)
+		token->type = ARG;
+	else if (iscommand(token->str) || isbuiltin(token->str))
 		token->type = COMMAND;
 	else if (ft_strcmp("<<", token->str) == 0)
 		token->type = RDINPUT;
@@ -81,15 +91,18 @@ void	loopandassigntype(t_cmdgroup *cmd)
 	t_token		*firsttoken;
 	t_cmdgroup	*firstcmd;
 	int			i;
+	int			previoustype;
 
 	firstcmd = cmd;
 	i = 0;
 	while (cmd != NULL)
 	{
+		previoustype = 0;
 		firsttoken = cmd->tokens;
 		while (cmd->tokens != NULL)
 		{
-			assigntype(cmd->tokens);
+			assigntype(cmd->tokens, previoustype);
+			previoustype = cmd->tokens->type;
 			cmd->tokens = cmd->tokens->next;
 		}
 		cmd->tokens = firsttoken;
@@ -99,7 +112,13 @@ void	loopandassigntype(t_cmdgroup *cmd)
 	cmd = firstcmd;
 }
 
+// void	arrangetokens(t_cmdgroup *cmdgroup)
+// {
+	
+// }
+
 void	parser(t_shell *shell)
 {
 	loopandassigntype(shell->cmdgroup);
+	// arrangetokens(shell->cmdgroup);
 }

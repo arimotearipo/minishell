@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/24 15:21:45 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:55:05 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,9 @@ int	main(int ac, char **av)
 {
 	t_shell		shell;
 	char		*line;
-	// char		*line = "a";
-
+	// char		*line = "echo | >> e asd | << delim file.txt argument";
+	// FORTESTING echo .. hello world "test" | asda >> <<  | cat -e < "123 ' > << | >>"
+	
 	(void)av;
 	if (ac != 1)
 		return (1);

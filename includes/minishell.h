@@ -1,6 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <readline/readline.h>
@@ -12,11 +13,13 @@
 
 # define COMMAND 1 // eg: echo, pwd, grep, awk, etc
 # define ARG 2 // inputs after commands. eg: "hello world"
-# define INPUT 3 // < redirection to left. Grab input from fd on the right and pass as argument to left
-# define OUTPUT 4 // > redirection to right. Redirect output from left to right which should be an fd
-# define APPEND 5 // >> double redirection. Take output from left and append to fd on the right
-# define RDINPUT 6 // << double redirection. Read input from user until EOF is met as pass as argument to programme on left
-# define PIPE 7 // | Take output from left of pipe and pass as argument to command on right of pipe
+# define FD	3 // Any argument that is a file descriptor
+# define INPUT 4 // < redirection to left. Grab input from fd on the right and pass as argument to left
+# define OUTPUT 5 // > redirection to right. Redirect output from left to right which should be an fd
+# define APPEND 6 // >> double redirection. Take output from left and append to fd on the right
+# define RDINPUT 7 // << double redirection. Read input from user until EOF is met as pass as argument to programme on left
+# define DELIM 8 // EOF which should come after <<
+# define PIPE 9 // | Take output from left of pipe and pass as argument to command on right of pipe
 
 typedef struct s_token
 {
@@ -31,6 +34,8 @@ typedef struct s_cmdgroup
 	t_token				*tokens;
 	int					cmdwordcount;
 	// int				tkn_count;
+	int					fdin;
+	int					fdout;
 	struct	s_cmdgroup  *next;
 }	t_cmdgroup;
 
