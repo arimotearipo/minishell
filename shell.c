@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/23 17:21:17 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/24 11:28:32 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ int	main(int ac, char **av)
 		lexer(line, &shell);
 		showlist(shell.cmdgroup);
 		clearmemory(shell.cmdgroup);
-		// free(line);
-		break ;
+		free(line);
+		// break ;
 	}
 	// system("leaks minishell");
 	return (0);
