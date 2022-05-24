@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/24 16:55:05 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/24 17:07:06 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,6 @@ int	main(int ac, char **av)
 		free(line);
 		break ;
 	}
-	system("leaks minishell");
+	// system("leaks minishell");
 	return (0);
 }

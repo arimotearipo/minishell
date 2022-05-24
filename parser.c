@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:28:06 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/24 16:45:17 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/24 17:14:19 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,11 @@ void	loopandassigntype(t_cmdgroup *cmd)
 void	parser(t_shell *shell)
 {
 	loopandassigntype(shell->cmdgroup);
+	/**
+	 * Errorchecking: Need to make sure that first token of a command group is of type COMMAND or INPUT/OUTPUT/APPEND/RDINPUT
+	 * Errorchecking: Need to check for empty command group.
+	 * Errorchecking: Need to check for consecutive redirection (more than 2)
+	 * Errorchecking: Need to deal with "<>" "< >" "><" "> <"" ">>>" "<<<"
+	 */
 	// arrangetokens(shell->cmdgroup);
 }
