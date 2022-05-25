@@ -3,31 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   tokenlength.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:02:09 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/23 15:05:35 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/25 13:49:20 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	getquotedlen(char *line, char c, int *i)
+int	getquotedlen(char *line, char c, int *i, int *len)
 {
-	int	len;
-
-	len = 2;
 	(*i)++;
 	while (line[*i] != c && line[*i] != '\0')
 	{
 		*i += 1;
-		len++;
+		(*len)++;
 	}
-	if (line[*i] == '\'' || line[*i] == '"')
+	if (line[*i] == c)
 		(*i)++;
 	else
 		return (-1);
-	return (len);
+	if (line[*i] == c)
+		getquotedlen(line, c, i, len);
+	return (*len);
 }
 
 int	gettokenlen(char *line, int *i)
@@ -67,7 +66,10 @@ int	getlen(char *line, int *i)
 
 	len = 0;
 	if (line[*i] == '"' || line[*i] == '\'')
-		len = getquotedlen(line, line[*i], i);
+	{
+		len = 2;
+		len = getquotedlen(line, line[*i], i, &len);
+	}
 	else if (line[*i] == '<' || line[*i] == '>')
 		len = getredlen(line, line[*i], i);
 	else if (line[*i] > 32)

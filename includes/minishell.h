@@ -56,7 +56,7 @@ void		creategroup(t_cmdgroup **cmdgroup, int count);
 int			gettokenlen(char *line, int *i);
 int			getredlen(char *line, char c, int *i);
 int			getlen(char *line, int *i);
-int			getquotedlen(char *line, char c, int *i);
+int			getquotedlen(char *line, char c, int *i, int *len);
 void		parser(t_shell *shell);
 void		free2d(char **arr);
 
