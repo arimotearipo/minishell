@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/25 17:50:51 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:27:07 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ void	lexer(char *line, t_shell *shell)
 int	main(int ac, char **av)
 {
 	t_shell		shell;
-	// char		*line;
-	char		*line = "a<<b'c'\"d\" | echo 'a'b>c makan\"hello\"world'lagi'\"dan\"next | echo 'one'\"two\"three|four";
+	char		*line;
+	// char		*line = "a<<b'c'\"d\" | echo 'a'b>c makan\"hello\"world'lagi'\"dan\"next | echo 'one'\"two\"three|four";
 	// char		*line = "echo \"hello\"\"world\" | echo one\"hello\"'world'\"hi\"'name | echo \"hello\"   \"world\" ";
 	// char		*line = "echo | >> e asd | << delim file.txt argument";
 	// char	*line = "echo .. hello world \"test\" | asda >> <<  | cat -e < \"123 ' > << | >>";
@@ -117,7 +117,7 @@ int	main(int ac, char **av)
 		return (1);
 	while (1)
 	{
-		// line = readline("minishell>% "); // Jangan lupa comment free(line)
+		line = readline("minishell>% "); // Jangan lupa comment free(line)
 		if (ft_strncmp(line, "exit", 4) == 0)
 			exit(0);
 		add_history(line);
@@ -125,8 +125,8 @@ int	main(int ac, char **av)
 		parser(&shell);
 		showlist(shell.cmdgroup);
 		clearmemory(shell.cmdgroup);
-		// free(line);
-		break ;
+		free(line);
+		// break ;
 	}
 	// system("leaks minishell");
 	return (0);
