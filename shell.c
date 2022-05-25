@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/24 17:07:06 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:50:51 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	collecttoken(char *line, t_cmdgroup *cmd)
 			i++;
 			continue ;
 		}
+		if (line[i] == '"' || line[i] == '\'')
+			start++;
 		len = getlen(line, &i);
 		if (addlist(cmd, line, start, len) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
@@ -74,19 +76,48 @@ void	lexer(char *line, t_shell *shell)
 	collecttoken(line, shell->cmdgroup);
 }
 
+// int	main(int ac, char **av)
+// {
+// 	t_shell		shell;
+// 	char		*line;
+// 	// char		*line = "echo | >> e asd | << delim file.txt argument";
+// 	// FORTESTING echo .. hello world "test" | asda >> <<  | cat -e < "123 ' > << | >>"
+	
+// 	(void)av;
+// 	if (ac != 1)
+// 		return (1);
+// 	while (1)
+// 	{
+// 		line = readline("minishell>% "); // Jangan lupa comment free(line)
+// 		if (ft_strncmp(line, "exit", 4) == 0)
+// 			exit(0);
+// 		add_history(line);
+// 		lexer(line, &shell);
+// 		parser(&shell);
+// 		showlist(shell.cmdgroup);
+// 		clearmemory(shell.cmdgroup);
+// 		free(line);
+// 		break ;
+// 	}
+// 	// system("leaks minishell");
+// 	return (0);
+// }
+
 int	main(int ac, char **av)
 {
 	t_shell		shell;
-	char		*line;
+	// char		*line;
+	char		*line = "a<<b'c'\"d\" | echo 'a'b>c makan\"hello\"world'lagi'\"dan\"next | echo 'one'\"two\"three|four";
+	// char		*line = "echo \"hello\"\"world\" | echo one\"hello\"'world'\"hi\"'name | echo \"hello\"   \"world\" ";
 	// char		*line = "echo | >> e asd | << delim file.txt argument";
-	// FORTESTING echo .. hello world "test" | asda >> <<  | cat -e < "123 ' > << | >>"
+	// char	*line = "echo .. hello world \"test\" | asda >> <<  | cat -e < \"123 ' > << | >>";
 	
 	(void)av;
 	if (ac != 1)
 		return (1);
 	while (1)
 	{
-		line = readline("minishell>% "); // Jangan lupa comment free(line)
+		// line = readline("minishell>% "); // Jangan lupa comment free(line)
 		if (ft_strncmp(line, "exit", 4) == 0)
 			exit(0);
 		add_history(line);
@@ -94,7 +125,7 @@ int	main(int ac, char **av)
 		parser(&shell);
 		showlist(shell.cmdgroup);
 		clearmemory(shell.cmdgroup);
-		free(line);
+		// free(line);
 		break ;
 	}
 	// system("leaks minishell");
