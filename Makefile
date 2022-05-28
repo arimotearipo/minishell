@@ -15,7 +15,7 @@ NAME = minishell
 all 	:	$(NAME)
 
 $(NAME) :	$(OBJS)
-			make -C libft
+			@make -C libft
 			$(CC) $(FLAGS) $(OBJS) $(INCLUDE) $(LINK) -o $(NAME)
 
 %.o		: 	%.c

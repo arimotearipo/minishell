@@ -25,6 +25,7 @@ typedef struct s_token
 {
 	char			*str;
 	int				type;
+	int				whitepsace;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -42,6 +43,7 @@ typedef struct s_cmdgroup
 typedef struct s_shell
 {
 	t_cmdgroup	*cmdgroup;
+	char		**sh_env;
 	int			cmdgrpcount;
 }	t_shell;
 

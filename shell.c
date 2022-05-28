@@ -6,11 +6,23 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/24 17:07:06 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:52:45 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	isecho(char *str)
+{
+	while (*str <= 32)
+		str++;
+	if (ft_strcmp("echo", str) != 0)
+		return (0);
+	str += 4;
+	if (*str <= 32)
+		return (1);
+	return (0);
+}
 
 int	countcmdgroups(char *line)
 {
@@ -74,7 +86,7 @@ void	lexer(char *line, t_shell *shell)
 	collecttoken(line, shell->cmdgroup);
 }
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **envp)
 {
 	t_shell		shell;
 	char		*line;
@@ -95,7 +107,7 @@ int	main(int ac, char **av)
 		showlist(shell.cmdgroup);
 		clearmemory(shell.cmdgroup);
 		free(line);
-		break ;
+		// break ;
 	}
 	// system("leaks minishell");
 	return (0);
