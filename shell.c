@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/25 15:52:45 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/28 14:16:51 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int	collecttoken(char *line, t_cmdgroup *cmd)
 			i++;
 			continue ;
 		}
+		if (line[i] == '"' || line[i] == '\'')
+			start++;
 		len = getlen(line, &i);
 		if (addlist(cmd, line, start, len) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
@@ -90,8 +92,10 @@ int	main(int ac, char **av, char **envp)
 {
 	t_shell		shell;
 	char		*line;
+	// char		*line = "a<<b'c'\"d\" | echo 'a'b>c makan\"hello\"world'lagi'\"dan\"next | echo 'one'\"two\"three|four";
+	// char		*line = "echo \"hello\"\"world\" | echo one\"hello\"'world'\"hi\"'name | echo \"hello\"   \"world\" ";
 	// char		*line = "echo | >> e asd | << delim file.txt argument";
-	// FORTESTING echo .. hello world "test" | asda >> <<  | cat -e < "123 ' > << | >>"
+	// char	*line = "echo .. hello world \"test\" | asda >> <<  | cat -e < \"123 ' > << | >>";
 	
 	(void)av;
 	if (ac != 1)

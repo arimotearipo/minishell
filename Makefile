@@ -16,17 +16,17 @@ all 	:	$(NAME)
 
 $(NAME) :	$(OBJS)
 			@make -C libft
-			$(CC) $(FLAGS) $(OBJS) $(INCLUDE) $(LINK) -o $(NAME)
+			$(CC) $(FLAGS) $(OBJS) $(INCLUDE) -o $(NAME) $(LINK)
 
 %.o		: 	%.c
 			$(CC) $(FLAGS) $(INCLUDE) -c $<
 
 clean 	: 
-			make clean -C libft
+			@make clean -C libft
 			rm -rf $(OBJS)
 
 fclean 	: 	clean
-			make fclean -C libft
+			@make fclean -C libft
 			rm -rf $(NAME)
 
 re 		:	fclean $(NAME)

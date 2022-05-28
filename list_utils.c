@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:35 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/24 14:21:40 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:32:30 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token	*createlist(char *str, int i, int len)
 	if (!str || i < 0 || len < 0)
 		return (NULL);
 	newlist = malloc(sizeof(t_token));
-	newlist->str = ft_substr(str, i, len);
+	newlist->str = ft_substrnoquote(str, i, len);
 	newlist->next = NULL;
 	newlist->prev = NULL;
 	// newlist->type = identifytype(str);
