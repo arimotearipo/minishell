@@ -1,4 +1,5 @@
 SRCS = shell.c error.c list_utils.c free_utils.c tokenlength.c parser.c \
+		clone_env.c \
 
 OBJS = $(SRCS:.c=.o)
 
