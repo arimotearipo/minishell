@@ -6,7 +6,7 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 17:12:09 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/05/29 19:06:57 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/05/29 20:19:16 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,25 @@ char	*get_var(t_shell *shell, t_token *token, int *i)
 {
 	char	*var;
 	char	*new;
-	int		j;
+	int		len;
+	int		start;
+	char	*env;
 
-	j = 0;
-	len =
-	var = malloc(len + 1);
-	while((token->str[*i] != '$' || token->str[*i] != -36) && token->str[*i])
+	len = 0;
+	start = ++(*i);
+	while(token->str[*i] != '$' && token->str[*i] != -36 && token->str[*i])
 	{
-		var[j] = token->str[*i + j];
+		len++;
 		(*i)++;
-		j++;
 	}
-	var[j] = 0;
-	new = ft_strdup(ft_getenv(shell->sh_env, var));
+	// len = strchri(token->str, *i, '=');
+	var = ft_substr(token->str, start, len);
+	env = ft_getenv(shell->sh_env, var);
+	if (env == NULL)
+		new = ft_strdup("");
+	else
+		new = ft_strdup(env);
+	free(var);
 	return (new);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:28:06 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/29 17:25:46 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/05/29 20:03:37 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	*ft_getenv(char **env, char *var)
 
 	i = 0;
 	len = ft_strlen(var);
+	if (len == 0)
+		return (NULL);
 	while (env[i] != NULL && ft_strncmp(env[i], var, len) != 0)
 		i++;
 	pointer = ft_strchr(env[i], '=');
