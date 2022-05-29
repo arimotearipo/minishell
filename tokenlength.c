@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenlength.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:02:09 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/28 14:24:33 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/29 13:41:25 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,13 @@ int	getquotedlen(char *line, char c, int *i, int *len)
 		&& line[*i] != '|')
 	{
 		*len += gettokenlen(line, i);
-		if (line[*i + 1] == '"' || line[*i + 1] == '\'')
-		{
-			c = line[*i];
-			(*i)++;
-			if (getquotedlen(line, c, i, len) == -1)
-				return (-1);
-		}
+		// if (line[*i + 1] == '"' || line[*i + 1] == '\'')
+		// {
+		// 	c = line[*i];
+		// 	(*i)++;
+		// 	if (getquotedlen(line, c, i, len) == -1)
+		// 		return (-1);
+		// }
 	}
 	return (*len);
 }

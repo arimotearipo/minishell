@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:35 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/25 18:32:30 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/29 15:11:50 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	creategroup(t_cmdgroup **cmdgroup, int count)
 
 	*cmdgroup = malloc(sizeof(t_cmdgroup));
 	(*cmdgroup)->tokens = NULL;
+	(*cmdgroup)->cmdwordcount = 0;
 	(*cmdgroup)->next = NULL;
 	lst = *cmdgroup; // assign address of first linked list of commandgroup to lst
 	while(count-- > 1)

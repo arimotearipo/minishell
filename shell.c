@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/28 14:30:59 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/29 15:39:23 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,12 @@ int	main(int ac, char **av, char **envp)
 {
 	t_shell		shell;
 	char		*line;
-	// char		*line = "a<<b'c'\"d\" | echo 'a'b>c makan\"hello\"world'lagi'\"dan\"next | echo 'one'\"two\"three|four";
-	// char		*line = "echo \"hello\"\"world\" | echo one\"hello\"'world'\"hi\"'name | echo \"hello\"   \"world\" ";
+	// char		*line = "a<<b'''' '''''''''''c'\"d\" | echo 'a'b>c makan\"hello\"world'lagi'\"dan\"next | echo 'one'\"two\"three|four";
+	// char		*line = "echo \"hello\"\"world\" | echo one\"hello\"'world'\"hi\"'name'\" next | echo \"hello\"   \"world\" ";
 	// char		*line = "echo | >> e asd | << delim file.txt argument";
+	// char		*line = "'ab''cd' 'ef'";
 	// char	*line = "echo .. hello world \"test\" | asda >> <<  | cat -e < \"123 ' > << | >>";
+	// char	*line = "echo hello pwd test cat";
 	
 	(void)av;
 	if (ac != 1)
@@ -112,7 +114,7 @@ int	main(int ac, char **av, char **envp)
 		showlist(shell.cmdgroup);
 		clearmemory(shell.cmdgroup);
 		free(line);
-		// break ;
+		break ;
 	}
 	// system("leaks minishell");
 	return (0);
