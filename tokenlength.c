@@ -6,7 +6,7 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:02:09 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/29 13:41:25 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/05/29 17:29:50 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int	getquotedlen(char *line, char c, int *i, int *len)
 	(*i)++;
 	while (line[*i] != c && line[*i] != '\0')
 	{
+		if (c == '\"' && line[*i] == '$')
+			line[*i] = (char)(-line[*i]);
 		*i += 1;
 		(*len)++;
 	}
@@ -89,16 +91,7 @@ int	getquotedlen(char *line, char c, int *i, int *len)
 		return (-1);
 	while (line[*i] > 32 && line[*i] != '<' && line[*i] != '>'
 		&& line[*i] != '|')
-	{
 		*len += gettokenlen(line, i);
-		// if (line[*i + 1] == '"' || line[*i + 1] == '\'')
-		// {
-		// 	c = line[*i];
-		// 	(*i)++;
-		// 	if (getquotedlen(line, c, i, len) == -1)
-		// 		return (-1);
-		// }
-	}
 	return (*len);
 }
 
@@ -113,6 +106,8 @@ int	gettokenlen(char *line, int *i)
 		&& line[*i] != '<' && line[*i] != '>'
 		&& line[*i] != '|')
 	{
+		if(line[*i] == '$')
+			line[*i] = (char)(-line[*i]);
 		(*i)++;
 		len++;
 	}

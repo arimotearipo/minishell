@@ -62,5 +62,6 @@ void		parser(t_shell *shell);
 void		free2d(char **arr);
 void		clone_env(char **envp, t_shell *shell);
 char		*ft_getenv(char **env, char *var);
+void		expand(t_shell *shell);
 
 #endif

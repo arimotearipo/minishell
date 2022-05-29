@@ -6,7 +6,7 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/29 15:39:23 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/05/29 17:11:51 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	main(int ac, char **av, char **envp)
 		showlist(shell.cmdgroup);
 		clearmemory(shell.cmdgroup);
 		free(line);
-		break ;
+		// break ;
 	}
 	// system("leaks minishell");
 	return (0);
