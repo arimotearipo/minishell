@@ -25,7 +25,6 @@ typedef struct s_token
 {
 	char			*str;
 	int				type;
-	int				whitepsace;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -33,7 +32,7 @@ typedef struct s_token
 typedef struct s_cmdgroup
 {
 	t_token				*tokens;
-	int					cmdwordcount;
+	int					cmdcnt;
 	// int				tkn_count;
 	int					fdin;
 	int					fdout;
@@ -62,5 +61,6 @@ int			getquotedlen(char *line, char c, int *i, int *len);
 void		parser(t_shell *shell);
 void		free2d(char **arr);
 void		clone_env(char **envp, t_shell *shell);
+char		*ft_getenv(char **env, char *var);
 
 #endif

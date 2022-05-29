@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:28:06 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/25 13:57:53 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/29 15:24:07 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,29 @@ int	isbuiltin(char *str)
 	return (0);
 }
 
-int	iscommand(char *str)
+char	*ft_getenv(char **env, char *var)
+{
+	int		i;
+	int		len;
+	char	*pointer;
+
+	i = 0;
+	len = ft_strlen(var);
+	while (env[i] != NULL && ft_strncmp(env[i], var, len) != 0)
+		i++;
+	pointer = ft_strrchr(env[i], '=');
+	return (pointer + 1);
+}
+
+int	iscmd(char *str, t_shell *shell)
 {
 	char			**binpath;
 	DIR				*dir;
-	struct dirent 	*entity;
+	struct dirent	*entity;
 	int				i;
-	
+
 	i = 0;
-	binpath = ft_split(getenv("PATH"), ':');
+	binpath = ft_split(ft_getenv(shell->sh_env, "PATH"), ':');
 	while (binpath[i] != NULL)
 	{
 		dir = opendir(binpath[i++]);
@@ -60,18 +74,19 @@ int	iscommand(char *str)
 	return (0);
 }
 
-void	assigntype(t_token *token, int prevtype)
+void	assigntype(t_token *token, t_cmdgroup *cmd, int prevtype, t_shell *sh)
 {
 	if (prevtype == RDINPUT)
 		token->type = DELIM;
-	else if ((prevtype >= INPUT && prevtype <= APPEND)
-				|| prevtype == DELIM)
+	else if ((prevtype >= INPUT && prevtype <= APPEND) || prevtype == DELIM)
 		token->type = FD;
-	else if (ft_strcmp(".", token->str) == 0 
-				|| ft_strcmp("..", token->str) == 0)
+	else if (!ft_strcmp(".", token->str) || !ft_strcmp("..", token->str))
 		token->type = ARG;
-	else if (iscommand(token->str) || isbuiltin(token->str))
+	else if ((iscmd(token->str, sh) || isbuiltin(token->str)) && !cmd->cmdcnt)
+	{
 		token->type = COMMAND;
+		cmd->cmdcnt += 1;
+	}
 	else if (ft_strcmp("<<", token->str) == 0)
 		token->type = RDINPUT;
 	else if (ft_strcmp("<", token->str) == 0)
@@ -86,7 +101,7 @@ void	assigntype(t_token *token, int prevtype)
 		token->type = ARG;
 }
 
-void	loopandassigntype(t_cmdgroup *cmd)
+void	loopandassigntype(t_cmdgroup *cmd, t_shell *shell)
 {
 	t_token		*firsttoken;
 	t_cmdgroup	*firstcmd;
@@ -101,7 +116,7 @@ void	loopandassigntype(t_cmdgroup *cmd)
 		firsttoken = cmd->tokens;
 		while (cmd->tokens != NULL)
 		{
-			assigntype(cmd->tokens, previoustype);
+			assigntype(cmd->tokens, cmd, previoustype, shell);
 			previoustype = cmd->tokens->type;
 			cmd->tokens = cmd->tokens->next;
 		}
@@ -119,7 +134,7 @@ void	loopandassigntype(t_cmdgroup *cmd)
 
 void	parser(t_shell *shell)
 {
-	loopandassigntype(shell->cmdgroup);
+	loopandassigntype(shell->cmdgroup, shell);
 	/**
 	 * Errorchecking: Need to make sure that first token of a command group is of type COMMAND or INPUT/OUTPUT/APPEND/RDINPUT
 	 * Errorchecking: Need to check for empty command group.
