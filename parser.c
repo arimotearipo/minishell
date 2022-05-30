@@ -6,7 +6,7 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:28:06 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/29 15:24:07 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/05/29 20:03:37 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ char	*ft_getenv(char **env, char *var)
 
 	i = 0;
 	len = ft_strlen(var);
+	if (len == 0)
+		return (NULL);
 	while (env[i] != NULL && ft_strncmp(env[i], var, len) != 0)
 		i++;
-	pointer = ft_strrchr(env[i], '=');
+	pointer = ft_strchr(env[i], '=');
 	return (pointer + 1);
 }
 
@@ -135,6 +137,7 @@ void	loopandassigntype(t_cmdgroup *cmd, t_shell *shell)
 void	parser(t_shell *shell)
 {
 	loopandassigntype(shell->cmdgroup, shell);
+	expand(shell);
 	/**
 	 * Errorchecking: Need to make sure that first token of a command group is of type COMMAND or INPUT/OUTPUT/APPEND/RDINPUT
 	 * Errorchecking: Need to check for empty command group.
