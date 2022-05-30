@@ -1,6 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <limits.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -47,11 +48,11 @@ typedef struct s_shell
 }	t_shell;
 
 int			collecttoken(char *line, t_cmdgroup *cmd);
-void		printerror(t_cmdgroup *cmd);
+void		printerror(t_shell *shell, t_cmdgroup *cmd);
 void		filllst(t_cmdgroup *cmd, char *str, int i, int len);
 int			addlist(t_cmdgroup *cmd, char *str, int i, int len); // Maybe to replace filllst
 void		addnewlst(t_token *lst);
-void		clearmemory(t_cmdgroup *lst);
+void		clearmemory(t_shell *shell, t_cmdgroup *lst);
 void		showlist(t_cmdgroup *cmd);
 void		creategroup(t_cmdgroup **cmdgroup, int count);
 int			gettokenlen(char *line, int *i);

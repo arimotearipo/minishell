@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:28:06 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/29 20:03:37 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/05/30 15:46:43 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ char	*ft_getenv(char **env, char *var)
 		return (NULL);
 	while (env[i] != NULL && ft_strncmp(env[i], var, len) != 0)
 		i++;
+	if (env[i] == NULL)
+		return (NULL);
 	pointer = ft_strchr(env[i], '=');
 	return (pointer + 1);
 }

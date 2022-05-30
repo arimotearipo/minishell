@@ -1,0 +1,5 @@
+abc"def"hij
+"abc"def'hij'
+
+echo "'$USER'"
+echo '"$USER"'
