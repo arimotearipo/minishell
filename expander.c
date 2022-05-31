@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 17:12:09 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/05/31 21:34:46 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/31 21:47:50 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,22 @@ void	indentifyenv(t_shell *shell, t_token *token)
 		}
 		else if (token->str[i] == quotetype && openquote == 1)
 			openquote = 0;
-		
-		if (token->str[i] == '$' && quotetype != '\'' 
+		if (token->str[i] == '$' && (token->str[i + 1] == '\0' 
+			|| token->str[i + 1] <= 32) && openquote == 0)
+			{
+				printf("SINI\n");
+				token->str[i] = '$';	
+			}
+		else if (token->str[i] == '$' && quotetype != '\'' 
 			&& (!ft_strchr("'\" ", token->str[i + 1])
 				&& token->str[i + 1] != '\0'))
 		{
 			token->str[i] = (char)(-36);
 		}
-		if (token->str[i] == '$' && ft_strchr("'\"", token->str[i + 1])
+		else if (token->str[i] == '$' && ft_strchr("'\"", token->str[i + 1])
 			&& openquote == 0)
 			{
+				printf("HERE\n");
 				token->str[i] = (char)(DOLLARDEL);
 			}
 		i++;
