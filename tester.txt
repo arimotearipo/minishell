@@ -6,3 +6,21 @@ echo '"$USER"'
 
 "'asa"$USER"assa'"
 echo "hello $ asd"
+echo $"USER"
+echo "$'USER'"
+
+$USER
+$NOTHING
+$ hello
+$'hello'
+
+"$USER"
+"$NOTHING"
+"$ USER"
+"$'USER'"
+
+'$USER'
+'$NOTHING'
+'$ USER'
+'$"USER'
+

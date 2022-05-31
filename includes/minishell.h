@@ -12,6 +12,9 @@
 # include <dirent.h>
 # include "libft.h"
 
+# define DOLLARDEL -1
+# define SQUOTE 39
+# define DQUOTE 34
 # define COMMAND 1 // eg: echo, pwd, grep, awk, etc
 # define ARG 2 // inputs after commands. eg: "hello world"
 # define FD	3 // Any argument that is a file descriptor

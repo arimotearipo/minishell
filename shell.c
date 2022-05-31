@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/31 16:54:19 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/31 21:24:48 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,30 +120,16 @@ int	collecttoken(char *line, t_cmdgroup *cmd, int *i)
 	return (0);
 }
 
-char	*stripwhitespace(char *line)
-{
-	int		len;
-	int		start;
-	char	*newline;
-
-	len = ft_strlen(line);
-	start = 0;
-	while (line[start] <= 32)
-		start++;
-	while (line[len] <= 32)
-		len--;
-	newline = ft_substr(line, start, len - start + 1);
-	free(line);
-	return (newline);
-}
-
 void	lexer(char *line, t_shell *shell)
 {
 	int			i;
+	char		*temp;
 	t_cmdgroup *first;
 
 	i = 0;
-	line = stripwhitespace(line);
+	temp = line;
+	line = ft_strtrim(line, " ");
+	free(temp);
 	shell->cmdgrpcount = countcmdgroups(line);
 	creategroup(&(shell->cmdgroup), shell->cmdgrpcount);
 	first = shell->cmdgroup;
@@ -161,7 +147,7 @@ int	main(int ac, char **av, char **envp)
 	// char		*line = "echo | >> e asd | << delim file.txt argument";
 	// char		*line = "'ab''cd' 'ef'";
 	// char	*line = "echo .. hello world \"test\" | asda >> <<  | cat -e < \"123 ' > << | >>";
-	// char	*line = ft_strdup("echo | hello");
+	// line = ft_strdup("$'USER'");
 	
 	(void)av;
 	if (ac != 1)

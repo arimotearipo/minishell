@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:02:09 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/30 17:17:26 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/31 21:02:55 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ int	getquotedlen(char *line, char c, int *i, int *len)
 	(*i)++;
 	while (line[*i] != c && line[*i] != '\0')
 	{
-		if (c == '\"' && line[*i] == '$')
-			line[*i] = (char)(-line[*i]);
+		// if (c == '\"' && line[*i] == '$')
+		// 	line[*i] = (char)(-line[*i]);
 		*i += 1;
 		(*len)++;
 	}
@@ -101,13 +101,10 @@ int	gettokenlen(char *line, int *i)
 	int	c;
 
 	len = 0;
-	while (line[*i] != ' ' && line[*i] != '"'
-		&& line[*i] != '\'' && line[*i] != '\0'
-		&& line[*i] != '<' && line[*i] != '>'
-		&& line[*i] != '|')
+	while (!ft_strchr(" \"'<>|", line[*i]) && line[*i] != '\0')
 	{
-		if(line[*i] == '$')
-			line[*i] = (char)(-line[*i]);
+		// if(line[*i] == '$')
+		// 	line[*i] = (char)(-line[*i]);
 		(*i)++;
 		len++;
 	}

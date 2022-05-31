@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:38:28 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/30 16:44:23 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/31 20:35:57 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	assignopeningquote(char const *s, unsigned int *start, int *flag,
 	char *openingquote)
 {
+	// printf("str: %s\ns len: %ld\nstart: %d\n", s, ft_strlen(s), *start);
 	if ((s[*start] == '\'' || s[*start] == '\"') && *flag == 0)
 		{
 			*openingquote = s[*start];
