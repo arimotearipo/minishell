@@ -47,7 +47,7 @@ typedef struct s_shell
 	int			cmdgrpcount;
 }	t_shell;
 
-int			collecttoken(char *line, t_cmdgroup *cmd);
+int			collecttoken(char *line, t_cmdgroup *cmd, int *i);
 void		printerror(t_shell *shell, t_cmdgroup *cmd);
 void		filllst(t_cmdgroup *cmd, char *str, int i, int len);
 int			addlist(t_cmdgroup *cmd, char *str, int i, int len); // Maybe to replace filllst
@@ -64,5 +64,6 @@ void		free2d(char **arr);
 void		clone_env(char **envp, t_shell *shell);
 char		*ft_getenv(char **env, char *var);
 void		expand(t_shell *shell);
+char		*ft_substrnoquote(char const *s, unsigned int start, size_t len);
 
 #endif

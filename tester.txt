@@ -3,3 +3,6 @@ abc"def"hij
 
 echo "'$USER'"
 echo '"$USER"'
+
+"'asa"$USER"assa'"
+echo "hello $ asd"

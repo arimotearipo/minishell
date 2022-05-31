@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:35 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/29 16:46:24 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:54:52 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token	*createlist(char *str, int i, int len)
 	if (!str || i < 0 || len < 0)
 		return (NULL);
 	newlist = malloc(sizeof(t_token));
-	newlist->str = ft_substrnoquote(str, i, len);
+	newlist->str = ft_substr(str, i, len);
 	newlist->next = NULL;
 	newlist->prev = NULL;
 	// newlist->type = identifytype(str);
@@ -86,7 +86,7 @@ void	showlist(t_cmdgroup *cmd)
 		firsttoken = cmd->tokens;
 		while (cmd->tokens != NULL)
 		{
-			printf("str: %s\t type: %d\n", cmd->tokens->str, cmd->tokens->type);
+			printf("str: (%s)\t type: %d\n", cmd->tokens->str, cmd->tokens->type);
 			cmd->tokens = cmd->tokens->next;
 		}
 		cmd->tokens = firsttoken;
@@ -95,28 +95,3 @@ void	showlist(t_cmdgroup *cmd)
 	}
 	cmd = firstcmd;
 }
-
-
-/* How to loop through the 2D linked list
-void	showlist(t_cmdgroup *cmd)
-{
-	t_token		*firsttoken;
-	t_cmdgroup	*firstcmd;
-	int			i;
-
-	firstcmd = cmd;
-	i = 0;
-	while (cmd != NULL)
-	{
-		firsttoken = cmd->tokens;
-		while (cmd->tokens != NULL)
-		{
-			cmd->tokens = cmd->tokens->next;
-		}
-		cmd->tokens = firsttoken;
-		cmd = cmd->next;
-		i++;
-	}
-	cmd = firstcmd;
-}
-*/
