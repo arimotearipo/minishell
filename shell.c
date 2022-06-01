@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/31 21:24:48 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:28:59 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int	collecttoken(char *line, t_cmdgroup *cmd, int *i)
 		assignquote(line, i, &quotetype, &openquote);
 		if (line[*i] == '|' && openquote == 0)
 		{
+			if (*i - start > 0)
+				addlist(cmd, line, start, *i - start);
 			(*i)++;
 			return (1);
 		}
@@ -143,12 +145,13 @@ int	main(int ac, char **av, char **envp)
 	t_shell		shell;
 	char		*line;
 	// char		*line = "a<<b'''' '''''''''''c'\"d\" | echo 'a'b>c makan\"hello\"world'lagi'\"dan\"next | echo 'one'\"two\"three|four";
-	// char		*line = "echo \"hello\"\"world\" | echo one\"hello\"'world'\"hi\"'name'\" next | echo \"hello\"   \"world\" ";
+	// char		*line = "$USER $NOTHING $ hello $'hello' "$USER" "$NOTHING" "$ USER" "$'USER'" '$USER' '$NOTHING' '$ USER' '$"USER'";
 	// char		*line = "echo | >> e asd | << delim file.txt argument";
 	// char		*line = "'ab''cd' 'ef'";
 	// char	*line = "echo .. hello world \"test\" | asda >> <<  | cat -e < \"123 ' > << | >>";
-	// line = ft_strdup("$'USER'");
-	
+	// line = ft_strdup("a|b | c");
+	// line = ft_strdup("\"$ USER\"");
+
 	(void)av;
 	if (ac != 1)
 		return (1);
