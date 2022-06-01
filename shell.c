@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/28 14:30:59 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/31 21:24:48 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,59 +50,111 @@ int	countcmdgroups(char *line)
 	return (count);
 }
 
-int	collecttoken(char *line, t_cmdgroup *cmd)
+void	skipseparator(t_cmdgroup *cmd, char *line, int *i)
 {
-	int		i;
+	char	redirection;
 	int		len;
 	int		start;
-
-	i = 0;
-	start = 0;
-	while (line[i] != '\0')
+	
+	while (ft_strchr("<> ", line[*i]) && line[*i])
 	{
-		start = i;
-		if (line[i] <= 32)
+		if (ft_strchr("<>", line[*i]))
 		{
-			i++;
+			len = 0;
+			start = *i;
+			redirection = line[*i];
+			while (line[*i] == redirection)
+			{
+				(*i)++;
+				len++;
+			}
+			if (len > 2)
+				ft_putstr_fd("Unrecognized token\n", 2);
+			else
+				addlist(cmd, line, start, len);
 			continue ;
 		}
-		if (line[i] == '|')
-		{
-			cmd = cmd->next;
-			i++;
-			continue ;
-		}
-		if (line[i] == '"' || line[i] == '\'')
-			start++;
-		len = getlen(line, &i);
-		if (addlist(cmd, line, start, len) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
+		(*i)++;
 	}
-	return (EXIT_SUCCESS);
+}
+
+void	assignquote(char *line, int *i, char *quotetype, int *openquote)
+{
+	if ((line[*i] == '\'' || line[*i] == '\"') && *openquote == 0)
+		{
+			*openquote = 1;
+			*quotetype = line[*i];
+		}
+		else if (line[*i] == *quotetype)
+			*openquote = 0;
+}
+
+int	collecttoken(char *line, t_cmdgroup *cmd, int *i)
+{
+	int		openquote;
+	char	quotetype;
+	int		start;
+
+	(void)cmd;
+	start = *i;
+	openquote = 0;
+	while (line[*i] != '\0')
+	{
+		assignquote(line, i, &quotetype, &openquote);
+		if (line[*i] == '|' && openquote == 0)
+		{
+			(*i)++;
+			return (1);
+		}
+		if (ft_strchr(" <>", line[*i]) && openquote == 0)
+		{
+			if (*i - start > 0)
+				addlist(cmd, line, start, *i - start);
+			skipseparator(cmd, line, i);
+			start = *i;
+			continue ;
+		}
+		(*i)++;
+	}
+	addlist(cmd, line, start, *i - start);
+	return (0);
 }
 
 void	lexer(char *line, t_shell *shell)
 {
+	int			i;
+	char		*temp;
+	t_cmdgroup *first;
+
+	i = 0;
+	temp = line;
+	line = ft_strtrim(line, " ");
+	free(temp);
 	shell->cmdgrpcount = countcmdgroups(line);
 	creategroup(&(shell->cmdgroup), shell->cmdgrpcount);
-	collecttoken(line, shell->cmdgroup);
+	first = shell->cmdgroup;
+	while (collecttoken(line, shell->cmdgroup, &i) == 1)
+		shell->cmdgroup = shell->cmdgroup->next;
+	shell->cmdgroup = first;
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	t_shell		shell;
 	char		*line;
-	// char		*line = "a<<b'c'\"d\" | echo 'a'b>c makan\"hello\"world'lagi'\"dan\"next | echo 'one'\"two\"three|four";
-	// char		*line = "echo \"hello\"\"world\" | echo one\"hello\"'world'\"hi\"'name | echo \"hello\"   \"world\" ";
+	// char		*line = "a<<b'''' '''''''''''c'\"d\" | echo 'a'b>c makan\"hello\"world'lagi'\"dan\"next | echo 'one'\"two\"three|four";
+	// char		*line = "echo \"hello\"\"world\" | echo one\"hello\"'world'\"hi\"'name'\" next | echo \"hello\"   \"world\" ";
 	// char		*line = "echo | >> e asd | << delim file.txt argument";
+	// char		*line = "'ab''cd' 'ef'";
 	// char	*line = "echo .. hello world \"test\" | asda >> <<  | cat -e < \"123 ' > << | >>";
+	// line = ft_strdup("$'USER'");
 	
 	(void)av;
 	if (ac != 1)
 		return (1);
-	clone_env(envp, &shell);
 	while (1)
 	{
+		clone_env(envp, &shell);
 		line = readline("minishell>% "); // Jangan lupa comment free(line)
 		if (ft_strncmp(line, "exit", 4) == 0)
 			exit(0);
@@ -110,8 +162,8 @@ int	main(int ac, char **av, char **envp)
 		lexer(line, &shell);
 		parser(&shell);
 		showlist(shell.cmdgroup);
-		clearmemory(shell.cmdgroup);
-		free(line);
+		clearmemory(&shell, shell.cmdgroup);
+		// free(line);
 		// break ;
 	}
 	// system("leaks minishell");

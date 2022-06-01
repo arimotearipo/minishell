@@ -1,6 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <limits.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -11,6 +12,9 @@
 # include <dirent.h>
 # include "libft.h"
 
+# define DOLLARDEL -1
+# define SQUOTE 39
+# define DQUOTE 34
 # define COMMAND 1 // eg: echo, pwd, grep, awk, etc
 # define ARG 2 // inputs after commands. eg: "hello world"
 # define FD	3 // Any argument that is a file descriptor
@@ -25,7 +29,6 @@ typedef struct s_token
 {
 	char			*str;
 	int				type;
-	int				whitepsace;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -33,7 +36,7 @@ typedef struct s_token
 typedef struct s_cmdgroup
 {
 	t_token				*tokens;
-	int					cmdwordcount;
+	int					cmdcnt;
 	// int				tkn_count;
 	int					fdin;
 	int					fdout;
@@ -47,12 +50,12 @@ typedef struct s_shell
 	int			cmdgrpcount;
 }	t_shell;
 
-int			collecttoken(char *line, t_cmdgroup *cmd);
-void		printerror(t_cmdgroup *cmd);
+int			collecttoken(char *line, t_cmdgroup *cmd, int *i);
+void		printerror(t_shell *shell, t_cmdgroup *cmd);
 void		filllst(t_cmdgroup *cmd, char *str, int i, int len);
 int			addlist(t_cmdgroup *cmd, char *str, int i, int len); // Maybe to replace filllst
 void		addnewlst(t_token *lst);
-void		clearmemory(t_cmdgroup *lst);
+void		clearmemory(t_shell *shell, t_cmdgroup *lst);
 void		showlist(t_cmdgroup *cmd);
 void		creategroup(t_cmdgroup **cmdgroup, int count);
 int			gettokenlen(char *line, int *i);
@@ -62,5 +65,8 @@ int			getquotedlen(char *line, char c, int *i, int *len);
 void		parser(t_shell *shell);
 void		free2d(char **arr);
 void		clone_env(char **envp, t_shell *shell);
+char		*ft_getenv(char **env, char *var);
+void		expand(t_shell *shell);
+char		*ft_substrnoquote(char const *s, unsigned int start, size_t len);
 
 #endif
