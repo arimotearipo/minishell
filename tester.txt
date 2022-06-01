@@ -24,3 +24,20 @@ $'hello'
 '$ USER'
 '$"USER'
 
+a<<b'''' '''''''''''c'\"d\" | echo 'a'b>c makan\"hello\"world'lagi'\"dan\"next | echo 'one'\"two\"three|four
+0
+str: (a)         type: 2
+str: (<<)        type: 7
+str: (b)         type: 8
+str: (c\d\)      type: 3
+1
+str: (echo)      type: 1
+str: (ab)        type: 2
+str: (>)         type: 5
+str: (c)         type: 3
+str: (makan\hello\worldlagi\dan\next)    type: 2
+2
+str: (echo)      type: 1
+str: (one\two\three)     type: 2
+3
+str: (four)      type: 2

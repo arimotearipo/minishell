@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:02:09 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/01 11:29:36 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:38:22 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,7 @@ int	getlen(char *line, int *i)
 
 	len = 0;
 	if (line[*i] == '"' || line[*i] == '\'')
-	{
 		len = getquotedlen(line, line[*i], i, &len);
-		printf("len %d\n", len);
-	}
 	else if (line[*i] == '<' || line[*i] == '>')
 		len = getredlen(line, line[*i], i);
 	else if (line[*i] > 32)

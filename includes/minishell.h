@@ -12,9 +12,24 @@
 # include <dirent.h>
 # include "libft.h"
 
+/*
+** EXIT STATUS
+*/
+# define SUCCESS 0
+# define SYNTAXERROR 1
+# define NOCOMMAND 127
+# define NOEXECUTE 126
+
+/*
+** QUOTE TYPE
+*/
 # define DOLLARDEL -1
 # define SQUOTE 39
 # define DQUOTE 34
+
+/*
+** TOKEN TYPE
+*/ 
 # define COMMAND 1 // eg: echo, pwd, grep, awk, etc
 # define ARG 2 // inputs after commands. eg: "hello world"
 # define FD	3 // Any argument that is a file descriptor
@@ -41,6 +56,9 @@ typedef struct s_cmdgroup
 	int					fdin;
 	int					fdout;
 	struct	s_cmdgroup  *next;
+	char				*grpstr;
+	char				*output;
+	char				*topass;
 }	t_cmdgroup;
 
 typedef struct s_shell
@@ -48,10 +66,14 @@ typedef struct s_shell
 	t_cmdgroup	*cmdgroup;
 	char		**sh_env;
 	int			cmdgrpcount;
+	int			exit;
 }	t_shell;
 
 int			collecttoken(char *line, t_cmdgroup *cmd, int *i);
-void		printerror(t_shell *shell, t_cmdgroup *cmd);
+void		printerror(t_shell *shell, char *msg, int errortype);
+void		emptycommand(t_shell *shell);
+void		checkline(t_shell *shell);
+void		redirectionislast(t_shell *shell);
 void		filllst(t_cmdgroup *cmd, char *str, int i, int len);
 int			addlist(t_cmdgroup *cmd, char *str, int i, int len); // Maybe to replace filllst
 void		addnewlst(t_token *lst);

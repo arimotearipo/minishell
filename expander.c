@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 17:12:09 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/01 15:01:48 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/01 21:15:41 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,11 @@ void	stripquote(t_shell *shell, t_token *token)
 	(void)shell;
 	i = 0;
 	len = getlen(token->str, &i);
+	if (len < 0)
+	{
+		printerror(shell, "Error: Unexpected token\n", SYNTAXERROR);
+		return ;
+	}
 	newstr = ft_substrnoquote(token->str, 0, len);
 	free(token->str);
 	token->str = newstr;

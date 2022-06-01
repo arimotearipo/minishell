@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:28:06 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/30 15:46:43 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/01 20:09:52 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,18 @@ int	isbuiltin(char *str)
 	return (0);
 }
 
+char	*getvarname(char *str)
+{
+	int		i;
+	char	*varname;
+
+	i = 0;
+	while (str[i] != '\0' && str[i] != '=')
+		i++;
+	varname = ft_substr(str, 0, i);
+	return (varname);
+}
+
 char	*ft_getenv(char **env, char *var)
 {
 	int		i;
@@ -41,7 +53,7 @@ char	*ft_getenv(char **env, char *var)
 	len = ft_strlen(var);
 	if (len == 0)
 		return (NULL);
-	while (env[i] != NULL && ft_strncmp(env[i], var, len) != 0)
+	while (env[i] != NULL && ft_strcchr(env[i], var, '=') != 0)
 		i++;
 	if (env[i] == NULL)
 		return (NULL);
@@ -82,8 +94,6 @@ void	assigntype(t_token *token, t_cmdgroup *cmd, int prevtype, t_shell *sh)
 {
 	if (prevtype == RDINPUT)
 		token->type = DELIM;
-	else if ((prevtype >= INPUT && prevtype <= APPEND) || prevtype == DELIM)
-		token->type = FD;
 	else if (!ft_strcmp(".", token->str) || !ft_strcmp("..", token->str))
 		token->type = ARG;
 	else if ((iscmd(token->str, sh) || isbuiltin(token->str)) && !cmd->cmdcnt)
@@ -99,6 +109,8 @@ void	assigntype(t_token *token, t_cmdgroup *cmd, int prevtype, t_shell *sh)
 		token->type = OUTPUT;
 	else if (ft_strcmp(">>", token->str) == 0)
 		token->type = APPEND;
+	else if ((prevtype >= INPUT && prevtype <= APPEND) || prevtype == DELIM)
+		token->type = FD;
 	else if (ft_strcmp("|", token->str) == 0)
 		token->type = PIPE;
 	else

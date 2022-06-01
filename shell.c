@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/01 15:28:59 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/01 21:34:28 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ void	skipseparator(t_cmdgroup *cmd, char *line, int *i)
 				(*i)++;
 				len++;
 			}
-			if (len > 2)
-				ft_putstr_fd("Unrecognized token\n", 2);
-			else
-				addlist(cmd, line, start, len);
+			// if (len > 2)
+			// 	ft_putstr_fd("Unrecognized token\n", 2);
+			// else
+			addlist(cmd, line, start, len);
 			continue ;
 		}
 		(*i)++;
@@ -89,13 +89,20 @@ void	assignquote(char *line, int *i, char *quotetype, int *openquote)
 			*openquote = 0;
 }
 
+void	collect(char *line, int *i, t_cmdgroup *cmd, int *start)
+{
+	if (*i - *start > 0)
+		addlist(cmd, line, *start, *i - *start);
+	if (ft_strchr(" <>", line[*i]))
+		skipseparator(cmd, line, i);
+}
+
 int	collecttoken(char *line, t_cmdgroup *cmd, int *i)
 {
 	int		openquote;
 	char	quotetype;
 	int		start;
 
-	(void)cmd;
 	start = *i;
 	openquote = 0;
 	while (line[*i] != '\0')
@@ -103,22 +110,19 @@ int	collecttoken(char *line, t_cmdgroup *cmd, int *i)
 		assignquote(line, i, &quotetype, &openquote);
 		if (line[*i] == '|' && openquote == 0)
 		{
-			if (*i - start > 0)
-				addlist(cmd, line, start, *i - start);
+			collect(line, i, cmd, &start);
 			(*i)++;
 			return (1);
 		}
 		if (ft_strchr(" <>", line[*i]) && openquote == 0)
 		{
-			if (*i - start > 0)
-				addlist(cmd, line, start, *i - start);
-			skipseparator(cmd, line, i);
+			collect(line, i, cmd, &start);
 			start = *i;
 			continue ;
 		}
 		(*i)++;
 	}
-	addlist(cmd, line, start, *i - start);
+	collect(line, i, cmd, &start);
 	return (0);
 }
 
@@ -157,6 +161,7 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	while (1)
 	{
+		shell.exit = 0;
 		clone_env(envp, &shell);
 		line = readline("minishell>% "); // Jangan lupa comment free(line)
 		if (ft_strncmp(line, "exit", 4) == 0)
@@ -164,7 +169,9 @@ int	main(int ac, char **av, char **envp)
 		add_history(line);
 		lexer(line, &shell);
 		parser(&shell);
-		showlist(shell.cmdgroup);
+		checkline(&shell);
+		if (shell.exit != SYNTAXERROR)
+			showlist(shell.cmdgroup);
 		clearmemory(&shell, shell.cmdgroup);
 		// free(line);
 		// break ;
@@ -172,3 +179,16 @@ int	main(int ac, char **av, char **envp)
 	// system("leaks minishell");
 	return (0);
 }
+
+// int	main(int ac, char **av)
+// {
+// 	char *str;
+// 	int	res;
+
+// 	(void)ac;
+// 	str = ft_strdup("ABCDE=FGHIJK");
+// 	res = ft_strcchr(str, av[1], av[2][0]);
+// 	printf("str: %s\nres: %d\n", str, res);
+// 	free(str);
+// 	return (0);
+// }
