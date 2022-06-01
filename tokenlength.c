@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:02:09 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/28 14:24:33 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/05/29 14:33:02 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int	gettokenlen(char *line, int *i)
 	int	len;
 	int	c;
 
+
 	len = 0;
 	while (line[*i] != ' ' && line[*i] != '"'
 		&& line[*i] != '\'' && line[*i] != '\0'
@@ -146,7 +147,10 @@ int	getlen(char *line, int *i)
 
 	len = 0;
 	if (line[*i] == '"' || line[*i] == '\'')
+	{
 		len = getquotedlen(line, line[*i], i, &len);
+		printf("len %d\n", len);
+	}
 	else if (line[*i] == '<' || line[*i] == '>')
 		len = getredlen(line, line[*i], i);
 	else if (line[*i] > 32)
