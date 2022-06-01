@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 17:12:09 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/05/31 21:47:50 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:01:48 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*get_var(t_shell *shell, t_token *token, int *i)
 {
 	char	*var;
-	char	*new;
+	char	*expandedvar;
 	int		len;
 	int		start;
 	char	*env;
@@ -28,15 +28,14 @@ char	*get_var(t_shell *shell, t_token *token, int *i)
 		len++;
 		(*i)++;
 	}
-	// len = strchri(token->str, *i, '=');
 	var = ft_substr(token->str, start, len);
 	env = ft_getenv(shell->sh_env, var);
-	if (env == NULL)
-		new = ft_strdup("");
-	else
-		new = ft_strdup(env);
 	free(var);
-	return (new);
+	if (env == NULL)
+		expandedvar = ft_strdup("");
+	else
+		expandedvar = ft_strdup(env);
+	return (expandedvar);
 }
 
 int	searchdollarsign(char *str)
@@ -53,6 +52,16 @@ int	searchdollarsign(char *str)
 	return (0);
 }
 
+void	expandstr(char **new, char **str)
+{
+	char	*temp;
+
+	temp = *new;
+	*new = ft_strjoin(temp, *str);
+	free(*str);
+	free(temp);
+}
+
 void	translate(t_shell *shell, t_token *token)
 {
 	int		i;
@@ -60,7 +69,6 @@ void	translate(t_shell *shell, t_token *token)
 	char	*new;
 	char	*var;
 	char	*str;
-	char	*temp;
 
 	i = 0;
 	j = 0;
@@ -73,21 +81,35 @@ void	translate(t_shell *shell, t_token *token)
 		while ((token->str[i] != -36 && token->str[i] != -1) && token->str[i])
 			i++;
 		str = ft_substr(token->str, j, i - j);
-		temp = new;
-		new = ft_strjoin(temp, str);
-		free(str);
-		free(temp);
+		expandstr(&new, &str);
+		// temp = new;
+		// new = ft_strjoin(temp, str);
+		// free(str);
+		// free(temp);
 		var = get_var(shell, token, &i);
-		temp = new;
-		new = ft_strjoin(temp, var);
-		free(temp);
-		free(var);
+		expandstr(&new, &var);
+		// temp = new;
+		// new = ft_strjoin(temp, var);
+		// free(temp);
+		// free(var);
 	}
 	free(token->str);
 	token->str = new;
 }
 
-void	indentifyenv(t_shell *shell, t_token *token)
+void	handledollar(char *cur, char next, int openquote, char quotetype)
+{
+	if (*cur != '$')
+		return ;
+	if (next <= 32 && openquote == 0)
+		*cur = '$';
+	else if (!ft_strchr("'\" ", next) && next != '\0' && quotetype != '\'')
+		*cur = (char)(-36);
+	else if (ft_strchr("'\"", next) && openquote == 0)
+		*cur = (char)(DOLLARDEL);
+}
+
+void	indentifyenv(t_shell *shell, char *str)
 {
 	int		i;
 	int		openquote;
@@ -97,36 +119,57 @@ void	indentifyenv(t_shell *shell, t_token *token)
 	openquote = 0;
 	quotetype = '\"';
 	i = 0;
-	while (token->str[i] != '\0')
+	while (str[i] != '\0')
 	{
-		if (ft_strchr("'\"", token->str[i]) && openquote == 0)
+		if (ft_strchr("'\"", str[i]) && openquote == 0)
 		{
-			quotetype = token->str[i];
+			quotetype = str[i];
 			openquote = 1;
 		}
-		else if (token->str[i] == quotetype && openquote == 1)
+		else if (str[i] == quotetype && openquote == 1)
 			openquote = 0;
-		if (token->str[i] == '$' && (token->str[i + 1] == '\0' 
-			|| token->str[i + 1] <= 32) && openquote == 0)
-			{
-				printf("SINI\n");
-				token->str[i] = '$';	
-			}
-		else if (token->str[i] == '$' && quotetype != '\'' 
-			&& (!ft_strchr("'\" ", token->str[i + 1])
-				&& token->str[i + 1] != '\0'))
-		{
-			token->str[i] = (char)(-36);
-		}
-		else if (token->str[i] == '$' && ft_strchr("'\"", token->str[i + 1])
-			&& openquote == 0)
-			{
-				printf("HERE\n");
-				token->str[i] = (char)(DOLLARDEL);
-			}
+		handledollar(&str[i], str[i + 1], openquote, quotetype);
 		i++;
 	}
 }
+
+// void	indentifyenv(t_shell *shell, char *str)
+// {
+// 	int		i;
+// 	int		openquote;
+// 	char 	quotetype;
+
+// 	(void)shell;
+// 	openquote = 0;
+// 	quotetype = '\"';
+// 	i = 0;
+// 	while (str[i] != '\0')
+// 	{
+// 		if (ft_strchr("'\"", str[i]) && openquote == 0)
+// 		{
+// 			quotetype = str[i];
+// 			openquote = 1;
+// 		}
+// 		else if (str[i] == quotetype && openquote == 1)
+// 			openquote = 0;
+// 		if (str[i] == '$' && str[i + 1] <= 32 && openquote == 0) // When nothing next to $
+// 		{
+// 			printf("MASUK?\n");
+// 			str[i] = '$';
+// 		}
+// 		else if (str[i] == '$' && quotetype != '\'' && !ft_strchr("'\" ", str[i + 1]) && str[i + 1] != '\0') // When $ need to be expanded
+// 		{
+// 			printf("MASUK 1\n");
+// 			str[i] = (char)(-36);
+// 		}
+// 		else if (str[i] == '$' && ft_strchr("'\"", str[i + 1]) && openquote == 0) // When $ needs to be removed
+// 		{
+// 			printf("MASUK 2\n");
+// 			str[i] = (char)(DOLLARDEL);
+// 		}
+// 		i++;
+// 	}
+// }
 
 void	stripquote(t_shell *shell, t_token *token)
 {
@@ -155,7 +198,7 @@ void	expand(t_shell *shell)
 		{
 			if (cmd->tokens->type == ARG || cmd->tokens->type == FD)
 			{
-				indentifyenv(shell, cmd->tokens);
+				indentifyenv(shell, cmd->tokens->str);
 				translate(shell, cmd->tokens);
 			}
 			stripquote(shell, cmd->tokens);
