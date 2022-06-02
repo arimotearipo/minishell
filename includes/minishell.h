@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
+/*   Updated: 2022/06/02 18:29:21 by wwan-taj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -29,16 +41,25 @@
 
 /*
 ** TOKEN TYPE
-*/ 
-# define COMMAND 1 // eg: echo, pwd, grep, awk, etc
-# define ARG 2 // inputs after commands. eg: "hello world"
-# define FD	3 // Any argument that is a file descriptor
-# define INPUT 4 // < redirection to left. Grab input from fd on the right and pass as argument to left
-# define OUTPUT 5 // > redirection to right. Redirect output from left to right which should be an fd
-# define APPEND 6 // >> double redirection. Take output from left and append to fd on the right
-# define RDINPUT 7 // << double redirection. Read input from user until EOF is met as pass as argument to programme on left
-# define DELIM 8 // EOF which should come after <<
-# define PIPE 9 // | Take output from left of pipe and pass as argument to command on right of pipe
+** # define COMMAND 1 // eg: echo, pwd, grep, awk, etc
+** # define INPUT 2 // < redirection to left. Grab input from fd on the right and pass as argument to left
+** # define OUTPUT 3 // > redirection to right. Redirect output from left to right which should be an fd
+** # define APPEND 4 // >> double redirection. Take output from left and append to fd on the right
+** # define RDINPUT 5 // << double redirection. Read input from user until EOF is met as pass as argument to programme on left
+** # define ARG 6 // inputs after commands. eg: "hello world"
+** # define FD	7 // Any argument that is a file descriptor
+** # define DELIM 8 // EOF which should come after <<
+** # define PIPE 9 // | Take output from left of pipe and pass as argument to command on right of pipe
+*/
+# define COMMAND 1
+# define INPUT 2
+# define OUTPUT 3
+# define APPEND 4
+# define RDINPUT 5
+# define ARG 6
+# define FD	7
+# define DELIM 8
+# define PIPE 9
 
 typedef struct s_token
 {
@@ -52,10 +73,9 @@ typedef struct s_cmdgroup
 {
 	t_token				*tokens;
 	int					cmdcnt;
-	// int				tkn_count;
 	int					fdin;
 	int					fdout;
-	struct	s_cmdgroup  *next;
+	struct s_cmdgroup	*next;
 	char				*grpstr;
 	char				*output;
 	char				*topass;
@@ -63,22 +83,31 @@ typedef struct s_cmdgroup
 
 typedef struct s_shell
 {
+	char		*cmdline;
 	t_cmdgroup	*cmdgroup;
 	char		**sh_env;
 	int			cmdgrpcount;
 	int			exit;
 }	t_shell;
 
+void		lexer(char *line, t_shell *shell);
 int			collecttoken(char *line, t_cmdgroup *cmd, int *i);
 void		printerror(t_shell *shell, char *msg, int errortype);
 void		emptycommand(t_shell *shell);
+void		checkfirsttoken(t_shell *shell);
 void		checkline(t_shell *shell);
-void		redirectionislast(t_shell *shell);
-void		filllst(t_cmdgroup *cmd, char *str, int i, int len);
-int			addlist(t_cmdgroup *cmd, char *str, int i, int len); // Maybe to replace filllst
+void		redirectionerror(t_shell *shell);
+int			isnoterror(int errornum);
+int			addlist(t_cmdgroup *cmd, char *str, int i, int len);
 void		addnewlst(t_token *lst);
+int			countcmdgroups(char *line);
 void		clearmemory(t_shell *shell, t_cmdgroup *lst);
 void		showlist(t_cmdgroup *cmd);
+void		showenv(t_shell *shell);
+char		*getvarname(char *str);
+int			searchdollarsign(char *str);
+void		expandstr(char **new, char **str);
+void		handledollar(char *cur, char next, int openquote, char quotetype);
 void		creategroup(t_cmdgroup **cmdgroup, int count);
 int			gettokenlen(char *line, int *i);
 int			getredlen(char *line, char c, int *i);

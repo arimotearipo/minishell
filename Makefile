@@ -1,5 +1,5 @@
-SRCS = shell.c error.c list_utils.c free_utils.c tokenlength.c parser.c \
-		clone_env.c expander.c ft_substrnoquote.c \
+SRCS = main.c lexer.c error.c error_utils.c list_utils.c free_utils.c tokenlength.c parser.c \
+		env_utils.c expander.c expander2.c ft_substrnoquote.c \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -8,7 +8,6 @@ INCLUDE = -I./includes -I./libft
 LINK = -L./libft -lft -lreadline
 
 FLAGS = -Wall -Wextra -Werror -g
-
 CC = gcc
 
 NAME = minishell

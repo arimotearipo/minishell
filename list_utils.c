@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:35 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/31 17:39:03 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/02 18:14:12 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_token	*createlist(char *str, int i, int len)
 	newlist->str = ft_substr(str, i, len);
 	newlist->next = NULL;
 	newlist->prev = NULL;
-	// newlist->type = identifytype(str);
 	return (newlist);
 }
 
@@ -35,8 +34,8 @@ void	creategroup(t_cmdgroup **cmdgroup, int count)
 	(*cmdgroup)->tokens = NULL;
 	(*cmdgroup)->cmdcnt = 0;
 	(*cmdgroup)->next = NULL;
-	lst = *cmdgroup; // assign address of first linked list of commandgroup to lst
-	while(count-- > 1)
+	lst = *cmdgroup;
+	while (count-- > 1)
 	{
 		new = malloc(sizeof(t_cmdgroup));
 		new->tokens = NULL;
@@ -49,7 +48,7 @@ void	creategroup(t_cmdgroup **cmdgroup, int count)
 int	addlist(t_cmdgroup *cmd, char *str, int i, int len)
 {
 	t_token	*lst;
-	t_token	*temp;		// for future purpose in case of adding a *prev pointer to each node
+	t_token	*temp;
 	t_token	*newlist;
 
 	newlist = createlist(str, i, len);
@@ -63,11 +62,11 @@ int	addlist(t_cmdgroup *cmd, char *str, int i, int len)
 	}
 	while (lst->next != NULL)
 	{
-		temp = lst;		// for future purpose in case of adding a *prev pointer to each node
+		temp = lst;
 		lst = lst->next;
-		lst->prev = temp; //for future purpose in case of adding a *prev pointer to each node
+		lst->prev = temp;
 	}
-	newlist->prev = lst;	// for future purpose in case of adding a *prev pointer to each node
+	newlist->prev = lst;
 	lst->next = newlist;
 	return (EXIT_SUCCESS);
 }
@@ -94,4 +93,30 @@ void	showlist(t_cmdgroup *cmd)
 		i++;
 	}
 	cmd = firstcmd;
+}
+
+int	countcmdgroups(char *line)
+{
+	int		count;
+	int		openquote;
+	char	quotetype;
+	int		i;
+
+	i = 0;
+	openquote = 0;
+	count = 1;
+	while (line[i] != '\0')
+	{
+		if ((line[i] == '\'' || line[i] == '"') && openquote == 0)
+		{
+			openquote = 1;
+			quotetype = line[i];
+		}
+		else if (line[i] == quotetype)
+			openquote = 0;
+		if (line[i] == '|' && openquote == 0)
+			count++;
+		i++;
+	}
+	return (count);
 }

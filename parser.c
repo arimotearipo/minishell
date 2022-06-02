@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:28:06 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/01 20:09:52 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/02 18:12:23 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,36 +29,6 @@ int	isbuiltin(char *str)
 	else if (ft_strcmp(str, "exit") == 0)
 		return (1);
 	return (0);
-}
-
-char	*getvarname(char *str)
-{
-	int		i;
-	char	*varname;
-
-	i = 0;
-	while (str[i] != '\0' && str[i] != '=')
-		i++;
-	varname = ft_substr(str, 0, i);
-	return (varname);
-}
-
-char	*ft_getenv(char **env, char *var)
-{
-	int		i;
-	int		len;
-	char	*pointer;
-
-	i = 0;
-	len = ft_strlen(var);
-	if (len == 0)
-		return (NULL);
-	while (env[i] != NULL && ft_strcchr(env[i], var, '=') != 0)
-		i++;
-	if (env[i] == NULL)
-		return (NULL);
-	pointer = ft_strchr(env[i], '=');
-	return (pointer + 1);
 }
 
 int	iscmd(char *str, t_shell *shell)
@@ -143,21 +113,8 @@ void	loopandassigntype(t_cmdgroup *cmd, t_shell *shell)
 	cmd = firstcmd;
 }
 
-// void	arrangetokens(t_cmdgroup *cmdgroup)
-// {
-	
-// }
-
 void	parser(t_shell *shell)
 {
 	loopandassigntype(shell->cmdgroup, shell);
 	expand(shell);
-	/**
-	 * Errorchecking: Need to make sure that first token of a command group is of type COMMAND or INPUT/OUTPUT/APPEND/RDINPUT
-	 * Errorchecking: Need to check for empty command group.
-	 * Errorchecking: Need to check for consecutive redirection (more than 2)
-	 * Errorchecking: Need to deal with "<>" "< >" "><" "> <"" ">>>" "<<<"
-	 * Echo needs to take in spaces
-	 */
-	// arrangetokens(shell->cmdgroup);
 }

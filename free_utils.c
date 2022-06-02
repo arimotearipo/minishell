@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:25:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/30 16:18:15 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/02 17:56:02 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,17 @@ void	ft_freelst(t_token **list)
 void	clearmemory(t_shell *shell, t_cmdgroup *lst)
 {
 	t_cmdgroup	*temp;
+
 	while (lst != NULL)
 	{
 		ft_freelst(&(lst->tokens));
 		temp = lst->next;
-		// printf("temp: %p\n", temp);
 		free(lst);
 		lst = temp;
 	}
 	free2d(shell->sh_env);
+	free(shell->cmdline);
+	shell->cmdline = NULL;
 	shell->sh_env = NULL;
 }
 

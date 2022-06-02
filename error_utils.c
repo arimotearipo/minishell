@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clone_env.c                                        :+:      :+:    :+:   */
+/*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/05/30 16:18:20 by wwan-taj         ###   ########.fr       */
+/*   Created: 2022/06/02 18:22:12 by wwan-taj          #+#    #+#             */
+/*   Updated: 2022/06/02 18:29:30 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	clone_env(char **envp, t_shell *shell)
+void	checkline(t_shell *shell)
 {
-	int	i;
-	int	j;
+	if (shell->exit == 0)
+		emptycommand(shell);
+	if (shell->exit == 0)
+		redirectionerror(shell);
+	if (shell->exit == 0)
+		checkfirsttoken(shell);
+}
 
-	i = 0;
-	while (envp[i] != NULL)
-		i++;
-	shell->sh_env = malloc(sizeof(char *) * i + 1);
-	j = 0;
-	while (j < i)
-	{
-		shell->sh_env[j] = ft_strdup(envp[j]);
-		j++;
-	}
-	shell->sh_env[j] = NULL;
+int	isnoterror(int errornum)
+{
+	if (errornum == SYNTAXERROR)
+		return (0);
+	if (errornum == NOCOMMAND)
+		return (0);
+	if (errornum == NOEXECUTE)
+		return (0);
+	return (1);
 }
