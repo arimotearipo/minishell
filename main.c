@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:06:04 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/02 18:06:28 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/02 20:24:12 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ int	main(int ac, char **av, char **envp)
 		parser(&shell);
 		checkline(&shell);
 		if (isnoterror(shell.exit))
+		{
 			showlist(shell.cmdgroup);
+			printf("\n\n\n\n");
+			ft_echo(&shell, shell.cmdgroup);
+		}
 		clearmemory(&shell, shell.cmdgroup);
 		// break ;
 	}
