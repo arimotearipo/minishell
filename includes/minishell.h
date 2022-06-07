@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/02 18:29:21 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/08 00:45:05 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_shell
 	int			exit;
 }	t_shell;
 
+void		initshell(t_shell *shell, char **envp);
 void		lexer(char *line, t_shell *shell);
 int			collecttoken(char *line, t_cmdgroup *cmd, int *i);
 void		printerror(t_shell *shell, char *msg, int errortype);
@@ -119,5 +120,7 @@ void		clone_env(char **envp, t_shell *shell);
 char		*ft_getenv(char **env, char *var);
 void		expand(t_shell *shell);
 char		*ft_substrnoquote(char const *s, unsigned int start, size_t len);
+void		export(t_shell *shell, char *arg);
+void		unset(t_shell *shell, char *arg);
 
 #endif
