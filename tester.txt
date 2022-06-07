@@ -41,3 +41,21 @@ str: (echo)      type: 1
 str: (one\two\three)     type: 2
 3
 str: (four)      type: 2
+
+---------------------------------------------------------------------------------------------------
+
+FT_ECHO
+
+echo
+echo -n
+
+echo -n -n hello
+echo -nnnnn hello
+echo -n -nn -n -nn hello
+echo -nnn -n -nnnnn hello
+echo "-nnnn" hello
+
+echo -nnna hello
+echo -n-n-n hello
+
+---------------------------------------------------------------------------------------------------
