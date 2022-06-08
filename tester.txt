@@ -59,3 +59,15 @@ echo -nnna hello
 echo -n-n-n hello
 
 ---------------------------------------------------------------------------------------------------
+
+FT_EXIT
+
+\\ exits
+exit
+exit 123
+exit 3a		\\ bash: exit: a: numeric argument required 
+
+\\ doesnt exit
+exit 1 2	\\ bash: exit: too many arguments
+
+---------------------------------------------------------------------------------------------------

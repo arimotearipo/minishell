@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 14:48:23 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:38:35 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <limits.h>
+# include <sys/cdefs.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -134,5 +135,7 @@ void		exe_cd(t_shell *shell, t_cmdgroup *grp);
 */
 
 int	ft_echo(t_shell *shell, t_cmdgroup *cmd);
+int	ft_pwd(t_shell *shell, t_cmdgroup *cmd);
+int	ft_exit(t_shell *shell, t_cmdgroup *cmd);
 
 #endif
