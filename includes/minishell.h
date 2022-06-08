@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 12:39:22 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/02 20:25:18 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,11 @@ char		*ft_substrnoquote(char const *s, unsigned int start, size_t len);
 void		export(t_shell *shell, char *arg);
 void		unset(t_shell *shell, char *arg);
 int			cd(t_shell *shell, char *arg);
+
+/*
+** BUILT-IN FUNCTIONS
+*/
+
+int	ft_echo(t_shell *shell, t_cmdgroup *cmd);
 
 #endif
