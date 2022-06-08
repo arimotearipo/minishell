@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 11:59:46 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 13:58:02 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:50:47 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,19 @@ int	cd(t_shell *shell, char *arg)
 	free(oldpwd);
 	free(newarg);
 	return (0);
+}
+
+void	exe_cd(t_shell *shell, t_cmdgroup *grp)
+{
+	t_token	*first;
+
+	first = grp->tokens;
+	grp->tokens = grp->tokens->next;
+	if (grp->tokens == NULL)
+	{
+		cd(shell, getenv("HOME"));
+		return ;
+	}
+	cd(shell, grp->tokens->str);
+	grp->tokens = first;
 }

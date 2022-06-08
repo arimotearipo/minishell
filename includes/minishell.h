@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/02 20:25:18 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:48:23 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,12 @@ void		clone_env(char **envp, t_shell *shell);
 char		*ft_getenv(char **env, char *var);
 void		expand(t_shell *shell);
 char		*ft_substrnoquote(char const *s, unsigned int start, size_t len);
-void		export(t_shell *shell, char *arg);
 void		unset(t_shell *shell, char *arg);
+void		exe_unset(t_shell *shell, t_cmdgroup *grp);
+void		export(t_shell *shell, char *arg);
+void		exe_export(t_shell *shell, t_cmdgroup *grp);
 int			cd(t_shell *shell, char *arg);
+void		exe_cd(t_shell *shell, t_cmdgroup *grp);
 
 /*
 ** BUILT-IN FUNCTIONS

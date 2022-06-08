@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 12:07:57 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:15:50 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	showenv(t_shell *shell)
 
 	len = ft_2darrlen(shell->sh_env);
 	i = 0;
-	while (i < len)
+	while (i < len - 1)
 	{
+		if (!ft_strcchr(shell->sh_env[i], "?", '='))
+			i++;
 		printf("%s\n", shell->sh_env[i]);
 		i++;
 	}

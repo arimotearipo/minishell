@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 00:30:32 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 12:08:00 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:47:42 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,18 @@ void	unset(t_shell *shell, char *arg)
 	new_env[i] = NULL;
 	free2d(shell->sh_env);
 	shell->sh_env = new_env;
+}
+
+void	exe_unset(t_shell *shell, t_cmdgroup *grp)
+{
+	t_token	*first;
+
+	first = grp->tokens;
+	grp->tokens = grp->tokens->next;
+	while (grp->tokens != NULL && grp->tokens->type == ARG)
+	{
+		unset(shell, grp->tokens->str);
+		grp->tokens = grp->tokens->next;
+	}
+	grp->tokens = first;
 }
