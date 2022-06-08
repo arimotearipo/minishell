@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:06:04 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 01:49:47 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/08 13:57:55 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,7 @@
 // 		shell.exit = 0;
 // 		line = readline("minishell>% "); // Jangan lupa comment free(line)
 // 		if (ft_strcchr(line, "exit", ' ') == 0)
-// 			break ;
-// 		if (ft_strcchr(line, "env", ' ') == 0)
-// 			showenv(&shell);
-// 		if (ft_strcchr(line, "export", ' ') == 0)
-// 			export(&shell, "ZZZZZZZZZZZZZZZZZZZZZ=AKSDASDASDASDASDASDASDASDASD");
+// 			exit(0);
 // 		add_history(line);
 // 		lexer(line, &shell);
 // 		parser(&shell);
@@ -54,23 +50,44 @@
 // 	return (0);
 // }
 
-int	main(int ac, char **av, char **envp)
-{
-	t_shell shell;
 
-	(void)ac;
-	(void)av;
-	initshell(&shell, envp);
-	// showenv(&shell);
-	// printf("INIT----------------------------------\n");
-	// export(&shell, "testing=555");
-	// showenv(&shell);
-	// printf("EXPORT----------------------------------\n");
-	// unset(&shell, "testing");
-	// showenv(&shell);
-	// printf("UNSET TESTING----------------------------------\n");
-	unset(&shell, "SHELL");
-	showenv(&shell);
-	printf("UNSET TERM----------------------------------\n");
-	return (0);	
-}
+// main() function that is used to test the export and unset built-in functions
+// int	main(int ac, char **av, char **envp)
+// {
+// 	t_shell shell;
+
+// 	(void)ac;
+// 	(void)av;
+// 	initshell(&shell, envp);
+// 	showenv(&shell);
+// 	printf("INIT----------------------------------\n");
+// 	export(&shell, "testing=555");
+// 	showenv(&shell);
+// 	printf("EXPORT----------------------------------\n");
+// 	export(&shell, "additionalvar=aksjdhakhsd");
+// 	showenv(&shell);
+// 	printf("EXPORT----------------------------------\n");
+// 	// unset(&shell, "testing");
+// 	// showenv(&shell);
+// 	// printf("UNSET TESTING----------------------------------\n");
+// 	unset(&shell, "nothing");
+// 	showenv(&shell);
+// 	printf("UNSET nothing----------------------------------\n");
+// 	return (0);	
+// }
+
+// main() function that is used to test the cd built-in function
+// int	main(int ac, char **av, char **ep)
+// {
+// 	t_shell	shell;
+
+// 	(void)ac;
+// 	(void)av;
+// 	initshell(&shell, ep);
+// 	showenv(&shell);
+// 	printf("-----INIT-----\n");
+// 	cd(&shell, "../libft");
+// 	showenv(&shell);
+// 	printf("-----CD-----\n");
+// 	return (0);
+// }

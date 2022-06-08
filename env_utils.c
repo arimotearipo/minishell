@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 01:49:05 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:07:57 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,18 @@ char	*getvarname(char *str)
 		i++;
 	varname = ft_substr(str, 0, i);
 	return (varname);
+}
+
+int	getvarindex(t_shell *shell, char *arg)
+{
+	int	m;
+
+	m = 0;
+	while (shell->sh_env[m] != NULL)
+	{
+		if (!ft_strcchr(shell->sh_env[m], arg, '='))
+			break ;
+		m++;
+	}
+	return (m);
 }
