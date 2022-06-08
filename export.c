@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:13:50 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/07 16:12:10 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:08:54 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	export(t_shell *shell, char *arg)
 		return ;
 	if (valid == 0)
 	{
-		printerror(shell, "Error. Argument is not a valid indentifier\n", 1);
+		printerror(shell, "Error. Argument is not a valid indentifier\n", 2);
 		return ;
 	}
 	count = ft_2darrlen(shell->sh_env);
