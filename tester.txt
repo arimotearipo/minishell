@@ -24,6 +24,8 @@ $'hello'
 '$ USER'
 '$"USER'
 
+wwan-taj  $ hello hello wwan-taj  $ USER $'USER' $USER $NOTHING $ USER $"USER
+
 a<<b'''' '''''''''''c'\"d\" | echo 'a'b>c makan\"hello\"world'lagi'\"dan\"next | echo 'one'\"two\"three|four
 0
 str: (a)         type: 2
@@ -71,3 +73,4 @@ exit 3a		\\ bash: exit: a: numeric argument required
 exit 1 2	\\ bash: exit: too many arguments
 
 ---------------------------------------------------------------------------------------------------
+

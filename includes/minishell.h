@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 14:38:35 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:58:59 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int			getvarindex(t_shell *shell, char *arg);
 int			searchdollarsign(char *str);
 void		expandstr(char **new, char **str);
 void		handledollar(char *cur, char next, int openquote, char quotetype);
+void		markquote(char **var, int quote1, int quote2);
 void		creategroup(t_cmdgroup **cmdgroup, int count);
 int			gettokenlen(char *line, int *i);
 int			getredlen(char *line, char c, int *i);
@@ -122,20 +123,22 @@ void		free2d(char **arr);
 void		clone_env(char **envp, t_shell *shell);
 char		*ft_getenv(char **env, char *var);
 void		expand(t_shell *shell);
-char		*ft_substrnoquote(char const *s, unsigned int start, size_t len);
-void		unset(t_shell *shell, char *arg);
-void		exe_unset(t_shell *shell, t_cmdgroup *grp);
+char		*ft_substrnoquote(char *s, unsigned int start, size_t len);
 void		export(t_shell *shell, char *arg);
-void		exe_export(t_shell *shell, t_cmdgroup *grp);
-int			cd(t_shell *shell, char *arg);
-void		exe_cd(t_shell *shell, t_cmdgroup *grp);
+void		unset(t_shell *shell, char *arg);
+void		updateexitvalue(t_shell *shell);
 
 /*
 ** BUILT-IN FUNCTIONS
 */
+int	exe_echo(t_shell *shell, t_cmdgroup *cmd);
+int	exe_pwd(t_shell *shell, t_cmdgroup *cmd);
+int	exe_exit(t_shell *shell, t_cmdgroup *cmd);
+void		exe_unset(t_shell *shell, t_cmdgroup *grp);
+void		exe_export(t_shell *shell, t_cmdgroup *grp);
+void		exe_cd(t_shell *shell, t_cmdgroup *grp);
 
-int	ft_echo(t_shell *shell, t_cmdgroup *cmd);
-int	ft_pwd(t_shell *shell, t_cmdgroup *cmd);
-int	ft_exit(t_shell *shell, t_cmdgroup *cmd);
+// EXECUTION
+void	exe_builtin(t_shell *shell);
 
 #endif

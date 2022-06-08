@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 00:30:32 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 14:47:42 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/08 20:20:06 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	unset(t_shell *shell, char *arg)
 
 	arrlen = ft_2darrlen(shell->sh_env);
 	m = getvarindex(shell, arg);
+	if (shell->sh_env[m] == NULL)
+		return ;
 	new_env = malloc(sizeof(char *) * arrlen);
 	i = 0;
 	j = 0;

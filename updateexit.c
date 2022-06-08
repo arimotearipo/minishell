@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   updateexit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/08 12:44:33 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/08 15:21:29 by wwan-taj         ###   ########.fr       */
+/*   Created: 2022/06/08 15:29:43 by wwan-taj          #+#    #+#             */
+/*   Updated: 2022/06/08 15:35:12 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exe_pwd(t_shell *shell, t_cmdgroup *cmd)
+void	updateexitvalue(t_shell *shell)
 {
-	(void)shell;
-	cmd->topass = malloc(PATH_MAX);
-	if (getcwd(cmd->topass, PATH_MAX) == NULL)
-		return (-1);
-	printf("%s\n", cmd->topass);
-	return (0);
+	char	*exitvaluestr;
+	char	*exitnum;
+
+	exitnum = ft_itoa(shell->exit);
+	exitvaluestr = ft_strjoin("?=", exitnum);
+	unset(shell, "?");
+	export(shell, exitvaluestr);
+	free(exitnum);
+	free(exitvaluestr);
 }

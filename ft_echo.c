@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:26:21 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/07 16:24:18 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:14:28 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	isechooption(t_token **tokens, int *option)
 	}
 }
 
-int	ft_echo(t_shell *shell, t_cmdgroup *cmd)
+int	exe_echo(t_shell *shell, t_cmdgroup *cmd)
 {
 	t_token	*tokens;
 	int		option;

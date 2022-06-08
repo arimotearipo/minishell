@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:38:28 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/02 18:15:34 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:58:18 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	assignopeningquote(char const *s, unsigned int *start, int *flag,
 	}
 }
 
-char	*ft_substrnoquote(char const *s, unsigned int start, size_t len)
+char	*ft_substrnoquote(char *s, unsigned int start, size_t len)
 {
 	char	*str;
 	size_t	i;
@@ -38,10 +38,10 @@ char	*ft_substrnoquote(char const *s, unsigned int start, size_t len)
 	{
 		assignopeningquote(s, &start, &flag, &openingquote);
 		while (i < len && !ft_strchr("'\"", s[start]) && flag == 0)
-			str[i++] = s[(start)++];
+			str[i++] = (char)s[(start)++];
 		assignopeningquote(s, &start, &flag, &openingquote);
 		while (s[start] != openingquote && i < len && flag == 1)
-			str[i++] = s[(start)++];
+			str[i++] = (char)s[(start)++];
 		flag = 0;
 		(start)++;
 	}

@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:17:46 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/02 18:18:24 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:58:46 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,17 @@ void	handledollar(char *cur, char next, int openquote, char quotetype)
 		*cur = (char)(-36);
 	else if (ft_strchr("'\"", next) && openquote == 0)
 		*cur = (char)(DOLLARDEL);
+}
+
+void	markquote(char **var, int quote1, int quote2)
+{
+	int	i;
+
+	i = 0;
+	while ((*var)[i] != '\0')
+	{
+		if ((*var)[i] == quote1 || (*var)[i] == quote2)
+			(*var)[i] = ((char)(*var)[i]) * -1;
+		i++;
+	}
 }

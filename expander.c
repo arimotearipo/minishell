@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 17:12:09 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/02 18:18:27 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/08 18:00:17 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	translate(t_shell *shell, t_token *token)
 		str = ft_substr(token->str, j, i - j);
 		expandstr(&new, &str);
 		var = get_var(shell, token, &i);
+		markquote(&var, SQUOTE, DQUOTE);
 		expandstr(&new, &var);
 	}
 	free(token->str);
@@ -125,6 +126,7 @@ void	expand(t_shell *shell)
 				translate(shell, cmd->tokens);
 			}
 			stripquote(shell, cmd->tokens);
+			markquote(&(cmd->tokens->str), SQUOTE * -1, DQUOTE * -1);
 			cmd->tokens = cmd->tokens->next;
 		}
 		cmd->tokens = firsttoken;
