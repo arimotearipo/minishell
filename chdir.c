@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 11:59:46 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 14:50:47 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:57:31 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	exe_cd(t_shell *shell, t_cmdgroup *grp)
 	grp->tokens = grp->tokens->next;
 	if (grp->tokens == NULL)
 	{
+		grp->tokens = first;
 		cd(shell, getenv("HOME"));
 		return ;
 	}
