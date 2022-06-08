@@ -23,6 +23,7 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include "libft.h"
+# include <sys/cdefs.h>
 
 /*
 ** EXIT STATUS
@@ -90,6 +91,7 @@ typedef struct s_shell
 	int			exit;
 }	t_shell;
 
+void		initshell(t_shell *shell, char **envp);
 void		lexer(char *line, t_shell *shell);
 int			collecttoken(char *line, t_cmdgroup *cmd, int *i);
 void		printerror(t_shell *shell, char *msg, int errortype);
@@ -105,6 +107,7 @@ void		clearmemory(t_shell *shell, t_cmdgroup *lst);
 void		showlist(t_cmdgroup *cmd);
 void		showenv(t_shell *shell);
 char		*getvarname(char *str);
+int			getvarindex(t_shell *shell, char *arg);
 int			searchdollarsign(char *str);
 void		expandstr(char **new, char **str);
 void		handledollar(char *cur, char next, int openquote, char quotetype);
@@ -119,6 +122,9 @@ void		clone_env(char **envp, t_shell *shell);
 char		*ft_getenv(char **env, char *var);
 void		expand(t_shell *shell);
 char		*ft_substrnoquote(char const *s, unsigned int start, size_t len);
+void		export(t_shell *shell, char *arg);
+void		unset(t_shell *shell, char *arg);
+int			cd(t_shell *shell, char *arg);
 
 /*
 ** BUILT-IN FUNCTIONS
