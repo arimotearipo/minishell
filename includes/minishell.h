@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
 /*   Updated: 2022/06/08 14:38:35 by mahmad-j         ###   ########.fr       */
@@ -24,6 +24,7 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include "libft.h"
+# include <sys/cdefs.h>
 
 /*
 ** EXIT STATUS
@@ -91,6 +92,7 @@ typedef struct s_shell
 	int			exit;
 }	t_shell;
 
+void		initshell(t_shell *shell, char **envp);
 void		lexer(char *line, t_shell *shell);
 int			collecttoken(char *line, t_cmdgroup *cmd, int *i);
 void		printerror(t_shell *shell, char *msg, int errortype);
@@ -106,6 +108,7 @@ void		clearmemory(t_shell *shell, t_cmdgroup *lst);
 void		showlist(t_cmdgroup *cmd);
 void		showenv(t_shell *shell);
 char		*getvarname(char *str);
+int			getvarindex(t_shell *shell, char *arg);
 int			searchdollarsign(char *str);
 void		expandstr(char **new, char **str);
 void		handledollar(char *cur, char next, int openquote, char quotetype);
@@ -120,6 +123,12 @@ void		clone_env(char **envp, t_shell *shell);
 char		*ft_getenv(char **env, char *var);
 void		expand(t_shell *shell);
 char		*ft_substrnoquote(char const *s, unsigned int start, size_t len);
+void		unset(t_shell *shell, char *arg);
+void		exe_unset(t_shell *shell, t_cmdgroup *grp);
+void		export(t_shell *shell, char *arg);
+void		exe_export(t_shell *shell, t_cmdgroup *grp);
+int			cd(t_shell *shell, char *arg);
+void		exe_cd(t_shell *shell, t_cmdgroup *grp);
 
 /*
 ** BUILT-IN FUNCTIONS

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clone_env.c                                        :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/02 18:12:01 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:15:50 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,14 @@
 void	showenv(t_shell *shell)
 {
 	int	i;
+	int	len;
 
+	len = ft_2darrlen(shell->sh_env);
 	i = 0;
-	while (shell->sh_env[i + 1] != NULL)
+	while (i < len - 1)
 	{
+		if (!ft_strcchr(shell->sh_env[i], "?", '='))
+			i++;
 		printf("%s\n", shell->sh_env[i]);
 		i++;
 	}
@@ -76,4 +80,18 @@ char	*getvarname(char *str)
 		i++;
 	varname = ft_substr(str, 0, i);
 	return (varname);
+}
+
+int	getvarindex(t_shell *shell, char *arg)
+{
+	int	m;
+
+	m = 0;
+	while (shell->sh_env[m] != NULL)
+	{
+		if (!ft_strcchr(shell->sh_env[m], arg, '='))
+			break ;
+		m++;
+	}
+	return (m);
 }

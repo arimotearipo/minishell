@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:25:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/02 17:56:02 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/08 00:28:46 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	clearmemory(t_shell *shell, t_cmdgroup *lst)
 {
 	t_cmdgroup	*temp;
 
+	if (lst == NULL)
+		return ;
 	while (lst != NULL)
 	{
 		ft_freelst(&(lst->tokens));
@@ -39,10 +41,8 @@ void	clearmemory(t_shell *shell, t_cmdgroup *lst)
 		free(lst);
 		lst = temp;
 	}
-	free2d(shell->sh_env);
 	free(shell->cmdline);
 	shell->cmdline = NULL;
-	shell->sh_env = NULL;
 }
 
 void	free2d(char **arr)
