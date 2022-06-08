@@ -1,5 +1,5 @@
 SRCS = main.c lexer.c error.c error_utils.c list_utils.c free_utils.c tokenlength.c parser.c \
-		env_utils.c expander.c expander2.c ft_substrnoquote.c ft_echo.c\
+		env_utils.c expander.c expander2.c ft_substrnoquote.c ft_echo.c ft_pwd.c ft_exit.c\
 
 OBJS = $(SRCS:.c=.o)
 

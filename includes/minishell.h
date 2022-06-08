@@ -6,7 +6,7 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/02 20:25:18 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:38:35 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <limits.h>
+# include <sys/cdefs.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -125,5 +126,7 @@ char		*ft_substrnoquote(char const *s, unsigned int start, size_t len);
 */
 
 int	ft_echo(t_shell *shell, t_cmdgroup *cmd);
+int	ft_pwd(t_shell *shell, t_cmdgroup *cmd);
+int	ft_exit(t_shell *shell, t_cmdgroup *cmd);
 
 #endif
