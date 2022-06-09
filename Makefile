@@ -1,6 +1,6 @@
 SRCS = main.c initshell.c lexer.c error.c error_utils.c list_utils.c free_utils.c tokenlength.c parser.c \
 		env_utils.c expander.c expander2.c ft_substrnoquote.c export.c unset.c chdir.c ft_echo.c ft_pwd.c ft_exit.c \
-		execute.c updateexit.c \
+		execute.c updateexit.c getallpath.c \
 
 OBJS = $(SRCS:.c=.o)
 

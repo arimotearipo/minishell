@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:06:04 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 22:05:29 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/09 16:25:41 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av, char **envp)
 	// char	*line = "echo .. hello world \"test\" | asda >> <<  | cat -e < \"123 ' > << | >>";
 	// line = ft_strdup("echo test > xx >");
 	// line = ft_strdup("a<<b'''' '''''''''''c'\"d\" | echo 'a'b>c makan\"hello\"world'lagi'\"dan\"next | echo 'one'\"two\"three|four");
-	// line = ft_strdup("echo as'''");
+	// line = ft_strdup("cd ..");
 
 	(void)av;
 	if (ac != 1)

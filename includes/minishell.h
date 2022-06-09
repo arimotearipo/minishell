@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 13:10:03 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/09 16:04:20 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void		parser(t_shell *shell);
 void		free2d(char **arr);
 void		clone_env(char **envp, t_shell *shell);
 char		*ft_getenv(char **env, char *var);
+char		**getallpath(t_shell *shell);
 void		expand(t_shell *shell);
 char		*ft_substrnoquote(char *s, unsigned int start, size_t len);
 int			isexisting(t_shell *shell, char *arg);

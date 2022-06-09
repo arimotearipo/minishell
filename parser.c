@@ -6,12 +6,13 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:28:06 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 21:28:17 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/09 17:42:34 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* This isbuiltin() function might be redundant */
 int	isbuiltin(char *str)
 {
 	if (ft_strcmp(str, "echo") == 0)
@@ -31,6 +32,7 @@ int	isbuiltin(char *str)
 	return (0);
 }
 
+/* This iscmd() function might be redundant */
 int	iscmd(char *str, t_shell *shell)
 {
 	char			**binpath;
@@ -62,15 +64,11 @@ int	iscmd(char *str, t_shell *shell)
 
 void	assigntype(t_token *token, t_cmdgroup *cmd, int prevtype, t_shell *sh)
 {
+	(void)sh;
 	if (prevtype == RDINPUT)
 		token->type = DELIM;
 	else if (!ft_strcmp(".", token->str) || !ft_strcmp("..", token->str))
 		token->type = ARG;
-	else if ((iscmd(token->str, sh) || isbuiltin(token->str)) && !cmd->cmdcnt)
-	{
-		token->type = COMMAND;
-		cmd->cmdcnt += 1;
-	}
 	else if (ft_strcmp("<<", token->str) == 0)
 		token->type = RDINPUT;
 	else if (ft_strcmp("<", token->str) == 0)
@@ -79,6 +77,11 @@ void	assigntype(t_token *token, t_cmdgroup *cmd, int prevtype, t_shell *sh)
 		token->type = OUTPUT;
 	else if (ft_strcmp(">>", token->str) == 0)
 		token->type = APPEND;
+	else if (/*(iscmd(token->str, sh) || isbuiltin(token->str)) && !cmd->cmdcnt*/token->prev == NULL)
+	{
+		token->type = COMMAND;
+		cmd->cmdcnt += 1;
+	}
 	else if ((prevtype >= INPUT && prevtype <= APPEND) || prevtype == DELIM)
 		token->type = FD;
 	else if (ft_strcmp("|", token->str) == 0)

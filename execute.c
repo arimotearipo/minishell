@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:07:40 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 14:54:23 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:39:36 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ char	*getcommandpath(t_shell *shell, char *str, int i)
 	char			*path;
 
 	binpath = ft_split(ft_getenv(shell->sh_env, "PATH"), ':');
+	// binpath = getallpath(shell);
 	while (binpath[i] != NULL)
 	{
 		dir = opendir(binpath[i++]);
@@ -80,18 +81,27 @@ char	*getcommandpath(t_shell *shell, char *str, int i)
 	return (NULL);
 }
 
-void	ft_execve(t_shell *shell)
+int	ft_execve(t_shell *shell)
 {
 	pid_t	pid;
+	char	*str;
+	char	**args;
+	char	*path;
+	int		status;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(getcommandpath(shell, shell->cmdgroup->tokens->str, 0),
-			argarr(shell, shell->cmdgroup), shell->sh_env);
+		str = shell->cmdgroup->tokens->str;
+		args = argarr(shell, shell->cmdgroup);
+		path = getcommandpath(shell, shell->cmdgroup->tokens->str, 0);
+		execve(str, args, shell->sh_env);
+		execve(path, args, shell->sh_env);
+		exit(1);
 	}
 	else
-		waitpid(0, NULL, 0);
+		waitpid(0, &status, 0);
+	return (status);
 }
 
 void	exe_builtin(t_shell *shell)
@@ -110,6 +120,6 @@ void	exe_builtin(t_shell *shell)
 		showenv(shell);
 	else if (ft_strcmp(shell->cmdgroup->tokens->str, "exit") == 0)
 		exe_exit(shell, shell->cmdgroup);
-	else
-		ft_execve(shell);
+	else if (ft_execve(shell))
+		printerror(shell, "Error. Command not found.\n", NOCOMMAND);
 }

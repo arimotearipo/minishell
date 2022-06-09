@@ -1,46 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   getallpath.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 18:25:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 15:49:08 by wwan-taj         ###   ########.fr       */
+/*   Created: 2022/06/09 15:57:34 by wwan-taj          #+#    #+#             */
+/*   Updated: 2022/06/09 17:42:52 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_freelst(t_token **list)
+/* This getallpath() function might be redundant */
+char	**getallpath(t_shell *shell)
 {
-	t_token	*l;
-	t_token	*next;
+	char	**binpath;
+	char	*pwd;
 
-	l = *list;
-	while (l)
-	{
-		next = l->next;
-		free(l->str);
-		free(l);
-		l = next;
-	}
-	*list = NULL;
-}
-
-void	clearmemory(t_shell *shell, t_cmdgroup *lst)
-{
-	t_cmdgroup	*temp;
-
-	if (lst == NULL)
-		return ;
-	while (lst != NULL)
-	{
-		ft_freelst(&(lst->tokens));
-		temp = lst->next;
-		free(lst);
-		lst = temp;
-	}
-	free(shell->cmdline);
-	shell->cmdline = NULL;
+	binpath = ft_split(ft_getenv(shell->sh_env, "PATH"), ':');
+	pwd = ft_getenv(shell->sh_env, "PWD");
+	ft_append2d(&binpath, pwd);
+	return (binpath);
 }
