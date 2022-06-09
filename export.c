@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:13:50 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 13:11:05 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:54:44 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	replacevar(t_shell *shell, char *arg, int i)
 {
 	int	valid;
-	
+
 	valid = ft_strchri(arg, 0, '=');
 	if (valid <= 0)
 	{
@@ -56,9 +56,9 @@ void	export(t_shell *shell, char *arg)
 }
 
 // Will check whether the arg argument passed is an already existing variable
-// in the 2D shell environment. It will return the index of the var if it is found,
-// it will return -1 if it is not found.
-int		isexisting(t_shell *shell, char *arg)
+// in the 2D shell environment. It will return the index of the var if it is
+// found, it will return -1 if it is not found.
+int	isexisting(t_shell *shell, char *arg)
 {
 	int		i;
 	int		index;

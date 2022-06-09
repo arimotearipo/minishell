@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 00:30:32 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 20:20:06 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:50:46 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ void	unset(t_shell *shell, char *arg)
 			j++;
 		if (shell->sh_env[j] == NULL)
 			break ;
-		new_env[i] = ft_strdup(shell->sh_env[j]);
-		i++;
-		j++;
+		new_env[i++] = ft_strdup(shell->sh_env[j++]);
 	}
 	new_env[i] = NULL;
 	free2d(shell->sh_env);

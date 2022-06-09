@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 16:04:20 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:55:15 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_shell
 	char		**sh_env;
 	int			cmdgrpcount;
 	int			exit;
+	
 }	t_shell;
 
 void		initshell(t_shell *shell, char **envp);
@@ -134,9 +135,9 @@ void		updateexitvalue(t_shell *shell);
 /*
 ** BUILT-IN FUNCTIONS
 */
-int	exe_echo(t_shell *shell, t_cmdgroup *cmd);
-int	exe_pwd(t_shell *shell, t_cmdgroup *cmd);
-int	exe_exit(t_shell *shell, t_cmdgroup *cmd);
+int			exe_echo(t_shell *shell, t_cmdgroup *cmd);
+int			exe_pwd(t_shell *shell, t_cmdgroup *cmd);
+int			exe_exit(t_shell *shell, t_cmdgroup *cmd);
 void		exe_unset(t_shell *shell, t_cmdgroup *grp);
 void		exe_export(t_shell *shell, t_cmdgroup *grp);
 void		exe_cd(t_shell *shell, t_cmdgroup *grp);

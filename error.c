@@ -6,12 +6,15 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:32 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/02 18:30:22 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:53:36 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* This checkfirstoken() function might be redundant as checking for command
+** not found is done on ft_execve()
+*/
 void	checkfirsttoken(t_shell *shell)
 {
 	t_cmdgroup	*cmd;

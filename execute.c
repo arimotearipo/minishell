@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:07:40 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 18:39:36 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:47:59 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ char	*getcommandpath(t_shell *shell, char *str, int i)
 	char			*path;
 
 	binpath = ft_split(ft_getenv(shell->sh_env, "PATH"), ':');
-	// binpath = getallpath(shell);
 	while (binpath[i] != NULL)
 	{
 		dir = opendir(binpath[i++]);

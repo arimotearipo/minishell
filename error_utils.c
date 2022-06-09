@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:22:12 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 17:22:01 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:52:49 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	checkline(t_shell *shell)
 		emptycommand(shell);
 	if (shell->exit == 0)
 		redirectionerror(shell);
-	// if (shell->exit == 0)
-	// 	checkfirsttoken(shell);
 }
 
 int	isnoterror(int errornum)
