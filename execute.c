@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:07:40 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 22:17:16 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:54:23 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,20 @@ char	*getcommandpath(t_shell *shell, char *str, int i)
 	return (NULL);
 }
 
+void	ft_execve(t_shell *shell)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		execve(getcommandpath(shell, shell->cmdgroup->tokens->str, 0),
+			argarr(shell, shell->cmdgroup), shell->sh_env);
+	}
+	else
+		waitpid(0, NULL, 0);
+}
+
 void	exe_builtin(t_shell *shell)
 {
 	if (ft_strcmp(shell->cmdgroup->tokens->str, "echo") == 0)
@@ -97,8 +111,5 @@ void	exe_builtin(t_shell *shell)
 	else if (ft_strcmp(shell->cmdgroup->tokens->str, "exit") == 0)
 		exe_exit(shell, shell->cmdgroup);
 	else
-	{
-	
-		printf("execve: %d\n", execve(getcommandpath(shell, shell->cmdgroup->tokens->str, 0), argarr(shell, shell->cmdgroup), shell->sh_env));
-	}
+		ft_execve(shell);
 }
