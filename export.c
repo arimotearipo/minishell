@@ -6,13 +6,13 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:13:50 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 20:16:30 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/09 13:11:05 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	replacevar(t_shell *shell, char *arg, int i)
+void	replacevar(t_shell *shell, char *arg, int i)
 {
 	int	valid;
 	
@@ -55,6 +55,9 @@ void	export(t_shell *shell, char *arg)
 	shell->sh_env = new_env;
 }
 
+// Will check whether the arg argument passed is an already existing variable
+// in the 2D shell environment. It will return the index of the var if it is found,
+// it will return -1 if it is not found.
 int		isexisting(t_shell *shell, char *arg)
 {
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 16:58:59 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/09 13:10:03 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ void		clone_env(char **envp, t_shell *shell);
 char		*ft_getenv(char **env, char *var);
 void		expand(t_shell *shell);
 char		*ft_substrnoquote(char *s, unsigned int start, size_t len);
+int			isexisting(t_shell *shell, char *arg);
+void		replacevar(t_shell *shell, char *arg, int i);
 void		export(t_shell *shell, char *arg);
 void		unset(t_shell *shell, char *arg);
 void		updateexitvalue(t_shell *shell);

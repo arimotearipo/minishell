@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 14:15:50 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/09 13:03:39 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	clone_env(char **envp, t_shell *shell)
 	shell->sh_env[++j] = NULL;
 }
 
+// Will retrieve the pointer next to the '=' sign in the 2D shell env array
 char	*ft_getenv(char **env, char *var)
 {
 	int		i;
@@ -70,6 +71,7 @@ char	*ft_getenv(char **env, char *var)
 	return (pointer + 1);
 }
 
+// Will return a malloced string from the beginning right before the '=' sign in the 2D shell env array
 char	*getvarname(char *str)
 {
 	int		i;
