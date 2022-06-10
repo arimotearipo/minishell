@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 18:52:21 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/10 23:57:04 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,10 @@ char	*getvarname(char *str)
 	return (varname);
 }
 
+// Will return the index of the variable in the sh_env specified by arg
+// The string passed as arg should not include the '=' sign.
+// This function may be redundant and obsolete as isexisting() function
+// does almost the same thing.
 int	getvarindex(t_shell *shell, char *arg)
 {
 	int	m;
@@ -93,8 +97,8 @@ int	getvarindex(t_shell *shell, char *arg)
 	while (shell->sh_env[m] != NULL)
 	{
 		if (!ft_strcchr(shell->sh_env[m], arg, '='))
-			break ;
+			return (m);
 		m++;
 	}
-	return (m);
+	return (-1);
 }

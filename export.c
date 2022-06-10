@@ -6,25 +6,31 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:13:50 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 18:54:44 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/11 00:11:47 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	replacevar(t_shell *shell, char *arg, int i)
+int	replacevar(t_shell *shell, char *arg)
 {
-	int	valid;
+	int		valid;
+	char	*var;
+	int		index;
 
 	valid = ft_strchri(arg, 0, '=');
-	if (valid <= 0)
+	var = ft_substr(arg, 0, ft_strchri(arg, 0, '='));
+	index = getvarindex(shell, var);
+	free(var);
+	if (valid <= 0 || index < 0)
 	{
 		if (valid == 0)
 			printerror(shell, "Error. Argument is not a valid indentifier\n", 2);
-		return ;
+		return (0);
 	}
-	free(shell->sh_env[i]);
-	shell->sh_env[i] = ft_strdup(arg);
+	free(shell->sh_env[index]);
+	shell->sh_env[index] = ft_strdup(arg);
+	return (1);
 }
 
 void	export(t_shell *shell, char *arg)
@@ -56,7 +62,9 @@ void	export(t_shell *shell, char *arg)
 }
 
 // Will check whether the arg argument passed is an already existing variable
-// in the 2D shell environment. It will return the index of the var if it is
+// in the 2D shell environment. The string passed in arg is the full argument
+// that includes the '=' sign and the value of the variable
+// It will return the index of the var if it is
 // found, it will return -1 if it is not found.
 int	isexisting(t_shell *shell, char *arg)
 {
@@ -77,17 +85,18 @@ int	isexisting(t_shell *shell, char *arg)
 void	exe_export(t_shell *shell, t_cmdgroup *grp)
 {
 	t_token	*first;
-	int		i;
 
 	first = grp->tokens;
 	grp->tokens = grp->tokens->next;
 	while (grp->tokens != NULL && grp->tokens->type == ARG)
 	{
-		i = isexisting(shell, grp->tokens->str);
-		if (i >= 0)
-			replacevar(shell, grp->tokens->str, i);
-		else
+		if (replacevar(shell, grp->tokens->str) == 0)
 			export(shell, grp->tokens->str);
+		// i = isexisting(shell, grp->tokens->str);
+		// if (i >= 0)
+		// 	replacevar(shell, grp->tokens->str, i);
+		// else
+		// 	export(shell, grp->tokens->str);
 		grp->tokens = grp->tokens->next;
 	}
 	grp->tokens = first;

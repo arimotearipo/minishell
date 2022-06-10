@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 18:55:15 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/11 00:07:04 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # define MINISHELL_H
 
 # include <limits.h>
+# include <linux/limits.h>
 # include <sys/cdefs.h>
+# include <sys/wait.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -24,7 +26,6 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include "libft.h"
-# include <sys/cdefs.h>
 
 /*
 ** EXIT STATUS
@@ -127,7 +128,7 @@ char		**getallpath(t_shell *shell);
 void		expand(t_shell *shell);
 char		*ft_substrnoquote(char *s, unsigned int start, size_t len);
 int			isexisting(t_shell *shell, char *arg);
-void		replacevar(t_shell *shell, char *arg, int i);
+int			replacevar(t_shell *shell, char *arg);
 void		export(t_shell *shell, char *arg);
 void		unset(t_shell *shell, char *arg);
 void		updateexitvalue(t_shell *shell);
