@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:13:50 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/11 00:14:54 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/11 00:25:29 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,14 @@
 
 int	replacevar(t_shell *shell, char *arg)
 {
-	int		valid;
 	char	*var;
 	int		index;
 
-	valid = ft_strchri(arg, 0, '=');
 	var = ft_substr(arg, 0, ft_strchri(arg, 0, '='));
 	index = getvarindex(shell, var);
 	free(var);
-	if (valid <= 0 || index < 0)
-	{
-		if (valid == 0)
-			printerror(shell, "Error. Argument is not a valid indentifier\n", 2);
+	if (index < 0)
 		return (0);
-	}
 	free(shell->sh_env[index]);
 	shell->sh_env[index] = ft_strdup(arg);
 	return (1);
