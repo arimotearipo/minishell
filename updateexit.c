@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:29:43 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 18:55:34 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/11 00:40:04 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	updateexitvalue(t_shell *shell)
 	exitnum = ft_itoa(shell->exit);
 	exitvaluestr = ft_strjoin("?=", exitnum);
 	unset(shell, "?");
-	export(shell, exitvaluestr);
+	insertvar(shell, exitvaluestr);
 	free(exitnum);
 	free(exitvaluestr);
 }

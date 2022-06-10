@@ -6,28 +6,28 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:13:50 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/11 00:25:29 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/11 00:50:23 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	replacevar(t_shell *shell, char *arg)
+void	replacevar(t_shell *shell, char *arg, int index)
 {
-	char	*var;
-	int		index;
-
-	var = ft_substr(arg, 0, ft_strchri(arg, 0, '='));
-	index = getvarindex(shell, var);
-	free(var);
-	if (index < 0)
-		return (0);
+	int		valid;
+	
+	valid = ft_strchri(arg, 0, '=');
+	if (valid <= 0)
+	{
+		if (valid == 0)
+			printerror(shell, "Error. Argument isn't a valid indentifier\n", 2);
+		return ;
+	}
 	free(shell->sh_env[index]);
 	shell->sh_env[index] = ft_strdup(arg);
-	return (1);
 }
 
-void	export(t_shell *shell, char *arg)
+void	insertvar(t_shell *shell, char *arg)
 {
 	char	**new_env;
 	int		valid;
@@ -38,7 +38,7 @@ void	export(t_shell *shell, char *arg)
 	if (valid <= 0)
 	{
 		if (valid == 0)
-			printerror(shell, "Error. Argument is not a valid indentifier\n", 2);
+			printerror(shell, "Error. Argument isn't a valid indentifier\n", 2);
 		return ;
 	}
 	count = ft_2darrlen(shell->sh_env);
@@ -80,18 +80,17 @@ int	isexisting(t_shell *shell, char *arg)
 void	exe_export(t_shell *shell, t_cmdgroup *grp)
 {
 	t_token	*first;
+	int		i;
 
 	first = grp->tokens;
 	grp->tokens = grp->tokens->next;
 	while (grp->tokens != NULL && grp->tokens->type == ARG)
 	{
-		if (replacevar(shell, grp->tokens->str) == 0)
-			export(shell, grp->tokens->str);
-		// i = isexisting(shell, grp->tokens->str);
-		// if (i >= 0)
-		// 	replacevar(shell, grp->tokens->str, i);
-		// else
-		// 	export(shell, grp->tokens->str);
+		i = isexisting(shell, grp->tokens->str);
+		if (i >= 0)
+			replacevar(shell, grp->tokens->str, i);
+		else
+			insertvar(shell, grp->tokens->str);
 		grp->tokens = grp->tokens->next;
 	}
 	grp->tokens = first;

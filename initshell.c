@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:53:26 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/11 00:07:44 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/11 00:51:14 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	incrementshlvl(t_shell *shell)
 	char	*shlvl;
 	char	*shlvl_arg;
 	int		shlvl_int;
-	// int		index;
+	int		index;
 
 	shlvl = ft_getenv(shell->sh_env, "SHLVL");
 	if (shlvl[0] == '-' && ft_strisnum(shlvl, 1))
@@ -29,8 +29,8 @@ void	incrementshlvl(t_shell *shell)
 	shlvl = ft_itoa(shlvl_int);
 	shlvl_arg = ft_strjoin("SHLVL=", shlvl);
 	free(shlvl);
-	// index = isexisting(shell, shlvl_arg);
-	replacevar(shell, shlvl_arg);
+	index = isexisting(shell, shlvl_arg);
+	replacevar(shell, shlvl_arg, index);
 	free(shlvl_arg);
 }
 
