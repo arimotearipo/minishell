@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:13:50 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/11 00:11:47 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/11 00:14:54 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	export(t_shell *shell, char *arg)
 // that includes the '=' sign and the value of the variable
 // It will return the index of the var if it is
 // found, it will return -1 if it is not found.
+// This function may obsolete as getvarindex does almost the same thing.
 int	isexisting(t_shell *shell, char *arg)
 {
 	int		i;
