@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/11 14:41:51 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/11 22:01:48 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,17 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include "libft.h"
+
+
+// GET NEXT LINE
+# define BUFFER_SIZE 20
+
+/*
+** FD VALUE
+*/
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
 
 /*
 ** EXIT STATUS
@@ -75,8 +86,6 @@ typedef struct s_cmdgroup
 {
 	t_token				*tokens;
 	int					cmdcnt;
-	int					fdin;
-	int					fdout;
 	struct s_cmdgroup	*next;
 	char				*grpstr;
 	char				*output;
@@ -90,7 +99,10 @@ typedef struct s_shell
 	char		**sh_env;
 	int			cmdgrpcount;
 	int			exit;
-	
+	int			fdstdout;
+	int			fdstdin;
+	int			fdout;
+	int			fdin;
 }	t_shell;
 
 void		initshell(t_shell *shell, char **envp);
@@ -131,6 +143,17 @@ void		replacevar(t_shell *shell, char *arg, int index);
 void		insertvar(t_shell *shell, char *arg);
 void		unset(t_shell *shell, char *arg);
 void		updateexitvalue(t_shell *shell);
+void		runline(t_shell *shell, t_cmdgroup *grp);
+void		resetfd(t_shell *shell);
+char		*get_next_line(int fd);
+
+/*
+** REDIRECTION FUNCTIONS
+*/
+void		open_redirectionread(t_shell *shell, t_cmdgroup *grp, t_token *token);
+void		open_redirectioninput(t_shell *shell, t_cmdgroup *grp, t_token *token);
+void		open_redirectionright(t_shell *shell, t_cmdgroup *grp, t_token *token);
+void		exe_redirection(t_shell *shell, t_cmdgroup *grp);
 
 /*
 ** BUILT-IN FUNCTIONS
@@ -143,6 +166,6 @@ void		exe_export(t_shell *shell, t_cmdgroup *grp);
 void		exe_cd(t_shell *shell, t_cmdgroup *grp);
 
 // EXECUTION
-void	exe_builtin(t_shell *shell);
+void		exe_builtin(t_shell *shell);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:07:40 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 18:47:59 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/11 21:19:24 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,14 @@ int	ft_execve(t_shell *shell)
 		args = argarr(shell, shell->cmdgroup);
 		path = getcommandpath(shell, shell->cmdgroup->tokens->str, 0);
 		execve(str, args, shell->sh_env);
+		if (path == NULL)
+			printerror(shell, "Error. Command not found.\n", NOCOMMAND);
 		execve(path, args, shell->sh_env);
 		exit(1);
 	}
 	else
 		waitpid(0, &status, 0);
+	shell->exit = status / 256;
 	return (status);
 }
 
@@ -119,6 +122,7 @@ void	exe_builtin(t_shell *shell)
 		showenv(shell);
 	else if (ft_strcmp(shell->cmdgroup->tokens->str, "exit") == 0)
 		exe_exit(shell, shell->cmdgroup);
-	else if (ft_execve(shell))
-		printerror(shell, "Error. Command not found.\n", NOCOMMAND);
+	else
+		ft_execve(shell);
+		// printerror(shell, "Error. Command not found.\n", NOCOMMAND);
 }

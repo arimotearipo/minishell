@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:53:26 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/11 00:51:14 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/11 17:51:50 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ void	incrementshlvl(t_shell *shell)
 	free(shlvl_arg);
 }
 
+void	resetfd(t_shell *shell)
+{
+	shell->fdin = -1;
+	shell->fdout = -1;
+}
+
 void	initshell(t_shell *shell, char **envp)
 {
 	shell->cmdline = NULL;
@@ -41,6 +47,9 @@ void	initshell(t_shell *shell, char **envp)
 	shell->sh_env = NULL;
 	shell->cmdgrpcount = 0;
 	shell->exit = 0;
+	shell->fdstdin = dup(STDIN);
+	shell->fdstdout = dup(STDOUT);
+	resetfd(shell);
 	clone_env(envp, shell);
 	incrementshlvl(shell);
 }

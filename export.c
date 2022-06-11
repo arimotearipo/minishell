@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:13:50 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/11 00:50:23 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/11 20:48:57 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	replacevar(t_shell *shell, char *arg, int index)
 {
 	int		valid;
-	
+
 	valid = ft_strchri(arg, 0, '=');
 	if (valid <= 0)
 	{

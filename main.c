@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:06:04 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 16:25:41 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/11 22:38:26 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	main(int ac, char **av, char **envp)
 	// char	*line = "echo .. hello world \"test\" | asda >> <<  | cat -e < \"123 ' > << | >>";
 	// line = ft_strdup("echo test > xx >");
 	// line = ft_strdup("a<<b'''' '''''''''''c'\"d\" | echo 'a'b>c makan\"hello\"world'lagi'\"dan\"next | echo 'one'\"two\"three|four");
-	// line = ft_strdup("cd ..");
+	// line = ft_strdup("cat >> file1.txt < Makefile << start << okay << end > file2.txt");
+	// line = ft_strdup("cat >>file1.txt << start << okay << end > file2.txt");
 
 	(void)av;
 	if (ac != 1)
@@ -31,6 +32,7 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		// clone_env(envp, &shell);
+		// printf("addr shell: %p\n", &shell.cmdgroup);
 		shell.exit = 0;
 		line = readline("minishell>% "); // Jangan lupa comment free(line)
 		add_history(line);
@@ -40,13 +42,18 @@ int	main(int ac, char **av, char **envp)
 		if (isnoterror(shell.exit))
 		{
 			showlist(shell.cmdgroup);
-			exe_builtin(&shell);
+			runline(&shell, shell.cmdgroup);
 		}
 		updateexitvalue(&shell);
+		// printf("addr shell: %p\n", &shell.cmdgroup);
+		// showlist(shell.cmdgroup);
 		clearmemory(&shell, shell.cmdgroup);
+		// printf("XXXX\n");
 		// break ;
 	}
 	clearmemory(&shell, shell.cmdgroup);
+	close(shell.fdstdin);
+	close(shell.fdstdout);
 	free2d(shell.sh_env);
 	// system("leaks minishell");
 	return (0);
