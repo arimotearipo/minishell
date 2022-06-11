@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/11 00:50:37 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/11 14:41:51 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # include <limits.h>
-# include <linux/limits.h>
 # include <sys/cdefs.h>
 # include <sys/wait.h>
 # include <fcntl.h>
