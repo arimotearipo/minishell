@@ -2,7 +2,9 @@ SRCS = main.c initshell.c lexer.c error.c error_utils.c list_utils.c free_utils.
 		env_utils.c expander.c expander2.c ft_substrnoquote.c export.c unset.c chdir.c ft_echo.c ft_pwd.c ft_exit.c \
 		execute.c updateexit.c getallpath.c redirection.c runline.c get_next_line.c \
 
-OBJS = $(SRCS:.c=.o)
+OBJ_DIR = obj/
+
+OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 
 INCLUDE = -I./includes -I./libft
 
@@ -19,12 +21,13 @@ $(NAME) :	$(OBJS)
 			@make -C libft
 			$(CC) $(FLAGS) $(OBJS) $(INCLUDE) -o $(NAME) $(LINK)
 
-%.o		: 	%.c
-			$(CC) $(FLAGS) $(INCLUDE) -c $<
+$(OBJ_DIR)%.o	:	%.c
+				@mkdir -p obj
+				$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
 
 clean 	: 
 			@make clean -C libft
-			rm -rf $(OBJS)
+			rm -rf $(OBJ_DIR)
 
 fclean 	: 	clean
 			@make fclean -C libft

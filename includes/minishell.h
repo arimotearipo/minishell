@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/11 22:01:48 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:06:04 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@
 # define OUTPUT 3
 # define APPEND 4
 # define RDINPUT 5
-# define ARG 6
-# define FD	7
-# define DELIM 8
-# define PIPE 9
+# define FD	6
+# define DELIM 7
+# define PIPE 8
+# define ARG 9
 
 typedef struct s_token
 {
@@ -158,14 +158,14 @@ void		exe_redirection(t_shell *shell, t_cmdgroup *grp);
 /*
 ** BUILT-IN FUNCTIONS
 */
-int			exe_echo(t_shell *shell, t_cmdgroup *cmd);
+int			exe_echo(t_shell *shell, t_cmdgroup *cmd, t_token *token);
 int			exe_pwd(t_shell *shell, t_cmdgroup *cmd);
 int			exe_exit(t_shell *shell, t_cmdgroup *cmd);
-void		exe_unset(t_shell *shell, t_cmdgroup *grp);
-void		exe_export(t_shell *shell, t_cmdgroup *grp);
+void		exe_unset(t_shell *shell, t_cmdgroup *grp, t_token *token);
+void		exe_export(t_shell *shell, t_cmdgroup *grp, t_token *token);
 void		exe_cd(t_shell *shell, t_cmdgroup *grp);
 
 // EXECUTION
-void		exe_builtin(t_shell *shell);
+void		run_program(t_shell *shell);
 
 #endif

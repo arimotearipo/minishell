@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 00:30:32 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 18:50:46 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:10:26 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,18 @@ void	unset(t_shell *shell, char *arg)
 	shell->sh_env = new_env;
 }
 
-void	exe_unset(t_shell *shell, t_cmdgroup *grp)
+void	exe_unset(t_shell *shell, t_cmdgroup *grp, t_token *tkn)
 {
 	t_token	*first;
 
-	first = grp->tokens;
-	grp->tokens = grp->tokens->next;
-	while (grp->tokens != NULL && grp->tokens->type == ARG)
+	(void)grp;
+	first = tkn;
+	tkn = tkn->next;
+	while (tkn != NULL)
 	{
-		unset(shell, grp->tokens->str);
-		grp->tokens = grp->tokens->next;
+		if (tkn->type == ARG || tkn->type == COMMAND)
+			unset(shell, tkn->str);
+		tkn = tkn->next;
 	}
-	grp->tokens = first;
+	tkn = first;
 }

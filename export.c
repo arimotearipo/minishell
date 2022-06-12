@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:13:50 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/11 20:48:57 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:02:47 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,21 +77,25 @@ int	isexisting(t_shell *shell, char *arg)
 	return (-1);
 }
 
-void	exe_export(t_shell *shell, t_cmdgroup *grp)
+void	exe_export(t_shell *shell, t_cmdgroup *grp, t_token *tkn)
 {
 	t_token	*first;
 	int		i;
 
-	first = grp->tokens;
-	grp->tokens = grp->tokens->next;
-	while (grp->tokens != NULL && grp->tokens->type == ARG)
+	(void)grp;
+	first = tkn;
+	tkn = tkn->next;
+	while (tkn != NULL)
 	{
-		i = isexisting(shell, grp->tokens->str);
-		if (i >= 0)
-			replacevar(shell, grp->tokens->str, i);
-		else
-			insertvar(shell, grp->tokens->str);
-		grp->tokens = grp->tokens->next;
+		if (tkn->type == ARG || tkn->type == COMMAND)
+		{
+			i = isexisting(shell, tkn->str);
+			if (i >= 0)
+				replacevar(shell, tkn->str, i);
+			else
+				insertvar(shell, tkn->str);
+		}
+		tkn = tkn->next;
 	}
-	grp->tokens = first;
+	tkn = first;
 }

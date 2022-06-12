@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:06:04 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/11 22:38:26 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/12 15:52:51 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int ac, char **av, char **envp)
 	close(shell.fdstdin);
 	close(shell.fdstdout);
 	free2d(shell.sh_env);
-	// system("leaks minishell");
+	system("leaks minishell");
 	return (0);
 }
 

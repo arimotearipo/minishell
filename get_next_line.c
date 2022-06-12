@@ -5,115 +5,73 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/11 16:34:31 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/11 22:02:31 by wwan-taj         ###   ########.fr       */
+/*   Created: 2021/11/16 13:33:10 by wwan-taj          #+#    #+#             */
+/*   Updated: 2022/06/12 16:12:44 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*loadbuffer(char *buffer, int fd, char *leftover)
+char	*loadbuffer(int fd, char *initbuf, char *buffer)
 {
-	int	numbytes;
+	int		numbytes;
 	char	*temp;
-	
+
 	numbytes = 1;
-	while (numbytes)
+	while (numbytes != '\0')
 	{
-		numbytes = read(fd, buffer, BUFFER_SIZE);
-		// printf("numbytes: %d\n", numbytes);
+		numbytes = read(fd, initbuf, BUFFER_SIZE);
 		if (numbytes == 0)
-			return (leftover);
+			return (buffer);
 		else if (numbytes < 0)
 			return (NULL);
-		buffer[numbytes] = '\0';
-		if (!leftover)
-			leftover = ft_strdup("");
-		temp = leftover;
-		leftover = ft_strjoin(temp, buffer);
-		// printf("loadbuffer: %s\n", leftover);
+		initbuf[numbytes] = '\0';
+		if (!buffer)
+			buffer = ft_strdup("");
+		temp = buffer;
+		buffer = ft_strjoin(temp, initbuf);
 		free(temp);
 		temp = NULL;
-		if (ft_strchr(buffer, '\n'))
+		if (ft_strchr(initbuf, '\n'))
 			break ;
 	}
-	// printf("leftover: %s", leftover);
-	return (leftover);
+	return (buffer);
 }
 
-char	*firstline(char	*text)
+char	*splittext(char	*text)
 {
-	int 	i;
-	char	*line;
+	int		i;
+	char	*buffer;
 
 	i = 0;
-	while (text[i] != '\n' && text[i] != '\0')
+	while (text[i] != '\0' && text[i] != '\n')
 		i++;
-	// printf("VALUE OF i: %d\n", i);
-	line = ft_substr(text, 0, i + 1);
-	return (line);
-}
-
-char	*cutoff(char	*leftover)
-{
-	int 	i;
-	char	*temp;
-	int		len;
-
-	len = ft_strlen(leftover);
-	i = 0;
-	while (leftover[i] != '\n' && leftover[i] != '\0')
-		i++;
-	temp = ft_substr(leftover, i + 1, len - 1);
-	if (temp[0] == '\0')
+	buffer = ft_substr(text, i + 1, ft_strlen(text) - i);
+	if (buffer[0] == '\0')
+	{
+		free(buffer);
 		return (NULL);
-	// printf("i + 1: %c\n", leftover[i + 1]);
-	// printf("temp: %s\n", temp);
-	free(leftover);
-	return (temp);
+	}
+	text[i + 1] = '\0';
+	return (buffer);
 }
 
 char	*get_next_line(int fd)
 {
-	char				*buffer;
-	char				*text;
-	static	char		*leftover;
+	char		*text;
+	char		*initbuf;
+	static char	*buffer[5000];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
+	initbuf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!initbuf)
 		return (NULL);
-	// printf("First leftover: %s\n", leftover);
-	if (!leftover)
-	{
-		// printf("there is no leftover\n");
-		leftover = ft_strdup("");
-	}
-	text = loadbuffer(buffer, fd, leftover);
-	// printf("text: %s\n", text);
-	free(buffer);
-	buffer = NULL;
+	text = loadbuffer(fd, initbuf, buffer[fd]);
+	free(initbuf);
+	initbuf = NULL;
 	if (!text)
 		return (NULL);
-	// printf("Last leftover: %s\n", leftover);
-	leftover = cutoff(text);
-	return (firstline(text));
+	buffer[fd] = splittext(text);
+	return (text);
 }
-
-// int	main(void)
-// {
-// 	int	fd;
-// 	char	*line;
-
-// 	fd = open("ten.txt", O_RDONLY);
-// 	for (int i = 0; i < 19; i++)
-// 	{
-// 		//printf("--FUNCTION CALL NO %d--\n", i);
-// 		line = get_next_line(fd);
-// 		printf("%s", line);
-// 		free(line);
-// 		line = NULL;
-// 	}
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:26:21 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/08 15:14:28 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/12 17:32:46 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,30 @@ void	isechooption(t_token **tokens, int *option)
 	}
 }
 
-int	exe_echo(t_shell *shell, t_cmdgroup *cmd)
+int	exe_echo(t_shell *shell, t_cmdgroup *cmd, t_token *token)
 {
 	t_token	*tokens;
 	int		option;
 
 	(void)shell;
 	option = 0;
-	tokens = cmd->tokens->next;
+	tokens = token->next;
 	cmd->topass = ft_strdup("");
 	isechooption(&tokens, &option);
-	while (tokens != NULL && tokens->type == ARG)
+	while (tokens != NULL)
 	{
-		strjoinandfree(&(cmd->topass), tokens->str);
-		if (tokens->next != NULL && tokens->next->type == ARG)
-			strjoinandfree(&(cmd->topass), " ");
+		if (tokens->type == ARG)
+		{
+			if(ft_strcmp(cmd->topass, ""))
+				strjoinandfree(&(cmd->topass), " ");
+			strjoinandfree(&(cmd->topass), tokens->str);
+			// if (tokens->next != NULL && tokens->next->type == ARG)
+		}
 		tokens = tokens->next;
 	}
 	if (option == 0)
 		strjoinandfree(&(cmd->topass), "\n");
-	printf("(%s)", cmd->topass);
+	ft_putstr_fd(cmd->topass, STDOUT);
 	free(cmd->topass);
 	return (0);
 }
