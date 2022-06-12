@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 17:12:09 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/08 18:00:17 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/12 19:11:41 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void	expand(t_shell *shell)
 {
 	t_cmdgroup	*cmd;
 	t_token		*firsttoken;
+	int			type;
 
 	cmd = shell->cmdgroup;
 	while (cmd != NULL)
@@ -120,7 +121,8 @@ void	expand(t_shell *shell)
 		firsttoken = cmd->tokens;
 		while (cmd->tokens != NULL)
 		{
-			if (cmd->tokens->type == ARG || cmd->tokens->type == FD)
+			type = cmd->tokens->type;
+			if (type == ARG || type == FD || type == COMMAND)
 			{
 				indentifyenv(shell, cmd->tokens->str);
 				translate(shell, cmd->tokens);

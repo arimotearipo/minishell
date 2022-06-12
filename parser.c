@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:28:06 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 18:56:21 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/12 19:08:06 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	assigntype(t_token *token, t_cmdgroup *cmd, int prevtype, t_shell *sh)
 		token->type = COMMAND;
 		cmd->cmdcnt += 1;
 	}
-	else if ((prevtype >= INPUT && prevtype <= APPEND) || prevtype == DELIM)
+	else if (prevtype >= INPUT && prevtype <= APPEND)
 		token->type = FD;
 	else if (ft_strcmp("|", token->str) == 0)
 		token->type = PIPE;
