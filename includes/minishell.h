@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/12 18:06:04 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:11:00 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,6 @@ void		exe_export(t_shell *shell, t_cmdgroup *grp, t_token *token);
 void		exe_cd(t_shell *shell, t_cmdgroup *grp);
 
 // EXECUTION
-void		run_program(t_shell *shell);
+void		run_program(t_shell *shell, t_cmdgroup *group);
 
 #endif

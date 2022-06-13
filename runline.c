@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 16:19:31 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/12 16:56:23 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/13 21:15:52 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,41 @@ void	closefd(t_shell *shell)
 	unlink(".ttiyut7");
 }
 
+void	piping(t_shell *shell, t_cmdgroup *grp)
+{
+	pid_t	pid;
+	int		fd[2];
+
+	(void)shell;
+	(void)grp;
+	if (pipe(fd) == -1)
+		return ;
+	pid = fork();
+	if (pid == -1)
+		return ;
+	if (pid == 0)
+	{
+		close(fd[0]);
+		// printf("BEFORE RUN\n");
+		run_program(shell, grp);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+		run_program(shell, grp);
+		exit(0);
+	}
+	else
+	{
+		// printf("IN ELSE\n");
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		waitpid(-1, NULL, 0);
+		// printf("EXITED CHILD\n");
+	}
+	// if (grp->next == NULL)
+	// 	dup2(shell->fdstdin, STDIN);
+}
+
 void	runline(t_shell *shell, t_cmdgroup *grp)
 {
 	t_cmdgroup	*first;
@@ -35,7 +70,16 @@ void	runline(t_shell *shell, t_cmdgroup *grp)
 	while (grp != NULL)
 	{
 		exe_redirection(shell, grp);
-		run_program(shell);
+		if (grp->next == NULL)
+		{
+			run_program(shell, grp);
+			dup2(shell->fdstdin, STDIN);
+		}
+		else
+		{
+			// run_program(shell, grp);
+			piping(shell, grp);
+		}
 		closefd(shell);
 		resetfd(shell);
 		grp = grp->next;
