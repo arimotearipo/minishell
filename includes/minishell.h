@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/13 21:30:32 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/13 22:58:10 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include "libft.h"
-
 
 // GET NEXT LINE
 # define BUFFER_SIZE 20
@@ -151,9 +150,9 @@ char		*get_next_line(int fd);
 /*
 ** REDIRECTION FUNCTIONS
 */
-void		open_redirectionread(t_shell *shell, t_cmdgroup *grp, t_token *token);
-void		open_redirectioninput(t_shell *shell, t_cmdgroup *grp, t_token *token);
-void		open_redirectionright(t_shell *shell, t_cmdgroup *grp, t_token *token);
+void		open_redirectionread(t_shell *shell, t_token *token);
+void		open_redirectioninput(t_shell *shell, t_token *token);
+void		open_redirectionright(t_shell *shell, t_token *token);
 void		exe_redirection(t_shell *shell, t_cmdgroup *grp);
 
 /*

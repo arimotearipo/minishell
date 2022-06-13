@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:07:40 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/13 19:59:30 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/13 22:59:22 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,7 @@ int	ft_execve(t_shell *shell, t_token *tkn, char *str)
 	if (pid == 0)
 	{
 		args = argarr(shell, tkn);
-		// for (int i = 0; args[i] != NULL; i++)
-		// {
-		// 	ft_putstr_fd("args = ", 2);
-		// 	ft_putstr_fd(args[i], 2);
-		// 	ft_putstr_fd("\n", 2);
-		// }
 		path = getcommandpath(shell, tkn->str, 0);
-		// ft_putstr_fd("path = ", 2);
-		// ft_putstr_fd(path, 2);
 		execve(str, args, shell->sh_env);
 		if (path == NULL)
 			printerror(shell, "Error. Command not found.\n", NOCOMMAND);

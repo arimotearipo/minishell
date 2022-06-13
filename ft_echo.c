@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:26:21 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/12 17:32:46 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/13 22:42:33 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	isechooption(t_token **tokens, int *option)
 {
 	int	i;
 
+	while ((*tokens)->type != ARG)
+		*tokens = (*tokens)->next;
 	while (*tokens != NULL && !ft_strncmp("-n", (*tokens)->str, 2))
 	{
 		i = 2;
@@ -54,10 +56,9 @@ int	exe_echo(t_shell *shell, t_cmdgroup *cmd, t_token *token)
 	{
 		if (tokens->type == ARG)
 		{
-			if(ft_strcmp(cmd->topass, ""))
+			if (ft_strcmp(cmd->topass, ""))
 				strjoinandfree(&(cmd->topass), " ");
 			strjoinandfree(&(cmd->topass), tokens->str);
-			// if (tokens->next != NULL && tokens->next->type == ARG)
 		}
 		tokens = tokens->next;
 	}
