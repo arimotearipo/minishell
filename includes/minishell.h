@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/13 18:11:00 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/13 21:30:32 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_shell
 	int			fdstdin;
 	int			fdout;
 	int			fdin;
+	int			redirflag;
 }	t_shell;
 
 void		initshell(t_shell *shell, char **envp);

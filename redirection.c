@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:07:38 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/12 16:39:29 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/13 21:30:51 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ void	exe_redirection(t_shell *shell, t_cmdgroup *grp)
 		if (grp->tokens->type >= INPUT && grp->tokens->type <= RDINPUT)
 		{
 			if (grp->tokens->type == OUTPUT || grp->tokens->type == APPEND)
+			{
 				open_redirectionright(shell, grp, grp->tokens);
+				shell->redirflag = 1;
+			}
 			else if (grp->tokens->type == INPUT)
 				open_redirectioninput(shell, grp, grp->tokens);
 			else if (grp->tokens->type == RDINPUT)
