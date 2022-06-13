@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 17:12:09 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/12 19:11:41 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/13 22:25:20 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_var(t_shell *shell, t_token *token, int *i)
 
 	len = 0;
 	start = ++(*i);
-	while (!ft_strchr("'\"$", token->str[*i]) && token->str[*i] != -36
+	while (!ft_strchr("'\"$=", token->str[*i]) && token->str[*i] != -36
 		&& token->str[*i])
 	{
 		len++;
