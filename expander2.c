@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:17:46 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 18:53:56 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/14 17:24:23 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ void	expandstr(char **new, char **str)
 	free(temp);
 }
 
+/*
+This function is called upon encountering a '$' sign in the token which marks
+the possibility of expansion. It will determine whether it needs to expand / 
+not expand / completely remove the '$' sign based on what the next character,
+whether it is in a quote and what quote type it is in.
+*/
 void	handledollar(char *cur, char next, int openquote, char quotetype)
 {
 	if (*cur != '$')
@@ -48,6 +54,10 @@ void	handledollar(char *cur, char next, int openquote, char quotetype)
 		*cur = (char)(DOLLARDEL);
 }
 
+// This function will mark the the quotes that are wrapping the envinronment values
+// that will be expanded. It does this by marking the character if it's negative value.
+// Therefore, the quotes will be treated as a non-quote and will not be removed later
+// in the stripquote function
 void	markquote(char **var, int quote1, int quote2)
 {
 	int	i;

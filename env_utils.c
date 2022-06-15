@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/11 00:14:32 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/14 16:48:15 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ void	showenv(t_shell *shell)
 	}
 }
 
+// Will duplicate the environment pointer that was received from the main()
+// function and add a secret env variable which is the exit value that is
+// represented by the '?' key.
 void	clone_env(char **envp, t_shell *shell)
 {
 	int		i;
