@@ -1,14 +1,18 @@
-SRCS = main.c initshell.c lexer.c error.c error_utils.c list_utils.c free_utils.c tokenlength.c parser.c \
-		env_utils.c expander.c expander2.c ft_substrnoquote.c export.c unset.c chdir.c ft_echo.c ft_pwd.c ft_exit.c \
-		execute.c updateexit.c getallpath.c redirection.c runline.c get_next_line.c \
+SRCS_FILES = main.c initshell.c lexer.c error.c error_utils.c list_utils.c free_utils.c tokenlength.c parser.c \
+			env_utils.c expander.c expander2.c ft_substrnoquote.c export.c unset.c chdir.c ft_echo.c ft_pwd.c ft_exit.c \
+			exec_prog.c exec_builtin.c updateexit.c getallpath.c redirection.c runline.c get_next_line.c signalhandler.c \
 
 OBJ_DIR = obj/
 
-OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
+SRC_DIR = srcs/
 
-INCLUDE = -I./includes -I./libft
+OBJS = $(addprefix $(OBJ_DIR), $(SRCS_FILES:.c=.o))
 
-LINK = -L./libft -lft -lreadline
+SRCS = $(addprefix $(SRC_DIR), $(SRCS_FILES))
+
+INCLUDE = -I./includes -I./libft -I/usr/local/Cellar/readline/8.1.2/include
+
+LINK = -L./libft -lft -L/usr/local/Cellar/readline/8.1.2/lib -lreadline 
 
 FLAGS = -Wall -Wextra -Werror -g
 CC = gcc
@@ -21,7 +25,7 @@ $(NAME) :	$(OBJS)
 			@make -C libft
 			$(CC) $(FLAGS) $(OBJS) $(INCLUDE) -o $(NAME) $(LINK)
 
-$(OBJ_DIR)%.o	:	%.c
+$(OBJ_DIR)%.o	:	$(SRCS)
 				@mkdir -p obj
 				$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
 
@@ -34,5 +38,8 @@ fclean 	: 	clean
 			rm -rf $(NAME)
 
 re 		:	fclean $(NAME)
+
+m		:	all 
+			./minishell
 
 .PHONY: all clean fclean re

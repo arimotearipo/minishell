@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:19:43 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/12 18:28:46 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:46:58 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,16 @@ int	exe_exit(t_shell *shell, t_cmdgroup *cmd)
 		printerror(shell, "bash: exit: too many arguments\n", 1);
 	else if (tokens != NULL)
 	{
+		free2d(shell->sh_env);
 		if (ft_strisnum(tokens->str, 1) == 0)
 			ft_exit(shell, cmd, tokens, 1);
 		else
 			ft_exit(shell, cmd, tokens, 2);
 	}
 	else
+	{
+		free2d(shell->sh_env);
 		ft_exit(shell, cmd, tokens, 3);
+	}
 	return (0);
 }

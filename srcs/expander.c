@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 17:12:09 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/14 16:55:20 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:39:04 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 // This function will expand the all the expandable tokens that starts with
 // the '$' sign. It first reads the characters until it found a terminator
-// for environment variable which should be "'"$=/". The string that has been read
-// then is stored in var. The function then will search in the 2D env to find 
-// a key that matches with var and tries to expand it.
+// for environment variable which should be "'"$=/". The string that has 
+// been read then is stored in var. The function then will search in the 2D 
+// env to find a key that matches with var and tries to expand it.
 // If no match is found, then it will just return an empty string.
 char	*get_var(t_shell *shell, t_token *token, int *i)
 {

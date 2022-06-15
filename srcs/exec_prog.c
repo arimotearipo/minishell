@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   exec_prog.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:07:40 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/13 22:59:22 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:38:38 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,38 +91,23 @@ int	ft_execve(t_shell *shell, t_token *tkn, char *str)
 	pid = fork();
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		args = argarr(shell, tkn);
 		path = getcommandpath(shell, tkn->str, 0);
 		execve(str, args, shell->sh_env);
 		if (path == NULL)
 			printerror(shell, "Error. Command not found.\n", NOCOMMAND);
 		execve(path, args, shell->sh_env);
-		exit(1);
+		exit(shell->exit);
 	}
 	else
-		waitpid(0, &status, 0);
+	{
+		signal(SIGINT, SIG_IGN);
+		waitpid(-1, &status, 0);
+	}
 	shell->exit = status / 256;
 	return (status);
-}
-
-void	exe_program(t_shell *shell, t_token *token, char *str)
-{
-	if (ft_strcmp(str, "echo") == 0)
-		exe_echo(shell, shell->cmdgroup, token);
-	else if (ft_strcmp(str, "cd") == 0)
-		exe_cd(shell, shell->cmdgroup);
-	else if (ft_strcmp(str, "pwd") == 0)
-		exe_pwd(shell, shell->cmdgroup);
-	else if (ft_strcmp(str, "export") == 0)
-		exe_export(shell, shell->cmdgroup, token);
-	else if (ft_strcmp(str, "unset") == 0)
-		exe_unset(shell, shell->cmdgroup, token);
-	else if (ft_strcmp(str, "env") == 0)
-		showenv(shell);
-	else if (ft_strcmp(str, "exit") == 0)
-		exe_exit(shell, shell->cmdgroup);
-	else
-		ft_execve(shell, token, str);
 }
 
 void	run_program(t_shell *shell, t_cmdgroup *group)
@@ -134,7 +119,6 @@ void	run_program(t_shell *shell, t_cmdgroup *group)
 	{
 		if (grp->tokens->type == COMMAND || grp->tokens->type == ARG)
 		{
-			// printf("heree : %s\n", grp->tokens->str);
 			exe_program(shell, grp->tokens, grp->tokens->str);
 			break ;
 		}

@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/13 22:58:10 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:42:55 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@
 /*
 ** TOKEN TYPE
 ** # define COMMAND 1 // eg: echo, pwd, grep, awk, etc
-** # define INPUT 2 // < redirection to left. Grab input from fd on the right and pass as argument to left
-** # define OUTPUT 3 // > redirection to right. Redirect output from left to right which should be an fd
-** # define APPEND 4 // >> double redirection. Take output from left and append to fd on the right
-** # define RDINPUT 5 // << double redirection. Read input from user until EOF is met as pass as argument to programme on left
+** # define INPUT 2 // < redirection to left
+** # define OUTPUT 3 // > redirection to right
+** # define APPEND 4 // >> double redirection
+** # define RDINPUT 5 // << double redirection. Read input from user
 ** # define ARG 6 // inputs after commands. eg: "hello world"
 ** # define FD	7 // Any argument that is a file descriptor
 ** # define DELIM 8 // EOF which should come after <<
-** # define PIPE 9 // | Take output from left of pipe and pass as argument to command on right of pipe
+** # define PIPE 9 // | Pass output to next command group
 */
 # define COMMAND 1
 # define INPUT 2
@@ -148,6 +148,11 @@ void		resetfd(t_shell *shell);
 char		*get_next_line(int fd);
 
 /*
+**	SIGNAL HANDLER
+*/
+void		sigint_handler(int signum);
+
+/*
 ** REDIRECTION FUNCTIONS
 */
 void		open_redirectionread(t_shell *shell, t_token *token);
@@ -166,6 +171,8 @@ void		exe_export(t_shell *shell, t_cmdgroup *grp, t_token *token);
 void		exe_cd(t_shell *shell, t_cmdgroup *grp);
 
 // EXECUTION
+int			ft_execve(t_shell *shell, t_token *tkn, char *str);
+void		exe_program(t_shell *shell, t_token *token, char *str);
 void		run_program(t_shell *shell, t_cmdgroup *group);
 
 #endif

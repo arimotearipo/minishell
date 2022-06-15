@@ -6,12 +6,16 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:35 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/11 20:47:51 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:59:50 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+The creatlist() function will use the ft_substr() to append each string that
+is determined to be a token into the token linked list.
+*/
 t_token	*createlist(char *str, int i, int len)
 {
 	t_token	*newlist;
@@ -25,6 +29,10 @@ t_token	*createlist(char *str, int i, int len)
 	return (newlist);
 }
 
+/*
+the creategroup() function will create a linked list of command groups based
+on the number of command groups found in a line.
+*/
 void	creategroup(t_cmdgroup **cmdgroup, int count)
 {
 	t_cmdgroup	*lst;
@@ -45,6 +53,9 @@ void	creategroup(t_cmdgroup **cmdgroup, int count)
 	}
 }
 
+/*
+The addlist() function will read take in the 
+*/
 int	addlist(t_cmdgroup *cmd, char *str, int i, int len)
 {
 	t_token	*lst;
@@ -71,6 +82,9 @@ int	addlist(t_cmdgroup *cmd, char *str, int i, int len)
 	return (EXIT_SUCCESS);
 }
 
+/*
+Just prints out all the collect tokens.
+*/
 void	showlist(t_cmdgroup *cmd)
 {
 	t_token		*firsttoken;
@@ -95,6 +109,10 @@ void	showlist(t_cmdgroup *cmd)
 	cmd = firstcmd;
 }
 
+/*
+Will count the number of command groups in a line. It will read the line
+and detect '|' characters that are not quoted.
+*/
 int	countcmdgroups(char *line)
 {
 	int		count;

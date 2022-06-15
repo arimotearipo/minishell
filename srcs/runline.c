@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 16:19:31 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/14 14:56:24 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:41:22 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	piping(t_shell *shell, t_cmdgroup *grp)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 		if (shell->redirflag == 0)
-		run_program(shell, grp);
+			run_program(shell, grp);
 		exit(0);
 	}
 	else
@@ -50,7 +50,6 @@ void	piping(t_shell *shell, t_cmdgroup *grp)
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
-		waitpid(-1, NULL, 0);
 	}
 }
 
@@ -74,5 +73,7 @@ void	runline(t_shell *shell, t_cmdgroup *grp)
 		resetfd(shell);
 		grp = grp->next;
 	}
+	while (wait(NULL) != -1)
+		;
 	grp = first;
 }
