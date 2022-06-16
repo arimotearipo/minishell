@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:25:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/15 22:15:32 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/16 20:44:02 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,16 @@ void	clearmemory(t_shell *shell, t_cmdgroup *lst)
 	}
 	free(shell->cmdline);
 	shell->cmdline = NULL;
+}
+
+void	free4str(char *a, char *b, char *c, char *d)
+{
+	if (a != NULL)
+		free(a);
+	if (b != NULL)
+		free(b);
+	if (c != NULL)
+		free(c);
+	if (d != NULL)
+		free(d);
 }

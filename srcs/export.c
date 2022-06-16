@@ -6,12 +6,17 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:13:50 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/12 18:02:47 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/16 20:33:51 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+The replace var function will take in the whole key=value pair as arg.
+It will then use the arg to replace the key=value at index passed as index
+in the 2D shell environment array.
+*/
 void	replacevar(t_shell *shell, char *arg, int index)
 {
 	int		valid;
@@ -27,6 +32,13 @@ void	replacevar(t_shell *shell, char *arg, int index)
 	shell->sh_env[index] = ft_strdup(arg);
 }
 
+/*
+insertvar() will check the validity of the key=value pair that is about
+to be passed into the 2D environment array. It will then duplicate another
+2D array and copies everything from existing 2D environment array into the
+new one while appending arg to the end. The sh_env pointer will then be pointed
+to the new 2D array. IT DOES NOT FREE THE STRING PASSED AS arg.
+*/
 void	insertvar(t_shell *shell, char *arg)
 {
 	char	**new_env;
@@ -77,6 +89,20 @@ int	isexisting(t_shell *shell, char *arg)
 	return (-1);
 }
 
+/*
+cvk stands for Check Valid Key
+This function will check the first character of a string during exporting.
+It will return 1 if the first character is either an alphabet or an underscore.
+It will return 0 otherwise.
+*/
+int	cvk(t_shell *shell, char *str)
+{
+	if (ft_isalpha(str[0]) || str[0] == '_')
+		return (1);
+	printerror(shell, "Argument is not a valid identifier\n", SYNTAXERROR);
+	return (0);
+}
+
 void	exe_export(t_shell *shell, t_cmdgroup *grp, t_token *tkn)
 {
 	t_token	*first;
@@ -85,9 +111,11 @@ void	exe_export(t_shell *shell, t_cmdgroup *grp, t_token *tkn)
 	(void)grp;
 	first = tkn;
 	tkn = tkn->next;
+	if (tkn == NULL)
+		showenv(shell, 0);
 	while (tkn != NULL)
 	{
-		if (tkn->type == ARG || tkn->type == COMMAND)
+		if ((tkn->type == ARG || tkn->type == COMMAND) && cvk(shell, tkn->str))
 		{
 			i = isexisting(shell, tkn->str);
 			if (i >= 0)

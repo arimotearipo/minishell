@@ -12,7 +12,7 @@ SRCS = $(addprefix $(SRC_DIR), $(SRCS_FILES))
 
 INCLUDE = -I./includes -I./libft -I/usr/local/Cellar/readline/8.1.2/include
 
-LINK = -L./libft -lft -L/usr/local/Cellar/readline/8.1.2/lib -lreadline 
+LINK = -L./libft -lft -lreadline -L/usr/local/Cellar/readline/8.1.2/lib
 
 FLAGS = -Wall -Wextra -Werror -g
 CC = gcc
@@ -25,7 +25,7 @@ $(NAME) :	$(OBJS)
 			@make -C libft
 			$(CC) $(FLAGS) $(OBJS) $(INCLUDE) -o $(NAME) $(LINK)
 
-$(OBJ_DIR)%.o	:	$(SRCS)
+$(OBJ_DIR)%.o	:	$(SRC_DIR)%.c
 				@mkdir -p obj
 				$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
 

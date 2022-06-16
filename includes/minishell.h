@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/15 22:42:55 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/16 20:05:53 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void		addnewlst(t_token *lst);
 int			countcmdgroups(char *line);
 void		clearmemory(t_shell *shell, t_cmdgroup *lst);
 void		showlist(t_cmdgroup *cmd);
-void		showenv(t_shell *shell);
+void		showenv(t_shell *shell, int arg);
 char		*getvarname(char *str);
 int			getvarindex(t_shell *shell, char *arg);
 int			searchdollarsign(char *str);

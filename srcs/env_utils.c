@@ -6,13 +6,19 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/14 16:48:15 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/16 20:14:30 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	showenv(t_shell *shell)
+/*
+showenv() function will show all the variables in the 2D environment array.
+The arg option shall be either 0 or 1. When 1 is passed as option, the env
+displayed will be preceded by "declare -x " whereas when 1 is passed as option,
+the env will be displayed normally.
+*/
+void	showenv(t_shell *shell, int arg)
 {
 	int	i;
 	int	len;
@@ -23,6 +29,8 @@ void	showenv(t_shell *shell)
 	{
 		if (!ft_strcchr(shell->sh_env[i], "?", '='))
 			i++;
+		if (!arg)
+			printf("declare -x ");
 		printf("%s\n", shell->sh_env[i]);
 		i++;
 	}
@@ -57,7 +65,10 @@ void	clone_env(char **envp, t_shell *shell)
 	shell->sh_env[++j] = NULL;
 }
 
-// Will retrieve the pointer next to the '=' sign in the 2D shell env array
+/*
+Will retrieve the pointer next to the '=' sign in the 2D shell env array.
+The return value do not need to be freed.
+*/
 char	*ft_getenv(char **env, char *var)
 {
 	int		i;
@@ -74,8 +85,11 @@ char	*ft_getenv(char **env, char *var)
 	return (pointer + 1);
 }
 
-// Will return a malloced string from the 
-// beginning right before the '=' sign in the 2D shell env array
+/*
+Returns a malloc string that contains the 'key' of the variable. The malloced
+string is from the beginning until right before the '=' sign in the 2D shell
+env array. The argument 'str' is a the complete key=value pair.
+*/
 char	*getvarname(char *str)
 {
 	int		i;

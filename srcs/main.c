@@ -6,37 +6,34 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:06:04 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/15 22:58:26 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/16 20:46:21 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	checkerror(int ac)
+void	end_of_file(t_shell *shell)
 {
-	if (ac != 1)
-	{
-		perror("No such file or directory\n");
-		exit(NOCOMMAND);
-	}
+	free2d(shell->sh_env);
+	exit(0);
 }
 
-int	main(int ac, char **av, char **envp)
+void	launch_minishell(char **envp)
 {
-	t_shell		shell;
-	char		*line;
+	t_shell	shell;
+	char	*line;
 
-	(void)av;
-	signal(SIGINT, &sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
-	checkerror(ac);
 	initshell(&shell, envp);
 	while (42)
 	{
+		signal(SIGINT, &sigint_handler);
+		signal(SIGQUIT, SIG_IGN);
 		shell.exit = 0;
 		line = readline("minishell>% ");
 		if (line == NULL)
-			exit(0);
+			end_of_file(&shell);
+		if (line[0] == '\0')
+			continue ;
 		add_history(line);
 		lexer(line, &shell);
 		parser(&shell);
@@ -46,5 +43,16 @@ int	main(int ac, char **av, char **envp)
 		updateexitvalue(&shell);
 		clearmemory(&shell, shell.cmdgroup);
 	}
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	(void)av;
+	if (ac != 1)
+	{
+		ft_putendl_fd("Anything not asked is not required.", 2);
+		exit(NOCOMMAND);
+	}
+	launch_minishell(envp);
 	return (0);
 }
