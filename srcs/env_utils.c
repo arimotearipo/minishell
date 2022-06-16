@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/16 20:14:30 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/16 20:54:14 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,20 @@ void	clone_env(char **envp, t_shell *shell)
 		i++;
 	i++;
 	shell->sh_env = malloc(sizeof(char *) * i + 1);
-	j = 0;
-	while (j < i - 1)
-	{
+	j = -1;
+	while (++j < i - 1)
 		shell->sh_env[j] = ft_strdup(envp[j]);
-		j++;
+	if (getvarindex(shell, "?"))
+		updateexitvalue(shell);
+	else
+	{
+		exitvalue = ft_itoa(shell->exit);
+		exitvar = ft_strjoin("?=", exitvalue);
+		shell->sh_env[j] = ft_strdup(exitvar);
+		free(exitvalue);
+		free(exitvar);
+		shell->sh_env[++j] = NULL;
 	}
-	exitvalue = ft_itoa(shell->exit);
-	exitvar = ft_strjoin("?=", exitvalue);
-	shell->sh_env[j] = ft_strdup(exitvar);
-	free(exitvalue);
-	free(exitvar);
-	shell->sh_env[++j] = NULL;
 }
 
 /*
