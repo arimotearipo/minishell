@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/16 20:57:04 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/17 18:30:01 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	clone_env(char **envp, t_shell *shell)
 
 /*
 Will retrieve the pointer next to the '=' sign in the 2D shell env array.
-The return value do not need to be freed.
+The return value do not need to be freed. The 'var' argument passed is 
+the key of the variable (before the '=' sign).
 */
 char	*ft_getenv(char **env, char *var)
 {

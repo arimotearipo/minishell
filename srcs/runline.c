@@ -6,23 +6,28 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 16:19:31 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/15 22:41:22 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/17 17:21:10 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // dup2(shell->fdstdin, STDIN); was removed after close(shell->fdin)
-void	closefd(t_shell *shell)
+void	closeandresetfd(t_shell *shell, int opt)
 {
 	if (shell->fdin > 0)
+	{
 		close(shell->fdin);
+		if (opt == 1)
+			dup2(shell->fdstdin, STDIN);
+	}
 	if (shell->fdout > 0)
 	{
 		close(shell->fdout);
 		dup2(shell->fdstdout, STDOUT);
 	}
 	unlink(".ttiyut7");
+	resetfd(shell);
 }
 
 void	piping(t_shell *shell, t_cmdgroup *grp)
@@ -53,15 +58,26 @@ void	piping(t_shell *shell, t_cmdgroup *grp)
 	}
 }
 
+static void	resetflags(t_shell *shell)
+{
+	shell->redirflag = 0;
+	shell->eofexit = 0;
+}
+
 void	runline(t_shell *shell, t_cmdgroup *grp)
 {
 	t_cmdgroup	*first;
 
 	first = grp;
 	while (grp != NULL)
-	{
-		shell->redirflag = 0;
+	{	
+		resetflags(shell);
 		exe_redirection(shell, grp);
+		if (shell->eofexit == 2)
+		{
+			closeandresetfd(shell, 1);
+			break ;
+		}
 		if (grp->next == NULL)
 		{
 			run_program(shell, grp);
@@ -69,8 +85,7 @@ void	runline(t_shell *shell, t_cmdgroup *grp)
 		}
 		else
 			piping(shell, grp);
-		closefd(shell);
-		resetfd(shell);
+		closeandresetfd(shell, 0);
 		grp = grp->next;
 	}
 	while (wait(NULL) != -1)

@@ -1,6 +1,7 @@
 SRCS_FILES = main.c initshell.c lexer.c error.c error_utils.c list_utils.c free_utils.c tokenlength.c parser.c \
 			env_utils.c expander.c expander2.c ft_substrnoquote.c export.c unset.c chdir.c ft_echo.c ft_pwd.c ft_exit.c \
 			exec_prog.c exec_builtin.c updateexit.c getallpath.c redirection.c runline.c get_next_line.c signalhandler.c \
+			heredoc_utils.c \
 
 OBJ_DIR = obj/
 
@@ -10,10 +11,12 @@ OBJS = $(addprefix $(OBJ_DIR), $(SRCS_FILES:.c=.o))
 
 SRCS = $(addprefix $(SRC_DIR), $(SRCS_FILES))
 
-INCLUDE = -I./includes -I./libft -I/usr/local/Cellar/readline/8.1.2/include
+# -I/usr/local/Cellar/readline/8.1.2/include
+# -L/usr/local/Cellar/readline/8.1.2/lib
 
-LINK = -L./libft -lft -lreadline -L/usr/local/Cellar/readline/8.1.2/lib
+INCLUDE = -I./includes -I./libft
 
+LINK = -L./libft -lft -lreadline
 FLAGS = -Wall -Wextra -Werror -g
 CC = gcc
 

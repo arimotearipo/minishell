@@ -6,39 +6,57 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:07:38 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/16 20:08:34 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/17 19:52:00 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	open_redirectionread(t_shell *shell, t_token *token)
+static void	open_heredoc(t_shell *shell, t_token *token)
 {
 	char	*line;
 
+	signal(SIGINT, SIG_DFL);
 	close(shell->fdin);
 	dup2(shell->fdstdin, STDIN);
 	unlink(".ttiyut7");
 	shell->fdin = open(".ttiyut7", O_WRONLY | O_TRUNC | O_CREAT | O_EXCL, 0600);
 	if (shell->fdin == -1)
-		return ;
+		exit(1);
 	while (1)
 	{
-		write(0, "> ", 2);
-		line = get_next_line(0);
-		if (!ft_strcchr(line, token->next->str, '\n'))
+		line = readline("> ");
+		if (!ft_strcmp(line, token->next->str) || line == NULL)
 		{
 			free(line);
 			line = NULL;
 			break ;
 		}
-		ft_putstr_fd(line, shell->fdin);
+		translateinheredoc(shell, &line);
+		ft_putendl_fd(line, shell->fdin);
 		free(line);
 		line = NULL;
 	}
 	close(shell->fdin);
-	shell->fdin = open(".ttiyut7", O_RDONLY);
-	dup2(shell->fdin, STDIN);
+	exit(0);
+}
+
+void	open_redirectionread(t_shell *shell, t_token *token)
+{
+	int		status;
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+		open_heredoc(shell, token);
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		waitpid(-1, &status, 0);
+		shell->fdin = open(".ttiyut7", O_RDONLY);
+		dup2(shell->fdin, STDIN);
+		shell->eofexit = status;
+	}
 }
 
 void	open_redirectioninput(t_shell *shell, t_token *token)

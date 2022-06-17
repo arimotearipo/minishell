@@ -6,13 +6,14 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/16 20:05:53 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/17 17:47:58 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <signal.h>
 # include <limits.h>
 # include <sys/cdefs.h>
 # include <sys/wait.h>
@@ -103,6 +104,7 @@ typedef struct s_shell
 	int			fdout;
 	int			fdin;
 	int			redirflag;
+	int			eofexit;
 }	t_shell;
 
 void		initshell(t_shell *shell, char **envp);
@@ -159,6 +161,7 @@ void		open_redirectionread(t_shell *shell, t_token *token);
 void		open_redirectioninput(t_shell *shell, t_token *token);
 void		open_redirectionright(t_shell *shell, t_token *token);
 void		exe_redirection(t_shell *shell, t_cmdgroup *grp);
+void		translateinheredoc(t_shell *shell, char **toexpand);
 
 /*
 ** BUILT-IN FUNCTIONS
