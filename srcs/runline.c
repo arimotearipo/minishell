@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   runline.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 16:19:31 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/17 17:21:10 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/19 18:09:23 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	runline(t_shell *shell, t_cmdgroup *grp)
 	t_cmdgroup	*first;
 
 	first = grp;
+	setlastcommand(shell);
 	while (grp != NULL)
 	{	
 		resetflags(shell);
