@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 16:19:31 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 01:45:42 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 02:04:16 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	runline(t_shell *shell, t_cmdgroup *grp)
 	t_cmdgroup	*first;
 
 	first = grp;
+	setlastcommand(shell);
 	while (grp != NULL)
 	{	
 		resetflags(shell);
@@ -88,7 +89,6 @@ void	runline(t_shell *shell, t_cmdgroup *grp)
 		closeandresetfd(shell, 0);
 		grp = grp->next;
 	}
-	setlastcommand(shell);
 	while (wait(NULL) != -1)
 		;
 	grp = first;

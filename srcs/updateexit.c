@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   updateexit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:29:43 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/19 18:31:20 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/20 02:06:45 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	setlastcommand(t_shell *shell)
 void	updatelastcommand(t_shell *shell)
 {
 	char	*lastcmd;
-	
+
 	if (shell->cmdgroup == NULL || shell->cmdgroup->next != NULL)
 		return ;
 	lastcmd = ft_strjoin("_=", shell->lastcmd);
