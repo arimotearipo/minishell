@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 01:55:10 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 02:15:36 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,17 @@ The arg option shall be either 0 or 1. When 1 is passed as option, the env
 displayed will be preceded by "declare -x " whereas when 1 is passed as option,
 the env will be displayed normally.
 */
-void	showenv(t_shell *shell, int arg)
+void	showenv(t_shell *shell, t_token *token, int arg)
 {
 	int	i;
 	int	m;
 	int	len;
 
+	if (token->next != NULL)
+	{
+		printerror(shell, "Error. No such file or directory\n", NOCOMMAND);
+		return ;
+	}
 	m = getvarindex(shell, "_");
 	if (m == -1)
 		insertvar(shell, "_=env");

@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:06:04 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 02:04:10 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 02:08:04 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	launch_minishell(char **envp)
 		lexer(line, &shell);
 		parser(&shell);
 		checkline(&shell);
+		setlastcommand(&shell);
 		if (isnoterror(shell.exit))
 			runline(&shell, shell.cmdgroup);
 		updateexitvalue(&shell);

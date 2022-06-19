@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:13:50 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/16 20:33:51 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 02:18:27 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ void	exe_export(t_shell *shell, t_cmdgroup *grp, t_token *tkn)
 
 	(void)grp;
 	first = tkn;
+	if (tkn->next == NULL)
+		showenv(shell, tkn, 0);
 	tkn = tkn->next;
-	if (tkn == NULL)
-		showenv(shell, 0);
 	while (tkn != NULL)
 	{
 		if ((tkn->type == ARG || tkn->type == COMMAND) && cvk(shell, tkn->str))

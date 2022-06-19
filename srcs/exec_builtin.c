@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 22:26:15 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/16 20:05:45 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 02:10:17 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	exe_program(t_shell *shell, t_token *token, char *str)
 	else if (ft_strcmp(str, "unset") == 0)
 		exe_unset(shell, shell->cmdgroup, token);
 	else if (ft_strcmp(str, "env") == 0)
-		showenv(shell, 1);
+		showenv(shell, token, 1);
 	else if (ft_strcmp(str, "exit") == 0)
 		exe_exit(shell, shell->cmdgroup);
 	else

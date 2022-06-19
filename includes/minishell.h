@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/19 18:21:23 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/20 02:11:47 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ void		addnewlst(t_token *lst);
 int			countcmdgroups(char *line);
 void		clearmemory(t_shell *shell, t_cmdgroup *lst);
 void		showlist(t_cmdgroup *cmd);
-void		showenv(t_shell *shell, int arg);
 char		*getvarname(char *str);
 int			getvarindex(t_shell *shell, char *arg);
 int			searchdollarsign(char *str);
@@ -175,6 +174,7 @@ int			exe_exit(t_shell *shell, t_cmdgroup *cmd);
 void		exe_unset(t_shell *shell, t_cmdgroup *grp, t_token *token);
 void		exe_export(t_shell *shell, t_cmdgroup *grp, t_token *token);
 void		exe_cd(t_shell *shell, t_cmdgroup *grp);
+void		showenv(t_shell *shell, t_token *token, int arg);
 
 // EXECUTION
 int			ft_execve(t_shell *shell, t_token *tkn, char *str);
