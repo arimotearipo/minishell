@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 11:59:46 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/19 17:35:52 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/19 17:45:30 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,18 @@ static void	update_pwd_and_oldpwd(t_shell *shell, char *oldpwd)
 
 void	cd_to_oldpwd(t_shell *shell)
 {
+	char	*oldpwdpath;
+
 	if (ft_getenv(shell->sh_env, "OLDPWD") == NULL)
 	{
 		printerror(shell, "OLDPWD not set\n", SYNTAXERROR);
 		return ;
 	}
-	cd(shell, ft_getenv(shell->sh_env, "OLDPWD"));
+	if (cd(shell, ft_getenv(shell->sh_env, "OLDPWD")) != -1)
+	{
+		oldpwdpath = ft_getenv(shell->sh_env, "OLDPWD");
+		ft_putendl_fd(oldpwdpath, 1);
+	}
 }
 
 int	cd(t_shell *shell, char *arg)
@@ -76,13 +82,13 @@ int	cd(t_shell *shell, char *arg)
 	char	*oldpwd;
 	int		tilde;
 
-	tilde = 0;
 	oldpwd = ft_strdup(ft_getenv(shell->sh_env, "PWD"));
 	if (arg[0] == '-' && arg[1] == '\0')
 	{
 		cd_to_oldpwd(shell);
 		return (0);
 	}
+	tilde = 0;
 	if (arg[0] == '~')
 	{
 		arg = expandpath(arg);
