@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/17 17:47:58 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/19 17:35:51 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ void		translateinheredoc(t_shell *shell, char **toexpand);
 /*
 ** BUILT-IN FUNCTIONS
 */
+int			cd(t_shell *shell, char *arg);
 int			exe_echo(t_shell *shell, t_cmdgroup *cmd, t_token *token);
 int			exe_pwd(t_shell *shell, t_cmdgroup *cmd);
 int			exe_exit(t_shell *shell, t_cmdgroup *cmd);

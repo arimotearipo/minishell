@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 11:59:46 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/16 20:00:55 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/19 17:35:52 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,22 @@ static void	update_pwd_and_oldpwd(t_shell *shell, char *oldpwd)
 	char	*newarg;
 	char	*dir;
 	char	*var;
-	int		m;
-	int		n;
+	int		oldpwdindex;
+	int		pwdindex;
 
 	newarg = malloc(sizeof(char) * PATH_MAX);
 	dir = getcwd(newarg, PATH_MAX);
-	n = getvarindex(shell, "OLDPWD");
-	m = getvarindex(shell, "PWD");
+	oldpwdindex = getvarindex(shell, "OLDPWD");
+	pwdindex = getvarindex(shell, "PWD");
 	var = ft_strjoin("OLDPWD=", oldpwd);
-	if (n != -1)
-		replacevar(shell, var, n);
+	if (oldpwdindex != -1)
+		replacevar(shell, var, oldpwdindex);
 	else
 		insertvar(shell, var);
 	free(var);
-	var = ft_strjoin("PWD", dir);
-	if (m != -1)
-		replacevar(shell, var, m);
+	var = ft_strjoin("PWD=", newarg);
+	if (pwdindex != -1)
+		replacevar(shell, var, pwdindex);
 	else
 		insertvar(shell, var);
 	free(var);
@@ -61,44 +61,28 @@ static void	update_pwd_and_oldpwd(t_shell *shell, char *oldpwd)
 	free(newarg);
 }
 
-// To be reviewed later
-// static void	cd_macro(t_shell *shell)
-// {
-// 	char	*newdir;
-// 	char	*curdir;
-// 	char	*oldpwdvar;
-// 	char	*buf;
-// 	int		m;
+void	cd_to_oldpwd(t_shell *shell)
+{
+	if (ft_getenv(shell->sh_env, "OLDPWD") == NULL)
+	{
+		printerror(shell, "OLDPWD not set\n", SYNTAXERROR);
+		return ;
+	}
+	cd(shell, ft_getenv(shell->sh_env, "OLDPWD"));
+}
 
-// 	buf = malloc(sizeof(char) * PATH_MAX);
-// 	curdir = getcwd(buf, PATH_MAX);
-// 	newdir = ft_getenv(shell->sh_env, "OLDPWD");
-// 	if (newdir == NULL)
-// 	{
-// 		printerror(shell, "Error: OLDPWD not set\n", SYNTAXERROR);
-// 		return ;
-// 	}
-// 	if (chdir(newdir) == -1)
-// 	{
-// 		printerror(shell, "Error. No such file or directory.\n", 1);
-// 		return ;
-// 	}
-// 	oldpwdvar = ft_strjoin("OLDPWD=", curdir);
-// 	m = isexisting(shell, oldpwdvar);
-// 	if (m > -1)
-// 		replacevar(shell, oldpwdvar, m);
-// 	else
-// 		insertvar(shell, oldpwdvar);
-// 	free(oldpwdvar);
-// }
-
-static int	cd(t_shell *shell, char *arg)
+int	cd(t_shell *shell, char *arg)
 {
 	char	*oldpwd;
 	int		tilde;
 
 	tilde = 0;
-	oldpwd = ft_strdup(getenv("PWD"));
+	oldpwd = ft_strdup(ft_getenv(shell->sh_env, "PWD"));
+	if (arg[0] == '-' && arg[1] == '\0')
+	{
+		cd_to_oldpwd(shell);
+		return (0);
+	}
 	if (arg[0] == '~')
 	{
 		arg = expandpath(arg);
