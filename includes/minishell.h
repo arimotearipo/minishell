@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/19 17:35:51 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/19 18:21:23 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_shell
 	int			fdin;
 	int			redirflag;
 	int			eofexit;
+	char		*lastcmd;
 }	t_shell;
 
 void		initshell(t_shell *shell, char **envp);
@@ -148,6 +149,7 @@ void		updateexitvalue(t_shell *shell);
 void		runline(t_shell *shell, t_cmdgroup *grp);
 void		resetfd(t_shell *shell);
 char		*get_next_line(int fd);
+void		setlastcommand(t_shell *shell);
 
 /*
 **	SIGNAL HANDLER
