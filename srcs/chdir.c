@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chdir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 11:59:46 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/19 17:55:47 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/20 01:59:03 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ calling of 'cd).
 static void	update_pwd_and_oldpwd(t_shell *shell, char *oldpwd)
 {
 	char	*newarg;
-	// char	*dir;
+	char	*dir;
 	char	*var;
 	int		oldpwdindex;
 	int		pwdindex;
 
 	newarg = malloc(sizeof(char) * PATH_MAX);
-	// dir = getcwd(newarg, PATH_MAX);
+	dir = getcwd(newarg, PATH_MAX);
 	oldpwdindex = getvarindex(shell, "OLDPWD");
 	pwdindex = getvarindex(shell, "PWD");
 	var = ft_strjoin("OLDPWD=", oldpwd);
@@ -51,7 +51,7 @@ static void	update_pwd_and_oldpwd(t_shell *shell, char *oldpwd)
 	else
 		insertvar(shell, var);
 	free(var);
-	var = ft_strjoin("PWD=", newarg);
+	var = ft_strjoin("PWD=", dir);
 	if (pwdindex != -1)
 		replacevar(shell, var, pwdindex);
 	else

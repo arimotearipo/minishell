@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/17 18:30:01 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 01:55:10 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,14 @@ the env will be displayed normally.
 void	showenv(t_shell *shell, int arg)
 {
 	int	i;
+	int	m;
 	int	len;
 
+	m = getvarindex(shell, "_");
+	if (m == -1)
+		insertvar(shell, "_=env");
+	else
+		replacevar(shell, "_=env", m);
 	len = ft_2darrlen(shell->sh_env);
 	i = 0;
 	while (i < len - 1)
