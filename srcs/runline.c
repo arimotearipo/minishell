@@ -6,7 +6,7 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 16:19:31 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 21:23:17 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/20 23:17:32 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	piping(t_shell *shell, t_cmdgroup *grp)
 	}
 	else
 	{
-		if (shell->heredocflag == 1)
-			wait(NULL);
+		// if (shell->heredocflag == 1)
+		// 	wait(NULL);
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
@@ -70,8 +70,25 @@ static void	resetflags(t_shell *shell)
 void	runline(t_shell *shell, t_cmdgroup *grp)
 {
 	t_cmdgroup	*first;
+	t_token		*fi;
 
 	first = grp;
+	while (grp != NULL)
+	{
+		fi = grp->tokens;
+		while (grp->tokens != NULL)
+		{
+			if (grp->tokens->type == RDINPUT)
+			{
+				shell->heredocflag = 1;
+				open_redirectionread(shell, grp->tokens);
+			}
+			grp->tokens = grp->tokens->next;
+		}
+		grp->tokens = fi;
+		grp = grp->next;
+	}
+	grp = first;
 	while (grp != NULL)
 	{	
 		resetflags(shell);
