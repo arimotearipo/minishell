@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:07:38 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/17 19:52:00 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 20:33:38 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,14 @@ void	exe_redirection(t_shell *shell, t_cmdgroup *grp)
 	first = grp->tokens;
 	while (grp->tokens != NULL)
 	{
-		if (grp->tokens->type >= INPUT && grp->tokens->type <= RDINPUT)
+		if (grp->tokens->type == RDINPUT)
+			open_redirectionread(shell, grp->tokens);
+		grp->tokens = grp->tokens->next;
+	}
+	grp->tokens = first;
+	while (grp->tokens != NULL)
+	{
+		if (grp->tokens->type >= INPUT && grp->tokens->type <= APPEND)
 		{
 			if (grp->tokens->type == OUTPUT || grp->tokens->type == APPEND)
 			{
@@ -101,8 +108,6 @@ void	exe_redirection(t_shell *shell, t_cmdgroup *grp)
 			}
 			else if (grp->tokens->type == INPUT)
 				open_redirectioninput(shell, grp->tokens);
-			else if (grp->tokens->type == RDINPUT)
-				open_redirectionread(shell, grp->tokens);
 		}
 		grp->tokens = grp->tokens->next;
 	}
