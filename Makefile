@@ -14,9 +14,9 @@ SRCS = $(addprefix $(SRC_DIR), $(SRCS_FILES))
 # -I/usr/local/Cellar/readline/8.1.2/include
 # -L/usr/local/Cellar/readline/8.1.2/lib
 
-INCLUDE = -I./includes -I./libft
+INCLUDE = -I./includes -I./libft -I/usr/local/Cellar/readline/8.1.2/include
 
-LINK = -L./libft -lft -lreadline
+LINK = -L./libft -lft -lreadline -L/usr/local/Cellar/readline/8.1.2/lib
 FLAGS = -Wall -Wextra -Werror -g
 CC = gcc
 

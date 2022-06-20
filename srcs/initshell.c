@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:53:26 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/13 21:31:05 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 12:58:09 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	incrementshlvl(t_shell *shell)
 	shlvl = ft_itoa(shlvl_int);
 	shlvl_arg = ft_strjoin("SHLVL=", shlvl);
 	free(shlvl);
-	index = isexisting(shell, shlvl_arg);
+	index = getfullvarindex(shell, shlvl_arg);
 	replacevar(shell, shlvl_arg, index);
 	free(shlvl_arg);
 }

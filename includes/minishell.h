@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 02:11:47 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 12:58:08 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ char		*ft_getenv(char **env, char *var);
 char		**getallpath(t_shell *shell);
 void		expand(t_shell *shell);
 char		*ft_substrnoquote(char *s, unsigned int start, size_t len);
-int			isexisting(t_shell *shell, char *arg);
+int			getfullvarindex(t_shell *shell, char *arg);
 void		replacevar(t_shell *shell, char *arg, int index);
 void		insertvar(t_shell *shell, char *arg);
 void		unset(t_shell *shell, char *arg);

@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:13:50 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 02:18:27 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 12:58:24 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	insertvar(t_shell *shell, char *arg)
 // It will return the index of the var if it is
 // found, it will return -1 if it is not found.
 // This function may obsolete as getvarindex does almost the same thing.
-int	isexisting(t_shell *shell, char *arg)
+int	getfullvarindex(t_shell *shell, char *arg)
 {
 	int		i;
 	int		index;
@@ -117,7 +117,7 @@ void	exe_export(t_shell *shell, t_cmdgroup *grp, t_token *tkn)
 	{
 		if ((tkn->type == ARG || tkn->type == COMMAND) && cvk(shell, tkn->str))
 		{
-			i = isexisting(shell, tkn->str);
+			i = getfullvarindex(shell, tkn->str);
 			if (i >= 0)
 				replacevar(shell, tkn->str, i);
 			else

@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 02:15:36 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 12:57:53 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ the env will be displayed normally.
 void	showenv(t_shell *shell, t_token *token, int arg)
 {
 	int	i;
-	int	m;
+	// int	m;
 	int	len;
 
 	if (token->next != NULL)
