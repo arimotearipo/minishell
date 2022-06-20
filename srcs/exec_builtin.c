@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 22:26:15 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 02:10:17 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 20:25:39 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,20 @@ void	exe_program(t_shell *shell, t_token *token, char *str)
 		exe_exit(shell, shell->cmdgroup);
 	else
 		ft_execve(shell, token, str);
+}
+
+void	run_program(t_shell *shell, t_cmdgroup *group)
+{
+	t_cmdgroup	*grp;
+
+	grp = group;
+	while (grp->tokens != NULL)
+	{
+		if (grp->tokens->type == COMMAND || grp->tokens->type == ARG)
+		{
+			exe_program(shell, grp->tokens, grp->tokens->str);
+			break ;
+		}
+		grp->tokens = grp->tokens->next;
+	}
 }

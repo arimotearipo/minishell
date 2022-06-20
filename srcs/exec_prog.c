@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:07:40 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/16 20:42:40 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 20:32:06 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	countarg(t_token *token)
+{
+	int	argcount;
+
+	argcount = 0;
+	while (token != NULL)
+	{
+		if ((token->type == ARG || token->type == COMMAND))
+			argcount++;
+		token = token->next;
+	}
+	return (argcount);
+}
 
 char	**argarr(t_shell *shell, t_token *token)
 {
@@ -21,20 +35,18 @@ char	**argarr(t_shell *shell, t_token *token)
 
 	(void)shell;
 	first = token;
-	argcount = 0;
-	while (token != NULL && (token->type == ARG || token->type == COMMAND))
-	{
-		argcount++;
-		token = token->next;
-	}
+	argcount = countarg(token);
 	argv = malloc(sizeof(char *) * argcount + 1);
 	i = 0;
 	token = first;
 	while (i < argcount)
 	{
-		argv[i] = ft_strdup(token->str);
+		if ((token->type == ARG || token->type == COMMAND))
+		{
+			argv[i] = ft_strdup(token->str);
+			i++;
+		}
 		token = token->next;
-		i++;
 	}
 	token = first;
 	argv[i] = NULL;
@@ -108,20 +120,4 @@ int	ft_execve(t_shell *shell, t_token *tkn, char *str)
 	}
 	shell->exit = status / 256;
 	return (status);
-}
-
-void	run_program(t_shell *shell, t_cmdgroup *group)
-{
-	t_cmdgroup	*grp;
-
-	grp = group;
-	while (grp->tokens != NULL)
-	{
-		if (grp->tokens->type == COMMAND || grp->tokens->type == ARG)
-		{
-			exe_program(shell, grp->tokens, grp->tokens->str);
-			break ;
-		}
-		grp->tokens = grp->tokens->next;
-	}
 }
