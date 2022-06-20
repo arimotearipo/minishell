@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:26:21 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/20 14:11:24 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 14:39:12 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	exe_echo(t_shell *shell, t_cmdgroup *cmd, t_token *token)
 	option = 0;
 	tokens = token->next;
 	cmd->topass = ft_strdup("");
-	isechooption(&tokens, &option);
+	if (tokens != NULL)
+		isechooption(&tokens, &option);
 	while (tokens != NULL)
 	{
 		if (tokens->type == ARG)
