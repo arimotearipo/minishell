@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 13:26:22 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 21:35:16 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	clone_env(char **envp, t_shell *shell)
 	j = -1;
 	while (++j < i - 1)
 		shell->sh_env[j] = ft_strdup(envp[j]);
-	if (getvarindex(shell, "?"))
+	if (getvarindex(shell, "?") != -1)
 		updateexitvalue(shell);
 	else
 	{

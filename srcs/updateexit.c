@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   updateexit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:29:43 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 02:06:45 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 21:36:41 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ void	updatelastcommand(t_shell *shell)
 	free(lastcmd);
 }
 
+/*
+This function will only be called when the the exit value is
+already present in the sh_env. It will update the value of '?'
+to its latest value.
+*/
 void	updateexitvalue(t_shell *shell)
 {
 	char	*exitvaluestr;

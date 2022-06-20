@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   runline.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 16:19:31 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 14:37:30 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 21:23:17 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	piping(t_shell *shell, t_cmdgroup *grp)
 	}
 	else
 	{
+		if (shell->heredocflag == 1)
+			wait(NULL);
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
@@ -62,6 +64,7 @@ static void	resetflags(t_shell *shell)
 {
 	shell->redirflag = 0;
 	shell->eofexit = 0;
+	shell->heredocflag = 0;
 }
 
 void	runline(t_shell *shell, t_cmdgroup *grp)
