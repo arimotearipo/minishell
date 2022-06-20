@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 22:30:05 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/19 17:46:27 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/20 14:01:52 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	sigint_handler(int signum)
 	{
 		rl_on_new_line();  	//Commented for linux
 		rl_redisplay();		// Commented for linux
-		ft_putendl_fd(" ", 1);
+		ft_putendl_fd("  ", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
