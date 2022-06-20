@@ -6,7 +6,7 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:07:38 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 21:18:52 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/20 23:15:39 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,15 @@ void	exe_redirection(t_shell *shell, t_cmdgroup *grp)
 	t_token	*first;
 
 	first = grp->tokens;
-	while (grp->tokens != NULL)
-	{
-		if (grp->tokens->type == RDINPUT)
-		{
-			shell->heredocflag = 1;
-			open_redirectionread(shell, grp->tokens);
-		}
-		grp->tokens = grp->tokens->next;
-	}
+	// while (grp->tokens != NULL)
+	// {
+	// 	if (grp->tokens->type == RDINPUT)
+	// 	{
+	// 		shell->heredocflag = 1;
+	// 		open_redirectionread(shell, grp->tokens);
+	// 	}
+	// 	grp->tokens = grp->tokens->next;
+	// }
 	grp->tokens = first;
 	while (grp->tokens != NULL)
 	{

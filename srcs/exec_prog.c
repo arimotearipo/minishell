@@ -6,7 +6,7 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:07:40 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 20:32:06 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/20 23:12:04 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,8 @@ int	ft_execve(t_shell *shell, t_token *tkn, char *str)
 		args = argarr(shell, tkn);
 		path = getcommandpath(shell, tkn->str, 0);
 		execve(str, args, shell->sh_env);
-		if (path == NULL)
+		if (execve(path, args, shell->sh_env) == -1)
 			printerror(shell, "Error. Command not found.\n", NOCOMMAND);
-		execve(path, args, shell->sh_env);
 		exit(shell->exit);
 	}
 	else
