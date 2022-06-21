@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:35 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/15 12:59:50 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/21 19:28:39 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	creategroup(t_cmdgroup **cmdgroup, int count)
 	*cmdgroup = malloc(sizeof(t_cmdgroup));
 	(*cmdgroup)->tokens = NULL;
 	(*cmdgroup)->cmdcnt = 0;
+	(*cmdgroup)->heredoc = ft_strdup("");
 	(*cmdgroup)->next = NULL;
 	lst = *cmdgroup;
 	while (count-- > 1)

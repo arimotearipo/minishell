@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 12:44:33 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/08 15:21:29 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/21 22:58:40 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@ int	exe_pwd(t_shell *shell, t_cmdgroup *cmd)
 	if (getcwd(cmd->topass, PATH_MAX) == NULL)
 		return (-1);
 	printf("%s\n", cmd->topass);
+	free(cmd->topass);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   updateexit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:29:43 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 21:36:41 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/21 22:52:34 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ void	updateexitvalue(t_shell *shell)
 	char	*exitvaluestr;
 	char	*exitnum;
 
-	exitnum = ft_itoa(shell->exit);
+	if (g_sigint == 1)
+		exitnum = ft_itoa(g_sigint);
+	else
+		exitnum = ft_itoa(shell->exit);
 	exitvaluestr = ft_strjoin("?=", exitnum);
 	unset(shell, "?");
 	insertvar(shell, exitvaluestr);

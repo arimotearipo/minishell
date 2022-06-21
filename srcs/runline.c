@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   runline.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 16:19:31 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 21:23:17 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/21 20:12:14 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	piping(t_shell *shell, t_cmdgroup *grp)
 	}
 	else
 	{
-		if (shell->heredocflag == 1)
-			wait(NULL);
+		// if (shell->heredocflag == 1)
+		// 	wait(NULL);
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
@@ -70,8 +70,31 @@ static void	resetflags(t_shell *shell)
 void	runline(t_shell *shell, t_cmdgroup *grp)
 {
 	t_cmdgroup	*first;
+	t_token		*firsttoken;
 
 	first = grp;
+	while (grp != NULL)
+	{
+		firsttoken = grp->tokens;
+		while (grp->tokens != NULL)
+		{
+			if (grp->tokens->type == RDINPUT)
+			{
+				shell->heredocflag = 1;
+				open_heredoc(shell, grp, grp->tokens);
+			}
+			grp->tokens = grp->tokens->next;
+		}
+		grp->tokens = firsttoken;
+		grp = grp->next;
+	}
+	grp = first;
+	// while (grp != NULL)
+	// {
+	// 	ft_putstr_fd(grp->heredoc, 2);
+	// 	printf("< --- This is heredoc\n");
+	// 	grp = grp->next;
+	// }
 	while (grp != NULL)
 	{	
 		resetflags(shell);

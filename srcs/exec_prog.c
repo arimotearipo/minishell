@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:07:40 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 20:32:06 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/21 22:22:08 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*getcommandpath(t_shell *shell, char *str, int i)
 	char			*path;
 
 	binpath = ft_split(ft_getenv(shell->sh_env, "PATH"), ':');
-	while (binpath[i] != NULL)
+	while (binpath != NULL && binpath[i] != NULL)
 	{
 		dir = opendir(binpath[i++]);
 		entity = readdir(dir);
@@ -108,9 +108,8 @@ int	ft_execve(t_shell *shell, t_token *tkn, char *str)
 		args = argarr(shell, tkn);
 		path = getcommandpath(shell, tkn->str, 0);
 		execve(str, args, shell->sh_env);
-		if (path == NULL)
+		if (execve(path, args, shell->sh_env) == -1)
 			printerror(shell, "Error. Command not found.\n", NOCOMMAND);
-		execve(path, args, shell->sh_env);
 		exit(shell->exit);
 	}
 	else

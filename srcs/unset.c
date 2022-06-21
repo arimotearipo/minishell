@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 00:30:32 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/16 16:18:21 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/21 22:30:42 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	exe_unset(t_shell *shell, t_cmdgroup *grp, t_token *tkn)
 	while (tkn != NULL)
 	{
 		if (tkn->type == ARG || tkn->type == COMMAND)
-			unset(shell, tkn->str);
+		{
+			if (cvk(shell, tkn->str))
+				unset(shell, tkn->str);
+		}
 		tkn = tkn->next;
 	}
 	tkn = first;
