@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:06:04 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 15:21:13 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:01:49 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,23 @@ void	end_of_file(t_shell *shell)
 	exit(0);
 }
 
+void	sigint_set_exit_value(t_shell *shell, int sigint)
+{
+	if (sigint == 1)
+	{
+		updateexitvalue(shell);
+		g_sigint = 0;
+	}
+}
+
+void	reset_value_and_signal(t_shell *shell)
+{
+	g_sigint = 0;
+	signal(SIGINT, &sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+	shell->exit = 0;
+}
+
 void	launch_minishell(char **envp)
 {
 	t_shell	shell;
@@ -27,30 +44,20 @@ void	launch_minishell(char **envp)
 	initshell(&shell, envp);
 	while (42)
 	{
-		g_sigint = 0;
-		signal(SIGINT, &sigint_handler);
-		signal(SIGQUIT, SIG_IGN);
-		shell.exit = 0;
+		reset_value_and_signal(&shell);
 		line = readline("minishell>% ");
 		if (line == NULL)
 			end_of_file(&shell);
 		if (ft_strempty(line) == 0)
 			continue ;
-		if (g_sigint == 1)
-		{
-			updateexitvalue(&shell);
-			g_sigint = 0;
-		}
+		sigint_set_exit_value(&shell, g_sigint);
 		add_history(line);
 		lexer(line, &shell);
 		parser(&shell);
 		checkline(&shell);
 		setlastcommand(&shell);
 		if (isnoterror(shell.exit))
-		{
-			runallheredocs(&shell, shell.cmdgroup);
-			runline(&shell, shell.cmdgroup);
-		}
+			execution(&shell, shell.cmdgroup);
 		updateexitvalue(&shell);
 		clearmemory(&shell, shell.cmdgroup);
 	}

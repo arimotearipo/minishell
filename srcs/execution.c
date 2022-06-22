@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_builtin.c                                     :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 22:26:15 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 20:25:39 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/22 15:50:07 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,10 @@ void	run_program(t_shell *shell, t_cmdgroup *group)
 		}
 		grp->tokens = grp->tokens->next;
 	}
+}
+
+void	execution(t_shell *shell, t_cmdgroup *grp)
+{
+	runallheredocs(shell, grp);
+	runline(shell, grp);
 }

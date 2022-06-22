@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 15:17:11 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/22 15:50:28 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ void		exe_cd(t_shell *shell, t_cmdgroup *grp);
 void		showenv(t_shell *shell, t_token *token, int arg);
 
 // EXECUTION
+void		execution(t_shell *shell, t_cmdgroup *grp);
 int			ft_execve(t_shell *shell, t_token *tkn, char *str);
 void		exe_program(t_shell *shell, t_token *token, char *str);
 void		run_program(t_shell *shell, t_cmdgroup *group);

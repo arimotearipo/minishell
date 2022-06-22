@@ -1,6 +1,6 @@
 SRCS_FILES = main.c initshell.c lexer.c error.c error_utils.c list_utils.c free_utils.c tokenlength.c parser.c \
 			env_utils.c expander.c expander2.c ft_substrnoquote.c export.c unset.c chdir.c chdir_utils.c ft_echo.c ft_pwd.c ft_exit.c \
-			exec_prog.c exec_builtin.c updateexit.c getallpath.c redirection.c runline.c get_next_line.c signalhandler.c \
+			exec_prog.c execution.c updateexit.c getallpath.c redirection.c runline.c get_next_line.c signalhandler.c \
 			heredoc_utils.c heredoc.c \
 
 OBJ_DIR = obj/
