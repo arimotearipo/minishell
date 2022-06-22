@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:06:04 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 19:35:00 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/22 23:06:54 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	launch_minishell(char **envp)
 	while (42)
 	{
 		reset_value_and_signal(&shell);
-		line = readline("cengkerang>% ");
+		line = readline("cangkerang>% ");
 		if (line == NULL)
 			end_of_file(&shell);
 		if (ft_strempty(line) == 0)

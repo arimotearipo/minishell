@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 19:00:30 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 19:46:31 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/22 22:26:57 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,17 +97,17 @@ static void	cheese_sleep(size_t n)
 
 void	banner(void)
 {
-	printf(BHYEL"                      _                              \n");
+	printf(BHYEL"                       _                              \n");
 	cheese_sleep(BANNERDELAY);
-	printf(BHYEL"  ___ ___ _ __   __ _| | _____ _ __ __ _ _ __   __ _ \n");
+	printf(BHYEL"  ___ __ _ _ __   __ _| | _____ _ __ __ _ _ __   __ _ \n");
 	cheese_sleep(BANNERDELAY);
-	printf(BHYEL" / __/ _ | '_ \\ / _` | |/ / _ | '__/ _` | '_ \\ / _` |\n");
+	printf(BHYEL" / __/ _` | '_ \\ / _` | |/ / _ | '__/ _` | '_ \\ / _` |\n");
 	cheese_sleep(BANNERDELAY);
-	printf(BHGRN"| (_|  __| | | | (_| |   |  __| | | (_| | | | | (_| |\n");
+	printf(BHGRN"| (_| (_| | | | | (_| |   |  __| | | (_| | | | | (_| |\n");
 	cheese_sleep(BANNERDELAY);
-	printf(BHGRN" \\___\\___|_| |_|\\__, |_|\\_\\___|_|  \\__,_|_| |_|\\__, |\n");
+	printf(BHGRN" \\___\\__,_|_| |_|\\__, |_|\\_\\___|_|  \\__,_|_| |_|\\__, |\n");
 	cheese_sleep(BANNERDELAY);
-	printf(BHCYN"                |___/                          |___/ \n\n");
+	printf(BHCYN"                 |___/                          |___/ \n");
 	cheese_sleep(BANNERDELAY);
 	printf(BHMAG"             A 42 Kuala Lumpur project\n");
 	cheese_sleep(BANNERDELAY);

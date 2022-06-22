@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:17:46 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/15 22:40:06 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/22 23:06:21 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,15 @@ the next character, whether it is in a quote and what quote type it is in.
 */
 void	handledollar(char *cur, char next, int openquote, char quotetype)
 {
+	(void)quotetype;
 	if (*cur != '$')
 		return ;
 	if (next <= 32 && openquote == 0)
 		*cur = '$';
-	else if (!ft_strchr("'\" ", next) && next != '\0' && quotetype != '\'')
+	else if (!ft_strchr("'\" ", next) && next != '\0' && openquote == 0)
+		*cur = (char)(-36);
+	else if (!ft_strchr("'\" ", next) && next != '\0' && openquote == 1
+		&& quotetype == '"')
 		*cur = (char)(-36);
 	else if (ft_strchr("'\"", next) && openquote == 0)
 		*cur = (char)(DOLLARDEL);
