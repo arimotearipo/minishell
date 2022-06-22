@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/21 22:48:48 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/22 15:17:11 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ char		*get_next_line(int fd);
 void		setlastcommand(t_shell *shell);
 void		strjoinandfree(char **new, char *str);
 int			cvk(t_shell *shell, char *str);
+char		*expandpath(char *arg);
 
 /*
 **	SIGNAL HANDLER
@@ -162,8 +163,10 @@ void		sigint_handler(int signum);
 /*
 ** REDIRECTION FUNCTIONS
 */
+void		runallheredocs(t_shell *shell, t_cmdgroup *grp);
 void		open_heredoc(t_shell *shell, t_cmdgroup *grp, t_token *token);
 void		open_heredoc_child(t_shell *shell, t_cmdgroup *grp, t_token *token);
+void		open_heredoc_parent(t_cmdgroup *grp);
 void		open_redirectionread(t_shell *shell, t_cmdgroup *grp, t_token *tkn);
 void		open_redirectioninput(t_shell *shell, t_token *token);
 void		open_redirectionright(t_shell *shell, t_token *token);

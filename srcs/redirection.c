@@ -6,49 +6,16 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:07:38 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/21 23:17:37 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/22 13:42:03 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Moved to heredoc.c
-// static void	open_heredoc(t_shell *shell, t_token *token)
-// {
-// 	char	*line;
-
-// 	signal(SIGINT, SIG_DFL);
-// 	close(shell->fdin);
-// 	dup2(shell->fdstdin, STDIN);
-// 	unlink(".ttiyut7");
-// 	shell->fdin = open(".ttiyut7", O_WRONLY | O_TRUNC | O_CREAT | O_EXCL, 0600);
-// 	if (shell->fdin == -1)
-// 		exit(1);
-// 	while (1)
-// 	{
-// 		line = readline("> ");
-// 		if (!ft_strcmp(line, token->next->str) || line == NULL)
-// 		{
-// 			free(line);
-// 			line = NULL;
-// 			break ;
-// 		}
-// 		translateinheredoc(shell, &line);
-// 		ft_putendl_fd(line, shell->fdin);
-// 		free(line);
-// 		line = NULL;
-// 	}
-// 	close(shell->fdin);
-// 	exit(0);
-// }
-
 void	open_heredoc(t_shell *shell, t_cmdgroup *grp, t_token *token)
 {
 	int		status;
-	int		readbytes;
 	pid_t	pid;
-	int		fd;
-	char	buf[PATH_MAX];
 
 	pid = fork();
 	if (pid == 0)
@@ -56,8 +23,8 @@ void	open_heredoc(t_shell *shell, t_cmdgroup *grp, t_token *token)
 		signal(SIGINT, SIG_DFL);
 		dup2(shell->fdstdin, STDIN_FILENO);
 		unlink(".ttiyut7");
-		shell->fdin = open(".ttiyut7", O_WRONLY | O_TRUNC | O_CREAT |
-			O_EXCL, 0600);
+		shell->fdin = open(".ttiyut7", O_WRONLY | O_TRUNC | O_CREAT
+				| O_EXCL, 0600);
 		open_heredoc_child(shell, grp, token);
 		ft_putstr_fd(grp->heredoc, shell->fdin);
 		close(shell->fdin);
@@ -67,11 +34,7 @@ void	open_heredoc(t_shell *shell, t_cmdgroup *grp, t_token *token)
 	{
 		signal(SIGINT, SIG_IGN);
 		waitpid(-1, &status, 0);
-		fd = open(".ttiyut7", O_RDONLY);
-		readbytes = read(fd, buf, PATH_MAX);
-		buf[readbytes] = '\0';
-		grp->heredoc = ft_strdup(buf);
-		close(fd);
+		open_heredoc_parent(grp);
 		shell->eofexit = status;
 	}
 }
@@ -113,12 +76,6 @@ void	open_redirectionread(t_shell *shell, t_cmdgroup *grp, t_token *tkn)
 	shell->fdin = open(".ttiyut7", O_RDONLY);
 	dup2(shell->fdin, STDIN_FILENO);
 	close(shell->fdin);
-	// ft_putstr_fd(grp->heredoc, 1);
-	// perror("assigned to ttiyut7\n");
-	// shell->fdin = open(".ttiyut7", O_RDONLY);
-	// dup2(shell->fdin, STDIN_FILENO);
-	// close(shell->fdin);
-	// ft_putstr_fd(grp->heredoc, STDIN_FILENO);
 }
 
 void	exe_redirection(t_shell *shell, t_cmdgroup *grp)
@@ -126,16 +83,6 @@ void	exe_redirection(t_shell *shell, t_cmdgroup *grp)
 	t_token	*first;
 
 	first = grp->tokens;
-	// while (grp->tokens != NULL)
-	// {
-	// 	if (grp->tokens->type == RDINPUT)
-	// 	{
-	// 		shell->heredocflag = 1;
-	// 		open_redirectionread(shell, grp->tokens);
-	// 	}
-	// 	grp->tokens = grp->tokens->next;
-	// }
-	// grp->tokens = first;
 	while (grp->tokens != NULL)
 	{
 		if (grp->tokens->type >= INPUT && grp->tokens->type <= RDINPUT)
@@ -148,10 +95,7 @@ void	exe_redirection(t_shell *shell, t_cmdgroup *grp)
 			else if (grp->tokens->type == INPUT)
 				open_redirectioninput(shell, grp->tokens);
 			else if (grp->tokens->type == RDINPUT)
-			{
-				// printf("TESTINGSASDASDASD\n");
 				open_redirectionread(shell, grp, grp->tokens);
-			}
 		}
 		grp->tokens = grp->tokens->next;
 	}

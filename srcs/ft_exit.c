@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:19:43 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/15 22:46:58 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/22 14:53:06 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,12 @@ int	exe_exit(t_shell *shell, t_cmdgroup *cmd)
 
 	tokens = cmd->tokens->next;
 	if (tokens != NULL && tokens->next != NULL)
-		printerror(shell, "bash: exit: too many arguments\n", 1);
+	{
+		if (ft_strisnum(tokens->str, 1) == 0)
+			ft_exit(shell, cmd, tokens, 1);
+		else
+			printerror(shell, "Too many arguments\n", SYNTAXERROR);
+	}
 	else if (tokens != NULL)
 	{
 		free2d(shell->sh_env);

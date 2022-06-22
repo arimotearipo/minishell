@@ -6,25 +6,11 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 11:59:46 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 01:59:03 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/22 15:16:47 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// Might need to free home variable
-char	*expandpath(char *arg)
-{
-	char	*home;
-	char	*remainderpath;
-	char	*fullpath;
-
-	home = getenv("HOME");
-	remainderpath = ft_substr(arg, 1, ft_strlen(arg));
-	fullpath = ft_strjoin(home, remainderpath);
-	free(remainderpath);
-	return (fullpath);
-}
 
 /*
 This will be called upon everytime the 'cd' built-in function is called.
@@ -72,8 +58,34 @@ void	cd_to_oldpwd(t_shell *shell)
 	}
 	if (cd(shell, ft_getenv(shell->sh_env, "OLDPWD")) != -1)
 	{
-		oldpwdpath = ft_getenv(shell->sh_env, "OLDPWD");
+		oldpwdpath = ft_getenv(shell->sh_env, "PWD");
 		ft_putendl_fd(oldpwdpath, 1);
+	}
+}
+
+void	check_pwd_and_oldpwd(t_shell *shell)
+{
+	char	*pwd;
+	char	*oldpwd;
+	char	*home;
+
+	if (getvarindex(shell, "PWD") == -1)
+	{
+		pwd = ft_strjoin("PWD=", getenv("PWD"));
+		insertvar(shell, pwd);
+		free(pwd);
+	}
+	else if (getvarindex(shell, "OLDPWD") == -1)
+	{
+		oldpwd = ft_strjoin("OLDPWD=", getenv("OLDPWD"));
+		insertvar(shell, oldpwd);
+		free(oldpwd);
+	}
+	else if (getvarindex(shell, "HOME") == -1)
+	{
+		home = ft_strjoin("HOME=", getenv("HOME"));
+		insertvar(shell, home);
+		free(home);
 	}
 }
 
@@ -82,12 +94,12 @@ int	cd(t_shell *shell, char *arg)
 	char	*oldpwd;
 	int		tilde;
 
-	oldpwd = ft_strdup(ft_getenv(shell->sh_env, "PWD"));
 	if (arg[0] == '-' && arg[1] == '\0')
 	{
 		cd_to_oldpwd(shell);
 		return (0);
 	}
+	oldpwd = ft_strdup(ft_getenv(shell->sh_env, "PWD"));
 	tilde = 0;
 	if (arg[0] == '~')
 	{
@@ -117,6 +129,7 @@ void	exe_cd(t_shell *shell, t_cmdgroup *cmd)
 		cd(shell, getenv("HOME"));
 		return ;
 	}
+	check_pwd_and_oldpwd(shell);
 	cd(shell, cmd->tokens->str);
 	cmd->tokens = first;
 }
