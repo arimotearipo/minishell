@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 15:50:28 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/22 19:18:59 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include "libft.h"
+
+// BANNER DELAY
+# define BANNERDELAY 40000000
 
 // GET NEXT LINE
 # define BUFFER_SIZE 20
@@ -154,6 +157,7 @@ void		setlastcommand(t_shell *shell);
 void		strjoinandfree(char **new, char *str);
 int			cvk(t_shell *shell, char *str);
 char		*expandpath(char *arg);
+void		banner(void);
 
 /*
 **	SIGNAL HANDLER
