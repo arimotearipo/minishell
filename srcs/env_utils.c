@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 21:35:16 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:56:51 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ void	clone_env(char **envp, t_shell *shell)
 /*
 Will retrieve the pointer next to the '=' sign in the 2D shell env array.
 The return value do not need to be freed. The 'var' argument passed is 
-the key of the variable (before the '=' sign).
+the key of the variable (before the '=' sign). The function will return
+the value of the variable.
 */
 char	*ft_getenv(char **env, char *var)
 {

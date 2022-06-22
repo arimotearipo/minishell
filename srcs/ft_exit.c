@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:19:43 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/22 14:53:06 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:35:43 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_exit(t_shell *shell, t_cmdgroup *cmd, t_token *tkn, int opt)
 	if (opt == 1)
 	{
 		ft_putendl_fd("exit", 1);
-		printerror(shell, "bash: exit: numeric argument required\n", 1);
+		printerror(shell, "Numeric argument required but exiting still\n", 1);
 		clearmemory(shell, cmd);
 		exit(255);
 	}
@@ -48,7 +48,7 @@ int	exe_exit(t_shell *shell, t_cmdgroup *cmd)
 		if (ft_strisnum(tokens->str, 1) == 0)
 			ft_exit(shell, cmd, tokens, 1);
 		else
-			printerror(shell, "Too many arguments\n", SYNTAXERROR);
+			printerror(shell, "Error: Too many arguments\n", SYNTAXERROR);
 	}
 	else if (tokens != NULL)
 	{

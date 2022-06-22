@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:06:04 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 16:01:49 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/22 18:02:51 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,25 @@ void	launch_minishell(char **envp)
 		clearmemory(&shell, shell.cmdgroup);
 	}
 }
+
+/*
+For the purpose of using minishell tester
+
+ int	launch_minishell_for_tester(char **envp, char *line)
+ {
+ 	t_shell	shell;
+ 	initshell(&shell, envp);
+ 	lexer(line, &shell);
+ 	parser(&shell);
+ 	checkline(&shell);
+ 	setlastcommand(&shell);
+ 	if (isnoterror(shell.exit))
+ 		execution(&shell, shell.cmdgroup);
+ 	updateexitvalue(&shell);
+ 	clearmemory(&shell, shell.cmdgroup);
+ 	return ft_atoi(ft_getenv(shell.sh_env, "?"));
+ }
+ */
 
 int	main(int ac, char **av, char **envp)
 {
