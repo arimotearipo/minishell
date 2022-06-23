@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:06:04 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 23:06:54 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:15:50 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	main(int ac, char **av, char **envp)
 		ft_putendl_fd("Anything not asked is not required.", 2);
 		exit(NOCOMMAND);
 	}
-	banner();
+	// banner();
 	launch_minishell(envp);
 	return (0);
 }

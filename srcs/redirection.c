@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:07:38 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 13:42:03 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:46:54 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,18 @@ void	open_heredoc(t_shell *shell, t_cmdgroup *grp, t_token *token)
 	}
 }
 
-void	open_redirectioninput(t_shell *shell, t_token *token)
+int	open_redirectioninput(t_shell *shell, t_token *token)
 {
 	close(shell->fdin);
 	dup2(shell->fdstdin, STDIN);
 	shell->fdin = open(token->next->str, O_RDONLY, 0700);
 	if (shell->fdin == -1)
-		return ;
+		return (-1);
 	dup2(shell->fdin, STDIN);
+	return (1);
 }
 
-void	open_redirectionright(t_shell *shell, t_token *tkn)
+void open_redirectionright(t_shell *shell, t_token *tkn)
 {
 	char	*fd;
 
@@ -63,6 +64,7 @@ void	open_redirectionright(t_shell *shell, t_token *tkn)
 	if (shell->fdout == -1)
 		return ;
 	dup2(shell->fdout, STDOUT);
+	return ;
 }
 
 void	open_redirectionread(t_shell *shell, t_cmdgroup *grp, t_token *tkn)
@@ -78,10 +80,12 @@ void	open_redirectionread(t_shell *shell, t_cmdgroup *grp, t_token *tkn)
 	close(shell->fdin);
 }
 
-void	exe_redirection(t_shell *shell, t_cmdgroup *grp)
+int	exe_redirection(t_shell *shell, t_cmdgroup *grp)
 {
 	t_token	*first;
+	int		res;
 
+	res = 0;
 	first = grp->tokens;
 	while (grp->tokens != NULL)
 	{
@@ -93,11 +97,14 @@ void	exe_redirection(t_shell *shell, t_cmdgroup *grp)
 				shell->redirflag = 1;
 			}
 			else if (grp->tokens->type == INPUT)
-				open_redirectioninput(shell, grp->tokens);
+				res = open_redirectioninput(shell, grp->tokens);
 			else if (grp->tokens->type == RDINPUT)
 				open_redirectionread(shell, grp, grp->tokens);
+			if (res == -1)
+				return (res);
 		}
 		grp->tokens = grp->tokens->next;
 	}
 	grp->tokens = first;
+	return (0);
 }

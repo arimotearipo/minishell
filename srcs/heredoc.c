@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:56:57 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 13:42:26 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/23 20:47:52 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	open_heredoc_child(t_shell *shell, t_cmdgroup *grp, t_token *token)
 {
 	char	*line;
 
-	grp->heredoc = ft_strdup("");
+	(void)shell;
+	(void)grp;
 	while (1)
 	{
 		line = readline("> ");

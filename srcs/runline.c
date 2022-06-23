@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 16:19:31 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 13:41:16 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:14:02 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,31 @@ static void	resetflags(t_shell *shell)
 	shell->heredocflag = 0;
 }
 
+void	runprogramchild(t_shell *shell, t_cmdgroup *grp)
+{
+	pid_t	pid;
+	int		status;
+
+	if (shell->cmdgrpcount == 1)
+	{
+		run_program(shell, grp);
+		dup2(shell->fdstdin, STDIN);
+		return ;
+	}
+	pid = fork();
+	if (pid == 0)
+	{
+		run_program(shell, grp);
+		exit(shell->exit);
+	}
+	else
+	{
+		waitpid(-1, &status, 0);
+		shell->exit = status;
+		dup2(shell->fdstdin, STDIN);
+	}
+}
+
 void	runline(t_shell *shell, t_cmdgroup *grp)
 {
 	t_cmdgroup	*first;
@@ -73,17 +98,20 @@ void	runline(t_shell *shell, t_cmdgroup *grp)
 	while (grp != NULL)
 	{	
 		resetflags(shell);
-		exe_redirection(shell, grp);
+		if (exe_redirection(shell, grp) == -1)
+		{
+			printerror(shell, "Error. No such file\n", SYNTAXERROR);
+			closeandresetfd(shell, 0);
+			grp = grp->next;
+			continue ;
+		}
 		if (shell->eofexit == 2)
 		{
 			closeandresetfd(shell, 1);
 			break ;
 		}
 		if (grp->next == NULL)
-		{
-			run_program(shell, grp);
-			dup2(shell->fdstdin, STDIN);
-		}
+			runprogramchild(shell, grp);
 		else
 			piping(shell, grp);
 		closeandresetfd(shell, 0);

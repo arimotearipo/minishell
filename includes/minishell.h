@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 19:18:59 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/23 15:12:53 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,9 +172,9 @@ void		open_heredoc(t_shell *shell, t_cmdgroup *grp, t_token *token);
 void		open_heredoc_child(t_shell *shell, t_cmdgroup *grp, t_token *token);
 void		open_heredoc_parent(t_cmdgroup *grp);
 void		open_redirectionread(t_shell *shell, t_cmdgroup *grp, t_token *tkn);
-void		open_redirectioninput(t_shell *shell, t_token *token);
+int			open_redirectioninput(t_shell *shell, t_token *token);
 void		open_redirectionright(t_shell *shell, t_token *token);
-void		exe_redirection(t_shell *shell, t_cmdgroup *grp);
+int			exe_redirection(t_shell *shell, t_cmdgroup *grp);
 void		translateinheredoc(t_shell *shell, char **toexpand);
 
 /*
