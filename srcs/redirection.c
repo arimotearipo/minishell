@@ -6,38 +6,11 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:07:38 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/23 22:50:37 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/24 02:39:33 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	open_heredoc(t_shell *shell, t_cmdgroup *grp, t_token *token)
-{
-	int		status;
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		dup2(shell->fdstdin, STDIN_FILENO);
-		unlink(".ttiyut7");
-		shell->fdin = open(".ttiyut7", O_WRONLY | O_TRUNC | O_CREAT
-				| O_EXCL, 0600);
-		open_heredoc_child(shell, grp, token);
-		ft_putstr_fd(grp->heredoc, shell->fdin);
-		close(shell->fdin);
-		exit(0);
-	}
-	else
-	{
-		signal(SIGINT, SIG_IGN);
-		waitpid(-1, &status, 0);
-		open_heredoc_parent(grp);
-		shell->eofexit = status;
-	}
-}
 
 int	open_redirectioninput(t_shell *shell, t_token *token)
 {
