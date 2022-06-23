@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:06:04 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/23 17:15:50 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:57:04 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	end_of_file(t_shell *shell)
 {
+	// if (shell->cmdgroup != NULL)
+		// clearmemory(shell, shell->cmdgroup);
 	free2d(shell->sh_env);
 	system("leaks minishell");
 	exit(0);

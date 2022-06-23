@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:56:57 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/23 20:47:52 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:09:15 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	open_heredoc_child(t_shell *shell, t_cmdgroup *grp, t_token *token)
 
 	(void)shell;
 	(void)grp;
+	grp->heredoc = ft_strdup("");
 	while (1)
 	{
 		line = readline("> ");
@@ -47,6 +48,7 @@ void	open_heredoc_parent(t_cmdgroup *grp)
 	fd = open(".ttiyut7", O_RDONLY);
 	readbytes = read(fd, buf, PATH_MAX);
 	buf[readbytes] = '\0';
+	free(grp->heredoc);
 	grp->heredoc = ft_strdup(buf);
 	close(fd);
 }

@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:29:43 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/21 22:52:34 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:33:39 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	setlastcommand(t_shell *shell)
 	{
 		if (token->type == ARG || token->type == COMMAND)
 			shell->lastcmd = token->str;
+		else
+			shell->lastcmd = "";
 		token = token->next;
 	}
 }

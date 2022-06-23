@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 22:26:15 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 15:50:07 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:12:06 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,19 @@ void	exe_program(t_shell *shell, t_token *token, char *str)
 
 void	run_program(t_shell *shell, t_cmdgroup *group)
 {
-	t_cmdgroup	*grp;
+	t_token	*first;
 
-	grp = group;
-	while (grp->tokens != NULL)
+	first = group->tokens;
+	while (group->tokens != NULL)
 	{
-		if (grp->tokens->type == COMMAND || grp->tokens->type == ARG)
+		if (group->tokens->type == COMMAND || group->tokens->type == ARG)
 		{
-			exe_program(shell, grp->tokens, grp->tokens->str);
+			exe_program(shell, group->tokens, group->tokens->str);
 			break ;
 		}
-		grp->tokens = grp->tokens->next;
+		group->tokens = group->tokens->next;
 	}
+	group->tokens = first;
 }
 
 void	execution(t_shell *shell, t_cmdgroup *grp)
