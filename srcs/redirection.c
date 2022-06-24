@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:07:38 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/24 02:39:33 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/24 15:57:13 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,29 +55,28 @@ void	open_redirectionread(t_shell *shell, t_cmdgroup *grp, t_token *tkn)
 
 int	exe_redirection(t_shell *shell, t_cmdgroup *grp)
 {
-	t_token	*first;
+	t_token	*token;
 	int		res;
 
 	res = 0;
-	first = grp->tokens;
-	while (grp->tokens != NULL)
+	token = grp->tokens;
+	while (token != NULL)
 	{
-		if (grp->tokens->type >= INPUT && grp->tokens->type <= RDINPUT)
+		if (token->type >= INPUT && token->type <= RDINPUT)
 		{
-			if (grp->tokens->type == OUTPUT || grp->tokens->type == APPEND)
+			if (token->type == OUTPUT || token->type == APPEND)
 			{
-				open_redirectionright(shell, grp->tokens);
+				open_redirectionright(shell, token);
 				shell->redirflag = 1;
 			}
-			else if (grp->tokens->type == INPUT)
-				res = open_redirectioninput(shell, grp->tokens);
-			else if (grp->tokens->type == RDINPUT)
-				open_redirectionread(shell, grp, grp->tokens);
+			else if (token->type == INPUT)
+				res = open_redirectioninput(shell, token);
+			else if (token->type == RDINPUT)
+				open_redirectionread(shell, grp, token);
 			if (res == -1)
 				return (res);
 		}
-		grp->tokens = grp->tokens->next;
+		token = token->next;
 	}
-	grp->tokens = first;
 	return (0);
 }
