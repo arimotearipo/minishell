@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 22:26:15 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/23 23:12:06 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/24 17:27:08 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ void	exe_program(t_shell *shell, t_token *token, char *str)
 	else if (ft_strcmp(str, "exit") == 0)
 		exe_exit(shell, shell->cmdgroup);
 	else
-		ft_execve(shell, token, str);
+	{
+		shell->exit = ft_execve(shell, token, str);
+	}
 }
 
 void	run_program(t_shell *shell, t_cmdgroup *group)

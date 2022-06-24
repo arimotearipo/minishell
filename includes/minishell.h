@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/23 15:12:53 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/24 21:30:15 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,7 @@ typedef struct s_token
 typedef struct s_cmdgroup
 {
 	t_token				*tokens;
-	int					cmdcnt;
 	struct s_cmdgroup	*next;
-	char				*grpstr;
-	char				*output;
 	char				*topass;
 	char				*heredoc;
 }	t_cmdgroup;
@@ -152,11 +149,14 @@ void		unset(t_shell *shell, char *arg);
 void		updateexitvalue(t_shell *shell);
 void		runline(t_shell *shell, t_cmdgroup *grp);
 void		resetfd(t_shell *shell);
+void		closeandresetfd(t_shell *shell, int opt);
+void		resetflags(t_shell *shell);
 char		*get_next_line(int fd);
 void		setlastcommand(t_shell *shell);
 void		strjoinandfree(char **new, char *str);
 int			cvk(t_shell *shell, char *str);
 char		*expandpath(char *arg);
+void		cheese_sleep(size_t n);
 void		banner(void);
 
 /*

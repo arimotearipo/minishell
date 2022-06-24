@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:07:40 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/23 23:14:44 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/24 22:19:42 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,14 +109,20 @@ int	ft_execve(t_shell *shell, t_token *tkn, char *str)
 		path = getcommandpath(shell, tkn->str, 0);
 		execve(str, args, shell->sh_env);
 		if (execve(path, args, shell->sh_env) == -1)
-			printerror(shell, "Error. Command not found.\n", NOCOMMAND);
+		{
+			// printf("in child\n");
+			exit(NOCOMMAND);
+		}
 		exit(shell->exit);
 	}
 	else
 	{
 		signal(SIGINT, SIG_IGN);
 		waitpid(-1, &status, 0);
+		if (WEXITSTATUS(status) == NOCOMMAND)
+			printerror(shell, "Error. Command not found\n", NOCOMMAND);
+		// printf("exit value: %d\n", status);
+		return (WEXITSTATUS(status));
 	}
-	shell->exit = status / 256;
-	return (status);
+	// printf("WEXITSTATUS: %d\n", WEXITSTATUS(status));
 }

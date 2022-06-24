@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 19:00:30 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 22:26:57 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/24 21:12:37 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@
 #define CRESET "\e[0m"
 #define COLOR_RESET "\e[0m"
 
-static void	cheese_sleep(size_t n)
+void	cheese_sleep(size_t n)
 {
 	size_t	i;
 

@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:28:06 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/23 15:35:32 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/24 21:31:25 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	iscmd(char *str, t_shell *shell)
 	return (0);
 }
 
-void	assigntype(t_token *token, t_cmdgroup *cmd, int prevtype, t_shell *sh)
+static void	assigntype(t_token *token, int prevtype, t_shell *sh)
 {
 	(void)sh;
 	if (prevtype == RDINPUT)
@@ -78,10 +78,7 @@ void	assigntype(t_token *token, t_cmdgroup *cmd, int prevtype, t_shell *sh)
 	else if (ft_strcmp(">>", token->str) == 0)
 		token->type = APPEND;
 	else if (token->prev == NULL)
-	{
 		token->type = COMMAND;
-		cmd->cmdcnt += 1;
-	}
 	else if (prevtype >= INPUT && prevtype <= APPEND)
 		token->type = FD;
 	else if (ft_strcmp("|", token->str) == 0)
@@ -105,7 +102,7 @@ void	loopandassigntype(t_cmdgroup *cmd, t_shell *shell)
 		firsttoken = cmd->tokens;
 		while (cmd->tokens != NULL)
 		{
-			assigntype(cmd->tokens, cmd, previoustype, shell);
+			assigntype(cmd->tokens, previoustype, shell);
 			previoustype = cmd->tokens->type;
 			cmd->tokens = cmd->tokens->next;
 		}

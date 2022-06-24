@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"__config": "c",
-		"locale": "c"
+		"locale": "c",
+		"iterator": "c"
 	}
 }

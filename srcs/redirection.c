@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:07:38 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/24 15:57:13 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/24 17:50:38 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	open_redirectioninput(t_shell *shell, t_token *token)
 	return (1);
 }
 
-void open_redirectionright(t_shell *shell, t_token *tkn)
+void	open_redirectionright(t_shell *shell, t_token *tkn)
 {
 	char	*fd;
 

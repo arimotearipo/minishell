@@ -6,29 +6,11 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 16:19:31 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/23 22:56:15 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/24 23:04:39 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// dup2(shell->fdstdin, STDIN); was removed after close(shell->fdin)
-void	closeandresetfd(t_shell *shell, int opt)
-{
-	if (shell->fdin > 0)
-	{
-		close(shell->fdin);
-		if (opt == 1)
-			dup2(shell->fdstdin, STDIN);
-	}
-	if (shell->fdout > 0)
-	{
-		close(shell->fdout);
-		dup2(shell->fdstdout, STDOUT);
-	}
-	unlink(".ttiyut7");
-	resetfd(shell);
-}
 
 void	piping(t_shell *shell, t_cmdgroup *grp)
 {
@@ -39,6 +21,7 @@ void	piping(t_shell *shell, t_cmdgroup *grp)
 	pid = fork();
 	if (pid == -1)
 		return ;
+	cheese_sleep(5000000);
 	if (pid == 0)
 	{
 		close(fd[0]);
@@ -48,7 +31,7 @@ void	piping(t_shell *shell, t_cmdgroup *grp)
 		close(fd[1]);
 		if (shell->redirflag == 0)
 			run_program(shell, grp);
-		exit(0);
+		exit(shell->exit);
 	}
 	else
 	{
@@ -58,17 +41,9 @@ void	piping(t_shell *shell, t_cmdgroup *grp)
 	}
 }
 
-static void	resetflags(t_shell *shell)
-{
-	shell->redirflag = 0;
-	shell->eofexit = 0;
-	shell->heredocflag = 0;
-}
-
 void	runprogramchild(t_shell *shell, t_cmdgroup *grp)
 {
 	pid_t	pid;
-	int		status;
 
 	if (shell->cmdgrpcount == 1)
 	{
@@ -79,30 +54,32 @@ void	runprogramchild(t_shell *shell, t_cmdgroup *grp)
 	pid = fork();
 	if (pid == 0)
 	{
+		cheese_sleep(5000000);
 		run_program(shell, grp);
 		exit(shell->exit);
 	}
 	else
-	{
-		waitpid(-1, &status, 0);
-		shell->exit = status;
 		dup2(shell->fdstdin, STDIN);
-	}
+}
+
+void	redirection_error(t_shell *shell, t_cmdgroup **grp)
+{
+	printerror(shell, "Error. No such file\n", SYNTAXERROR);
+	closeandresetfd(shell, 0);
+	*grp = (*grp)->next;
 }
 
 void	runline(t_shell *shell, t_cmdgroup *grp)
 {
-	t_cmdgroup	*first;
+	t_cmdgroup	*grplist;
 
-	first = grp;
-	while (grp != NULL)
+	grplist = grp;
+	while (grplist != NULL)
 	{	
 		resetflags(shell);
-		if (exe_redirection(shell, grp) == -1)
+		if (exe_redirection(shell, grplist) == -1)
 		{
-			printerror(shell, "Error. No such file\n", SYNTAXERROR);
-			closeandresetfd(shell, 0);
-			grp = grp->next;
+			redirection_error(shell, &(grplist));
 			continue ;
 		}
 		if (shell->eofexit == 2)
@@ -110,14 +87,14 @@ void	runline(t_shell *shell, t_cmdgroup *grp)
 			closeandresetfd(shell, 1);
 			break ;
 		}
-		if (grp->next == NULL)
-			runprogramchild(shell, grp);
+		if (grplist->next == NULL)
+			runprogramchild(shell, grplist);
 		else
-			piping(shell, grp);
+			piping(shell, grplist);
 		closeandresetfd(shell, 0);
-		grp = grp->next;
+		grplist = grplist->next;
 	}
-	while (wait(NULL) != -1)
+	while (wait(&(shell->exit)) != -1)
 		;
-	grp = first;
+	shell->exit = WEXITSTATUS(shell->exit);
 }
