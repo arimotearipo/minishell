@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 00:30:32 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/21 22:30:42 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/25 18:18:00 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	exe_unset(t_shell *shell, t_cmdgroup *grp, t_token *tkn)
 	{
 		if (tkn->type == ARG || tkn->type == COMMAND)
 		{
-			if (cvk(shell, tkn->str))
+			if (cvk(shell, tkn->str, 1))
 				unset(shell, tkn->str);
 		}
 		tkn = tkn->next;

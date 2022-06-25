@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:32 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/15 21:07:43 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/25 16:10:13 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	redirectioncheck(t_shell *shell, t_token *tokens)
 	{
 		if (tokens->next == NULL)
 		{
-			printerror(shell, "Error: Unexpected token\n", SYNTAXERROR);
+			printerror(shell, "Error: Unexpected token\n", REDIRERROR);
 			return (0);
 		}
 		else if ((tokens->next->type >= INPUT && tokens->next->type <= RDINPUT))
@@ -83,7 +83,7 @@ void	emptycommand(t_shell *shell)
 		firsttoken = cmd->tokens;
 		if (cmd->tokens == NULL)
 		{
-			printerror(shell, "Error: Unexpected token\n", SYNTAXERROR);
+			printerror(shell, "Error: Unexpected token\n", UNEXPECTEDTOKEN);
 			return ;
 		}
 		cmd->tokens = firsttoken;

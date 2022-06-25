@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:28:06 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/24 21:31:25 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/25 20:16:09 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,24 @@ static void	assigntype(t_token *token, int prevtype, t_shell *sh)
 		token->type = ARG;
 }
 
+static void	markemptystr(t_shell *shell, t_token *token)
+{
+	int	i;
+
+	(void)shell;
+	i = 0;
+	while (token->str[i] != 0)
+	{
+		if (!ft_strchr("'\"", token->str[i]))
+		{
+			token->emptystr = 0;
+			return ;
+		}
+		i++;
+	}
+	token->emptystr = 1;
+}
+
 void	loopandassigntype(t_cmdgroup *cmd, t_shell *shell)
 {
 	t_token		*firsttoken;
@@ -103,6 +121,7 @@ void	loopandassigntype(t_cmdgroup *cmd, t_shell *shell)
 		while (cmd->tokens != NULL)
 		{
 			assigntype(cmd->tokens, previoustype, shell);
+			markemptystr(shell, cmd->tokens);
 			previoustype = cmd->tokens->type;
 			cmd->tokens = cmd->tokens->next;
 		}
