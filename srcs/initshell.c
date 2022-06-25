@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initshell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:53:26 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/20 12:58:09 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/25 20:45:21 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	initshell(t_shell *shell, char **envp)
 	shell->fdstdin = dup(STDIN);
 	shell->fdstdout = dup(STDOUT);
 	shell->redirflag = 0;
+	shell->exportflag = 0;
 	resetfd(shell);
 	clone_env(envp, shell);
 	incrementshlvl(shell);

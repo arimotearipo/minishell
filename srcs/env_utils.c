@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 16:56:51 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/25 19:25:16 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	export_no_arg(char *arg)
+{
+	char	*varkey;
+	char	*varvalue;
+
+	varkey = getvarname(arg);
+	varvalue = ft_strchr(arg, '=') + 1;
+	ft_putstr_fd("declare -x ", 1);
+	ft_putstr_fd(varkey, 1);
+	ft_putstr_fd("=\"", 1);
+	ft_putstr_fd(varvalue, 1);
+	ft_putendl_fd("\"", 1);
+	free(varkey);
+}
 
 /*
 showenv() function will show all the variables in the 2D environment array.
@@ -31,9 +46,9 @@ void	showenv(t_shell *shell, t_token *token, int arg)
 	}
 	m = getvarindex(shell, "_");
 	if (m == -1)
-		insertvar(shell, "_=env");
+		insertvar(shell, "_=/usr/bin/env");
 	else
-		replacevar(shell, "_=env", m);
+		replacevar(shell, "_=/usr/bin/env", m);
 	len = ft_2darrlen(shell->sh_env);
 	i = 0;
 	while (i < len - 1)
@@ -41,8 +56,9 @@ void	showenv(t_shell *shell, t_token *token, int arg)
 		if (!ft_strcchr(shell->sh_env[i], "?", '='))
 			i++;
 		if (!arg)
-			printf("declare -x ");
-		printf("%s\n", shell->sh_env[i]);
+			export_no_arg(shell->sh_env[i]);
+		else
+			ft_putendl_fd(shell->sh_env[i], 1);
 		i++;
 	}
 }

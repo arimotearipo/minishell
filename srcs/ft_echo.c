@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 19:26:21 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/21 17:16:58 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/25 21:04:26 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,11 @@ int	exe_echo(t_shell *shell, t_cmdgroup *cmd, t_token *token)
 		isechooption(&tokens, &option);
 	while (tokens != NULL)
 	{
+		// printf("flag = %d\n", tokens->emptystr);
 		if (tokens->type == ARG)
 		{
-			if (ft_strcmp(cmd->topass, ""))
+			if (ft_strcmp(cmd->topass, "") || (!ft_strcmp(tokens->str, "")
+				&& tokens->emptystr == 1))
 				strjoinandfree(&(cmd->topass), " ");
 			strjoinandfree(&(cmd->topass), tokens->str);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:22:12 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/09 18:52:49 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/25 16:18:22 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ int	isnoterror(int errornum)
 	if (errornum == NOCOMMAND)
 		return (0);
 	if (errornum == NOEXECUTE)
+		return (0);
+	if (errornum == UNEXPECTEDTOKEN)
+		return (0);
+	if (errornum == REDIRERROR)
 		return (0);
 	return (1);
 }

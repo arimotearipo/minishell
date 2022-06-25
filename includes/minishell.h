@@ -6,7 +6,7 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/25 07:58:49 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/25 20:04:35 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@
 */
 # define SUCCESS 0
 # define SYNTAXERROR 1
+# define UNEXPECTEDTOKEN 2
 # define NOCOMMAND 127
 # define NOEXECUTE 126
+# define REDIRERROR 139
 
 /*
 ** QUOTE TYPE
@@ -81,6 +83,7 @@ typedef struct s_token
 {
 	char			*str;
 	int				type;
+	int				emptystr;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -107,6 +110,7 @@ typedef struct s_shell
 	int			redirflag;
 	int			eofexit;
 	int			heredocflag;
+	int			exportflag;
 	char		*lastcmd;
 }	t_shell;
 
@@ -154,10 +158,12 @@ void		resetflags(t_shell *shell);
 char		*get_next_line(int fd);
 void		setlastcommand(t_shell *shell);
 void		strjoinandfree(char **new, char *str);
-int			cvk(t_shell *shell, char *str);
+int			cvk(t_shell *shell, char *str, int option);
 char		*expandpath(char *arg);
 void		cheese_sleep(size_t n);
 void		banner(void);
+int			check_first_key_char(char c);
+int			check_next_key_char(char c);
 
 /*
 **	SIGNAL HANDLER
