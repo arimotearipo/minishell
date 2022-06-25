@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:19:43 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/22 16:35:43 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/25 08:00:11 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	ft_exit(t_shell *shell, t_cmdgroup *cmd, t_token *tkn, int opt)
 	}
 }
 
-int	exe_exit(t_shell *shell, t_cmdgroup *cmd)
+int	exe_exit(t_shell *shell, t_cmdgroup *cmd, t_token *token)
 {
 	t_token	*tokens;
 
-	tokens = cmd->tokens->next;
+	tokens = token->next;
 	if (tokens != NULL && tokens->next != NULL)
 	{
 		if (ft_strisnum(tokens->str, 1) == 0)

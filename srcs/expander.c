@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 17:12:09 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/17 18:33:09 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/25 09:06:44 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ char	*get_var(t_shell *shell, t_token *token, int *i)
 		(*i)++;
 	}
 	var = ft_substr(token->str, start, len);
+	if (ft_isdigit(var[0]))
+	{
+		free(var);
+		expandedvar = ft_substr(token->str, start + 1, len - 1);
+		return (expandedvar);
+	}
 	env = ft_getenv(shell->sh_env, var);
 	free(var);
 	if (env == NULL)
