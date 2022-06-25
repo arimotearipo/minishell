@@ -6,11 +6,19 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 16:19:31 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/25 16:23:44 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/26 00:01:35 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	waitandsetexit(t_shell *shell)
+{
+	while (wait(&(shell->exit)) != -1)
+		;
+	if (shell->cmdgrpcount > 1)
+		shell->exit = WEXITSTATUS(shell->exit);
+}
 
 void	piping(t_shell *shell, t_cmdgroup *grp)
 {
@@ -94,8 +102,5 @@ void	runline(t_shell *shell, t_cmdgroup *grp)
 		closeandresetfd(shell, 0);
 		grplist = grplist->next;
 	}
-	while (wait(&(shell->exit)) != -1)
-		;
-	if (shell->cmdgrpcount > 1)
-		shell->exit = WEXITSTATUS(shell->exit);
+	waitandsetexit(shell);
 }

@@ -6,7 +6,7 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:32 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/25 16:10:13 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/25 23:31:58 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ int	redirectioncheck(t_shell *shell, t_token *tokens)
 	{
 		if (tokens->next == NULL)
 		{
-			printerror(shell, "Error: Unexpected token\n", REDIRERROR);
+			printerror(shell, "Error: Unexpected token\n", UNEXPTOKEN);
 			return (0);
 		}
 		else if ((tokens->next->type >= INPUT && tokens->next->type <= RDINPUT))
 		{
-			printerror(shell, "Error: Unexpected token\n", SYNTAXERROR);
+			printerror(shell, "Error: Unexpected token\n", UNEXPTOKEN);
 			return (0);
 		}
 	}
@@ -83,7 +83,7 @@ void	emptycommand(t_shell *shell)
 		firsttoken = cmd->tokens;
 		if (cmd->tokens == NULL)
 		{
-			printerror(shell, "Error: Unexpected token\n", UNEXPECTEDTOKEN);
+			printerror(shell, "Error: Unexpected token\n", UNEXPTOKEN);
 			return ;
 		}
 		cmd->tokens = firsttoken;

@@ -6,7 +6,7 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:06:04 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/25 19:20:11 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/26 00:54:50 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void	launch_minishell(char **envp)
 // }
 
 // For the purpose of using minishell tester
- int	launch_minishell_for_tester(char **envp, char *line)
- {
+int	launch_minishell_for_tester(char **envp, char *line)
+{
 	t_shell	shell;
 
 	line = ft_strdup(line);
@@ -91,8 +91,8 @@ void	launch_minishell(char **envp)
 		execution(&shell, shell.cmdgroup);
 	updateexitvalue(&shell);
 	clearmemory(&shell, shell.cmdgroup);
-	return ft_atoi(ft_getenv(shell.sh_env, "?"));
- }
+	return (ft_atoi(ft_getenv(shell.sh_env, "?")));
+}
 
 int	main(int ac, char **av, char **envp)
 {

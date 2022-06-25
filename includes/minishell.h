@@ -6,7 +6,7 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/25 20:04:35 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/26 00:23:12 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 */
 # define SUCCESS 0
 # define SYNTAXERROR 1
-# define UNEXPECTEDTOKEN 2
+# define UNEXPTOKEN 2
 # define NOCOMMAND 127
 # define NOEXECUTE 126
 # define REDIRERROR 139
@@ -164,6 +164,7 @@ void		cheese_sleep(size_t n);
 void		banner(void);
 int			check_first_key_char(char c);
 int			check_next_key_char(char c);
+void		markemptystr(t_shell *shell, t_token *token);
 
 /*
 **	SIGNAL HANDLER

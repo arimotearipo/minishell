@@ -6,7 +6,7 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 17:12:09 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/25 09:06:44 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/26 01:20:00 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 char	*get_var(t_shell *shell, t_token *token, int *i)
 {
 	char	*var;
-	char	*expandedvar;
 	int		len;
 	int		start;
 	char	*env;
@@ -38,16 +37,14 @@ char	*get_var(t_shell *shell, t_token *token, int *i)
 	if (ft_isdigit(var[0]))
 	{
 		free(var);
-		expandedvar = ft_substr(token->str, start + 1, len - 1);
-		return (expandedvar);
+		return (ft_substr(token->str, start + 1, len - 1));
 	}
 	env = ft_getenv(shell->sh_env, var);
 	free(var);
 	if (env == NULL)
-		expandedvar = ft_strdup("");
+		return (ft_strdup(""));
 	else
-		expandedvar = ft_strdup(env);
-	return (expandedvar);
+		return (ft_strdup(env));
 }
 
 void	translate(t_shell *shell, t_token *token)
@@ -113,7 +110,7 @@ void	stripquote(t_shell *shell, t_token *token)
 	len = getlen(token->str, &i);
 	if (len < 0)
 	{
-		printerror(shell, "Error: Unexpected token\n", SYNTAXERROR);
+		printerror(shell, "Error: Unexpected token\n", UNEXPTOKEN);
 		return ;
 	}
 	newstr = ft_substrnoquote(token->str, 0, len);
