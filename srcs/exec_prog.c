@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:07:40 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/24 22:19:42 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/25 23:44:11 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,7 @@ int	ft_execve(t_shell *shell, t_token *tkn, char *str)
 		path = getcommandpath(shell, tkn->str, 0);
 		execve(str, args, shell->sh_env);
 		if (execve(path, args, shell->sh_env) == -1)
-		{
-			// printf("in child\n");
 			exit(NOCOMMAND);
-		}
 		exit(shell->exit);
 	}
 	else
@@ -121,8 +118,6 @@ int	ft_execve(t_shell *shell, t_token *tkn, char *str)
 		waitpid(-1, &status, 0);
 		if (WEXITSTATUS(status) == NOCOMMAND)
 			printerror(shell, "Error. Command not found\n", NOCOMMAND);
-		// printf("exit value: %d\n", status);
 		return (WEXITSTATUS(status));
 	}
-	// printf("WEXITSTATUS: %d\n", WEXITSTATUS(status));
 }

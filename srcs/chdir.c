@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chdir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 11:59:46 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 15:16:47 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/25 23:42:22 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	cd(t_shell *shell, char *arg)
 }
 
 void	exe_cd(t_shell *shell, t_cmdgroup *cmd)
-{
+{	
 	t_token	*first;
 
 	first = cmd->tokens;
@@ -126,7 +126,12 @@ void	exe_cd(t_shell *shell, t_cmdgroup *cmd)
 	if (cmd->tokens == NULL)
 	{
 		cmd->tokens = first;
-		cd(shell, getenv("HOME"));
+		if (ft_getenv(shell->sh_env, "HOME") == NULL)
+		{
+			printerror(shell, "HOME not set\n", 1);
+			return ;
+		}
+		cd(shell, ft_getenv(shell->sh_env, "HOME"));
 		return ;
 	}
 	check_pwd_and_oldpwd(shell);

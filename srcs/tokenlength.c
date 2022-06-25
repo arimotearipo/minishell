@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenlength.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:02:09 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/08 18:02:14 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/26 01:17:24 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	gettokenlen(char *line, int *i)
 	int	c;
 
 	len = 0;
-	while (!ft_strchr(" \"'<>|", line[*i]) && line[*i] != '\0')
+	while (!ft_strchr("\"'<>|", line[*i]) && line[*i] != '\0')
 	{
 		(*i)++;
 		len++;

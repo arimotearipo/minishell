@@ -6,7 +6,7 @@
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 17:26:20 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/25 19:18:32 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/25 23:43:01 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	first_key_error(t_shell *shell, char *str)
 	{
 		if (ft_strchr("-", str[0]))
 			printerror(shell, "Argument is not a valid identifier\n",
-				UNEXPECTEDTOKEN);
+				UNEXPTOKEN);
 		else
 			printerror(shell, "Argument is not a valid identifier\n",
 				SYNTAXERROR);

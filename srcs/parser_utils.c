@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_utils.c                                      :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/02 18:22:12 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/25 22:58:10 by mahmad-j         ###   ########.fr       */
+/*   Created: 2022/06/26 00:22:26 by mahmad-j          #+#    #+#             */
+/*   Updated: 2022/06/26 00:23:02 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	checkline(t_shell *shell)
+void	markemptystr(t_shell *shell, t_token *token)
 {
-	if (shell->exit == 0)
-		emptycommand(shell);
-	if (shell->exit == 0)
-		redirectionerror(shell);
-}
+	int	i;
 
-int	isnoterror(int errornum)
-{
-	if (errornum == SYNTAXERROR)
-		return (0);
-	if (errornum == NOCOMMAND)
-		return (0);
-	if (errornum == NOEXECUTE)
-		return (0);
-	if (errornum == UNEXPTOKEN)
-		return (0);
-	if (errornum == REDIRERROR)
-		return (0);
-	return (1);
+	(void)shell;
+	i = 0;
+	while (token->str[i] != 0)
+	{
+		if (!ft_strchr("'\"", token->str[i]))
+		{
+			token->emptystr = 0;
+			return ;
+		}
+		i++;
+	}
+	token->emptystr = 1;
 }
