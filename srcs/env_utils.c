@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 14:18:11 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/26 00:36:56 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/26 01:26:42 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	export_no_arg(char *arg)
 	free(varkey);
 }
 
-void    find_and_replace(t_shell *shell, char *arg)
+void	find_and_replace(t_shell *shell, char *arg)
 {
-	int        m;
-	char    *key;
+	int		m;
+	char	*key;
 
 	key = getvarname(arg);
 	m = getvarindex(shell, key);
