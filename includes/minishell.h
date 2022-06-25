@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/24 21:30:15 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/25 07:58:49 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ void		translateinheredoc(t_shell *shell, char **toexpand);
 int			cd(t_shell *shell, char *arg);
 int			exe_echo(t_shell *shell, t_cmdgroup *cmd, t_token *token);
 int			exe_pwd(t_shell *shell, t_cmdgroup *cmd);
-int			exe_exit(t_shell *shell, t_cmdgroup *cmd);
+int			exe_exit(t_shell *shell, t_cmdgroup *cmd, t_token *token);
 void		exe_unset(t_shell *shell, t_cmdgroup *grp, t_token *token);
 void		exe_export(t_shell *shell, t_cmdgroup *grp, t_token *token);
 void		exe_cd(t_shell *shell, t_cmdgroup *grp);

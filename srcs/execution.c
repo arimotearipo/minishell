@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 22:26:15 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/24 17:27:08 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/25 08:02:42 by mahmad-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,9 @@ void	exe_program(t_shell *shell, t_token *token, char *str)
 	else if (ft_strcmp(str, "env") == 0)
 		showenv(shell, token, 1);
 	else if (ft_strcmp(str, "exit") == 0)
-		exe_exit(shell, shell->cmdgroup);
+		exe_exit(shell, shell->cmdgroup, token);
 	else
-	{
 		shell->exit = ft_execve(shell, token, str);
-	}
 }
 
 void	run_program(t_shell *shell, t_cmdgroup *group)
