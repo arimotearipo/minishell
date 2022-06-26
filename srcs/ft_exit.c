@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:19:43 by mahmad-j          #+#    #+#             */
-/*   Updated: 2022/06/25 19:34:33 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/26 17:52:46 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	printexit(t_shell *shell)
+{
+	if (shell->cmdgrpcount == 1)
+		ft_putendl_fd("exit", 2);
+}
 
 void	ft_exit(t_shell *shell, t_cmdgroup *cmd, t_token *tkn, int opt)
 {
@@ -18,7 +24,7 @@ void	ft_exit(t_shell *shell, t_cmdgroup *cmd, t_token *tkn, int opt)
 
 	if (opt == 1)
 	{
-		ft_putendl_fd("exit", 2);
+		printexit(shell);
 		printerror(shell, "Numeric argument required but exiting still\n", 1);
 		clearmemory(shell, cmd);
 		exit(255);
@@ -27,13 +33,13 @@ void	ft_exit(t_shell *shell, t_cmdgroup *cmd, t_token *tkn, int opt)
 	{
 		exitstatus = ft_atoi(tkn->str);
 		ft_putnbr_fd(exitstatus, 2);
-		ft_putendl_fd("exit", 2);
+		printexit(shell);
 		clearmemory(shell, cmd);
 		exit(exitstatus % 256);
 	}
 	else if (opt == 3)
 	{
-		ft_putendl_fd("exit", 2);
+		printexit(shell);
 		clearmemory(shell, cmd);
 		exit(0);
 	}
