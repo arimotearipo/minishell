@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:21:32 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/25 23:31:58 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/26 20:56:32 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* This checkfirstoken() function might be redundant as checking for command
-** not found is done on ft_execve()
-*/
-void	checkfirsttoken(t_shell *shell)
-{
-	t_cmdgroup	*cmd;
-	t_cmdgroup	*first;
-
-	cmd = shell->cmdgroup;
-	first = cmd;
-	while (cmd != NULL)
-	{
-		if (cmd->tokens->type < COMMAND || cmd->tokens->type > RDINPUT)
-		{
-			printerror(shell, "Error: Command not found\n", NOCOMMAND);
-			return ;
-		}
-		cmd = cmd->next;
-	}
-	cmd = first;
-}
 
 int	redirectioncheck(t_shell *shell, t_token *tokens)
 {

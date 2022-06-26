@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:28:06 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/26 00:22:50 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/26 18:39:46 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,7 @@ int	iscmd(char *str, t_shell *shell)
 static void	assigntype(t_token *token, int prevtype, t_shell *sh)
 {
 	(void)sh;
-	if (prevtype == RDINPUT)
-		token->type = DELIM;
-	else if (!ft_strcmp(".", token->str) || !ft_strcmp("..", token->str))
-		token->type = ARG;
-	else if (ft_strcmp("<<", token->str) == 0)
+	if (ft_strcmp("<<", token->str) == 0)
 		token->type = RDINPUT;
 	else if (ft_strcmp("<", token->str) == 0)
 		token->type = INPUT;
@@ -77,6 +73,10 @@ static void	assigntype(t_token *token, int prevtype, t_shell *sh)
 		token->type = OUTPUT;
 	else if (ft_strcmp(">>", token->str) == 0)
 		token->type = APPEND;
+	else if (prevtype == RDINPUT)
+		token->type = DELIM;
+	else if (!ft_strcmp(".", token->str) || !ft_strcmp("..", token->str))
+		token->type = ARG;
 	else if (token->prev == NULL)
 		token->type = COMMAND;
 	else if (prevtype >= INPUT && prevtype <= APPEND)

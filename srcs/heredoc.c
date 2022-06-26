@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:56:57 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/24 15:19:27 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/26 20:49:53 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ void	open_heredoc_child(t_shell *shell, t_cmdgroup *grp, t_token *token)
 	char	*line;
 
 	(void)shell;
-	(void)grp;
+	if (ft_strcmp(grp->heredoc, ""))
+	{
+		free(grp->heredoc);
+		grp->heredoc = ft_strdup("");
+	}
 	while (1)
 	{
 		line = readline("> ");
@@ -47,11 +51,16 @@ void	open_heredoc_parent(t_cmdgroup *grp)
 	fd = open(".ttiyut7", O_RDONLY);
 	readbytes = read(fd, buf, PATH_MAX);
 	buf[readbytes] = '\0';
+	if (ft_strcmp(grp->heredoc, ""))
+	{
+		free(grp->heredoc);
+		grp->heredoc = ft_strdup("");
+	}
 	strjoinandfree(&(grp->heredoc), buf);
 	close(fd);
 }
 
-void	open_heredoc(t_shell *shell, t_cmdgroup *grp, t_token *token)
+int	open_heredoc(t_shell *shell, t_cmdgroup *grp, t_token *token)
 {
 	int		status;
 	pid_t	pid;
@@ -73,8 +82,10 @@ void	open_heredoc(t_shell *shell, t_cmdgroup *grp, t_token *token)
 	{
 		signal(SIGINT, SIG_IGN);
 		waitpid(-1, &status, 0);
+		if (status == SIGINT)
+			return (shell->exit = 1);
 		open_heredoc_parent(grp);
-		shell->eofexit = status;
+		return (shell->eofexit = status);
 	}
 }
 
@@ -86,24 +97,23 @@ within the cmdgroup struct.
 */
 void	runallheredocs(t_shell *shell, t_cmdgroup *grp)
 {
-	t_cmdgroup	*first;
-	t_token		*firsttoken;
+	t_cmdgroup	*grpptr;
+	t_token		*tknptr;
 
-	first = grp;
-	while (grp != NULL)
+	grpptr = grp;
+	while (grpptr != NULL)
 	{
-		firsttoken = grp->tokens;
-		while (grp->tokens != NULL)
+		tknptr = grpptr->tokens;
+		while (tknptr != NULL)
 		{
-			if (grp->tokens->type == RDINPUT)
+			if (tknptr->type == RDINPUT)
 			{
 				shell->heredocflag = 1;
-				open_heredoc(shell, grp, grp->tokens);
+				if (open_heredoc(shell, grpptr, tknptr) == 1)
+					return ;
 			}
-			grp->tokens = grp->tokens->next;
+			tknptr = tknptr->next;
 		}
-		grp->tokens = firsttoken;
-		grp = grp->next;
+		grpptr = grpptr->next;
 	}
-	grp = first;
 }

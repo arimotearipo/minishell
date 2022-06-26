@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/26 00:23:12 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/26 20:55:48 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ void		lexer(char *line, t_shell *shell);
 int			collecttoken(char *line, t_cmdgroup *cmd, int *i);
 void		printerror(t_shell *shell, char *msg, int errortype);
 void		emptycommand(t_shell *shell);
-void		checkfirsttoken(t_shell *shell);
 void		checkline(t_shell *shell);
 void		redirectionerror(t_shell *shell);
 int			isnoterror(int errornum);
@@ -170,12 +169,13 @@ void		markemptystr(t_shell *shell, t_token *token);
 **	SIGNAL HANDLER
 */
 void		sigint_handler(int signum);
+void		sigint_set_exit_value(t_shell *shell, int sigint);
 
 /*
 ** REDIRECTION FUNCTIONS
 */
 void		runallheredocs(t_shell *shell, t_cmdgroup *grp);
-void		open_heredoc(t_shell *shell, t_cmdgroup *grp, t_token *token);
+int			open_heredoc(t_shell *shell, t_cmdgroup *grp, t_token *token);
 void		open_heredoc_child(t_shell *shell, t_cmdgroup *grp, t_token *token);
 void		open_heredoc_parent(t_cmdgroup *grp);
 void		open_redirectionread(t_shell *shell, t_cmdgroup *grp, t_token *tkn);

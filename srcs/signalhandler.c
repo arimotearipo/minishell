@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 22:30:05 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/22 15:18:08 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/26 20:44:09 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,14 @@ void	sigint_handler(int signum)
 		rl_replace_line("", 0);
 		rl_redisplay();
 		g_sigint = 1;
+	}
+}
+
+void	sigint_set_exit_value(t_shell *shell, int sigint)
+{
+	if (sigint == 1)
+	{
+		updateexitvalue(shell);
+		g_sigint = 0;
 	}
 }

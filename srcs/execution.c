@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 22:26:15 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/25 08:02:42 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/26 19:50:17 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ void	run_program(t_shell *shell, t_cmdgroup *group)
 void	execution(t_shell *shell, t_cmdgroup *grp)
 {
 	runallheredocs(shell, grp);
-	runline(shell, grp);
+	if (shell->exit == 0)
+		runline(shell, grp);
 }
