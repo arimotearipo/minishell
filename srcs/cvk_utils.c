@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cvk_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 17:26:20 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/25 23:43:01 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/26 17:18:42 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ int	check_next_key_char(char c)
 	return (0);
 }
 
-int	first_key_error(t_shell *shell, char *str)
+int	first_key_error(t_shell *shell, char *str, int *i)
 {
+	while (str[*i] == '_')
+		(*i)++;
 	if (!check_first_key_char(str[0]))
 	{
 		if (ft_strchr("-", str[0]))
@@ -58,8 +60,8 @@ int	cvk(t_shell *shell, char *str, int option)
 {
 	int	i;
 
-	i = 1;
-	if (first_key_error(shell, str))
+	i = 0;
+	if (first_key_error(shell, str, &i))
 		return (0);
 	while (str[i] != '\0' && str[i] != '=')
 	{
