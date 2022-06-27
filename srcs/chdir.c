@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chdir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 11:59:46 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/25 23:42:22 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/27 17:33:39 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	cd(t_shell *shell, char *arg)
 	if (chdir(arg) == -1)
 	{
 		printerror(shell, "Error. No such file or directory.\n", 1);
+		free(oldpwd);
 		return (-1);
 	}
 	if (tilde == 1)

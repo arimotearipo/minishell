@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:25:25 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/24 21:59:25 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/27 18:06:35 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	clearmemory(t_shell *shell, t_cmdgroup *lst)
 {
 	t_cmdgroup	*temp;
 
+	free(shell->lastcmd);
 	if (lst == NULL)
 		return ;
 	while (lst != NULL)

@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:06:04 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/26 20:57:54 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/27 18:25:18 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	end_of_file(t_shell *shell)
 {
 	free2d(shell->sh_env);
+	system("leaks minishell");
 	exit(0);
 }
 

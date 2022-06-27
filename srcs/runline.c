@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   runline.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 16:19:31 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/26 00:01:35 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/27 15:18:02 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ void	runprogramchild(t_shell *shell, t_cmdgroup *grp)
 		exit(shell->exit);
 	}
 	else
+	{
+		signal(SIGINT, SIG_IGN);
 		dup2(shell->fdstdin, STDIN);
+	}
 }
 
 void	redirection_error(t_shell *shell, t_cmdgroup **grp)

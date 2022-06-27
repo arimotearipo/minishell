@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:13:50 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/26 00:19:38 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/27 17:31:31 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void	insertvar(t_shell *shell, char *arg)
 void	exe_export(t_shell *shell, t_cmdgroup *grp, t_token *tkn)
 {
 	t_token	*first;
-	int		i;
 
 	(void)grp;
 	first = tkn;
@@ -130,11 +129,7 @@ void	exe_export(t_shell *shell, t_cmdgroup *grp, t_token *tkn)
 		{
 			if (shell->exportflag == 1)
 				removeplus(&(tkn->str));
-			i = getfullvarindex(shell, tkn->str);
-			if (i >= 0)
-				replacevar(shell, tkn->str, i);
-			else
-				insertvar(shell, tkn->str);
+			find_and_replace(shell, tkn->str);
 		}
 		shell->exportflag = 0;
 		tkn = tkn->next;

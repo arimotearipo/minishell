@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initshell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahmad-j <mahmad-j@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 01:53:26 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/25 20:45:21 by mahmad-j         ###   ########.fr       */
+/*   Updated: 2022/06/27 17:41:41 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ void	incrementshlvl(t_shell *shell)
 	char	*shlvl;
 	char	*shlvl_arg;
 	int		shlvl_int;
-	int		index;
 
 	shlvl = ft_getenv(shell->sh_env, "SHLVL");
-	if (shlvl[0] == '-' && ft_strisnum(shlvl, 1))
+	if (shlvl == NULL)
+		shlvl_int = 1;
+	else if (shlvl[0] == '-' && ft_strisnum(shlvl, 1))
 		shlvl_int = 0;
 	else if (!ft_strisnum(shlvl, 1))
 		shlvl_int = 1;
@@ -29,8 +30,7 @@ void	incrementshlvl(t_shell *shell)
 	shlvl = ft_itoa(shlvl_int);
 	shlvl_arg = ft_strjoin("SHLVL=", shlvl);
 	free(shlvl);
-	index = getfullvarindex(shell, shlvl_arg);
-	replacevar(shell, shlvl_arg, index);
+	find_and_replace(shell, shlvl_arg);
 	free(shlvl_arg);
 }
 

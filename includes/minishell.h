@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:01:14 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/26 20:55:48 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/27 16:35:11 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_cmdgroup
 	struct s_cmdgroup	*next;
 	char				*topass;
 	char				*heredoc;
+	int					todelete;
 }	t_cmdgroup;
 
 typedef struct s_shell
@@ -148,6 +149,7 @@ char		*ft_substrnoquote(char *s, unsigned int start, size_t len);
 int			getfullvarindex(t_shell *shell, char *arg);
 void		replacevar(t_shell *shell, char *arg, int index);
 void		insertvar(t_shell *shell, char *arg);
+void		find_and_replace(t_shell *shell, char *arg);
 void		unset(t_shell *shell, char *arg);
 void		updateexitvalue(t_shell *shell);
 void		runline(t_shell *shell, t_cmdgroup *grp);

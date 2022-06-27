@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:29:43 by wwan-taj          #+#    #+#             */
-/*   Updated: 2022/06/24 17:18:17 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/06/27 18:22:00 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,21 @@ void	setlastcommand(t_shell *shell)
 	t_cmdgroup	*grp;
 	t_token		*token;
 
+	shell->lastcmd = ft_strdup("");
+	if (shell->cmdgrpcount > 1)
+		return ;
 	grp = shell->cmdgroup;
 	token = grp->tokens;
-	if (grp->next != NULL)
-		shell->lastcmd = NULL;
 	while (token != NULL)
 	{
 		if (token->type == ARG || token->type == COMMAND)
-			shell->lastcmd = token->str;
-		else
-			shell->lastcmd = "";
+		{
+			free(shell->lastcmd);
+			if (!ft_strcmp(shell->cmdgroup->tokens->str, "export"))
+				shell->lastcmd = getvarname(token->str);
+			else
+				shell->lastcmd = ft_strdup(token->str);
+		}
 		token = token->next;
 	}
 }
